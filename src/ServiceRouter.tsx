@@ -1,8 +1,7 @@
-import "./index.css";
-import App from "./App.tsx";
 import { Route, Routes, useLocation } from "react-router";
 import RouteTransition from "./RouteTransition.tsx";
-import Test from "./Test.tsx";
+import Test2 from "./Test2.tsx";
+import Home from "./page/Home.tsx";
 
 // ServiceRouter.tsx
 const ServiceRouter = () => {
@@ -10,8 +9,8 @@ const ServiceRouter = () => {
   return (
     <RouteTransition location={location}>
       <Routes location={location}>
-        <Route path="/" element={<App />} />
-        <Route path="/test" element={<Test />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/test" element={<Test2 />} />
       </Routes>
     </RouteTransition>
   );
