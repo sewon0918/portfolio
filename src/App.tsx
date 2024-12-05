@@ -1,17 +1,7 @@
-import { useNavigate } from "react-router";
+import ServiceRouter from "./ServiceRouter";
 
 function App() {
-  const navigate = useNavigate();
-  const onClick = () => {
-    navigate("/test");
-  };
-
-  return (
-    <div
-      onClick={onClick}
-      style={{ backgroundColor: "blue", width: "100vw", height: "100vh" }}
-    ></div>
-  );
+  return <ServiceRouter />;
 }
 
 export default App;

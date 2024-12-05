@@ -1,17 +1,16 @@
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useNavigate } from "react-router";
+
 export default function Test() {
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate("/test");
+  };
   return (
     <>
-      <div style={{ backgroundColor: "red", width: "100%", height: "100%" }}>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-        <div style={{ fontSize: 40 }}>ksjdncdsj skdc sdjkcnsjkcnsjsdkc</div>
-      </div>
+      <div
+        onClick={onClick}
+        style={{ backgroundColor: "red", width: "100%", height: "100%" }}
+      ></div>
     </>
   );
 }
