@@ -1,3 +1,4 @@
+import Header from "@/components/common/Header";
 import { useEffect, useRef, useState } from "react";
 import { Location } from "react-router";
 import {
@@ -8,12 +9,16 @@ import {
 const RouteTransition = ({
   location,
   children,
+  duration = 300,
+  showHeader = false,
 }: {
   location: Location;
   children: React.ReactNode;
+  duration?: number;
+  showHeader?: boolean;
 }) => {
   const nodeRef = useRef<HTMLDivElement>(null);
-  const TIMEOUT = 300; // 애니메이션 지속 시간(ms)
+  const TIMEOUT = duration; // 애니메이션 지속 시간(ms)
   const [isPopTransition, setIsPopTransition] = useState<boolean>(false);
 
   const [zIndex, setZIndex] = useState<number>(1); // 초기 z-index
@@ -64,6 +69,7 @@ const RouteTransition = ({
         minHeight: "100vh",
       }}
     >
+      {showHeader && <Header />}
       <TransitionGroup component={null}>
         <Transition
           key={location.pathname} // 각 pathname에 대해 고유한 key 사용
