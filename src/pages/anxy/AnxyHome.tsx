@@ -1,55 +1,21 @@
-import { DragWorryScoreSOS } from "@/components/anxy/DragWorryScoreSOS";
-import { useState } from "react";
-import { Wori } from "@/components/anxy/Wori";
 import AppScreen from "@/components/common/AppScreen";
-import { useNavigate } from "react-router";
-import { css } from "@emotion/react";
-import { TestLink } from "@/components/common/TestLink";
+import Tabs from "@/components/anxy/Tabs";
+import { useRecoilState } from "recoil";
+import homeTypeAtom from "@/recoil/anxy/home/atom";
+import AnxyTab from "./AnxyTab";
+
+import WoriTab from "./WoriTab";
+import { useState } from "react";
 
 export default function AnxyHome() {
-  const navigate = useNavigate();
-
-  const [woriScore, setWoriScore] = useState(50);
-  const [showWoriAnimation, setShowWoriAnimation] = useState<boolean>(false);
-  const [score] = useState<number>(50);
+  const [homeType] = useRecoilState(homeTypeAtom);
+  const [scrollTop, setScrollTop] = useState<number>(0);
 
   return (
-    <AppScreen backgroundColor="#F1EEEB">
-      <div
-        css={css({
-          padding: "0 20px",
-        })}
-      >
-        <TestLink
-          onClick={() => {
-            navigate("/anxy/community");
-          }}
-        >
-          커뮤니티
-        </TestLink>
-        <TestLink
-          onClick={() => {
-            alert("go leave");
-          }}
-        >
-          구독 취소
-        </TestLink>
-        <div
-          css={css({
-            margin: "0 auto",
-            width: "fit-content",
-            marginBottom: "10px",
-          })}
-        >
-          <Wori score={woriScore} showWoriAnimation={showWoriAnimation} />
-        </div>
+    <AppScreen backgroundColor="#F1EEEB" setScrollTop={setScrollTop}>
+      {homeType === "wori" ? <WoriTab /> : <AnxyTab scrollTop={scrollTop} />}
 
-        <DragWorryScoreSOS
-          score={score}
-          setScore={setWoriScore}
-          setShowWoriAnimation={setShowWoriAnimation}
-        />
-      </div>
+      <Tabs />
     </AppScreen>
   );
 }
