@@ -8,9 +8,7 @@ import { TestLink } from "@/components/common/TestLink";
 
 export default function AnxyHome() {
   const navigate = useNavigate();
-  const onClick = () => {
-    navigate("/anxy/test");
-  };
+
   const [woriScore, setWoriScore] = useState(50);
   const [showWoriAnimation, setShowWoriAnimation] = useState<boolean>(false);
   const [score] = useState<number>(50);
@@ -24,7 +22,7 @@ export default function AnxyHome() {
       >
         <TestLink
           onClick={() => {
-            onClick();
+            navigate("/anxy/community");
           }}
         >
           커뮤니티

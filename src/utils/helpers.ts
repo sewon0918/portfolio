@@ -3,3 +3,7 @@ export function addAlpha(hex: string, alpha: number) {
     .toString(16)
     .padStart(2, "0")}`;
 }
+
+export function getImageUrl(imagePath: string, callerUrl: string) {
+  return new URL(`${imagePath}`, callerUrl).href;
+}
