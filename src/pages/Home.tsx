@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
-import Title from "../components/Title";
+import Title from "@/components/Title";
 import iphone_mockup from "@/assets/iphone_mockup.png";
 import { useNavigate } from "react-router";
+import { css } from "@emotion/react";
+import { TestLink } from "@/components/common/TestLink";
 
 export default function Home() {
   const IphoneContainer = styled.div({
@@ -16,7 +18,6 @@ export default function Home() {
     position: "relative",
     pointerEvents: "none",
     width: "100%",
-    // opacity: 0.6,
   });
 
   const Iframe = styled.iframe({
@@ -37,41 +38,35 @@ export default function Home() {
     marginTop: "20px",
   });
 
-  const Test = styled.div({
-    fontSize: "20px",
-    fontWeight: 700,
-    border: "1px solid black",
-  });
-
   const ProjectContainer = styled.div({ display: "flex" });
+
   const navigate = useNavigate();
   const onClick = () => {
-    navigate("/test");
+    navigate("/anxy");
   };
   return (
     <div
-      style={{
+      css={css({
         backgroundColor: "white",
-        width: "100%",
+        padding: "20px",
         minHeight: "100%",
         overflow: "hidden",
-      }}
+      })}
     >
-      <Test
+      <TestLink
         onClick={() => {
-          // router.push("/anxy/home");
           onClick();
         }}
       >
         모바일
-      </Test>
+      </TestLink>
       <ProjectContainer>
         <IphoneContainer>
           <IphoneImage src={iphone_mockup} alt={"iphone_mockup"}></IphoneImage>
 
           <Iframe
             // src="http://172.30.1.87:5173/test"
-            src="http://172.30.1.87:5173/test"
+            src="http://192.0.0.2:5173/anxy"
             width="100%"
             allowFullScreen
           ></Iframe>
