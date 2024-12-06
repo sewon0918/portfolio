@@ -25,7 +25,7 @@ export default function Home() {
     left: "21px",
     top: "18.7px",
     width: "calc(100% - 41px)",
-    height: "calc(100% - 42px)",
+    height: "calc(100% - 41px)",
     border: "0px",
     borderRadius: "40px",
   });
@@ -65,8 +65,8 @@ export default function Home() {
           <IphoneImage src={iphone_mockup} alt={"iphone_mockup"}></IphoneImage>
 
           <Iframe
-            // src="http://172.30.1.87:5173/test"
-            src="http://192.0.0.2:5173/anxy"
+            src="http://172.30.1.87:5173/anxy"
+            // src="http://192.0.0.2:5173/anxy"
             width="100%"
             allowFullScreen
           ></Iframe>
@@ -80,9 +80,10 @@ export default function Home() {
           정신건강에 기여한다" 라는 목표 아래 수많은 가설들을 테스트하는
           과정에서 사람들의 반응이 가장 좋았던 아이디어를 발전시켜 나갔습니다.`,
               `빠른 검증을 위해 모든 화면을 웹뷰로 개발했고, 그에 따라 화면
-          레이아웃과 네비게이션 시스템을 만들었습니다.`,
+          레이아웃과 네비게이션 시스템을 구축했습니다.`,
               `친근하고 자연스러운
           사용자 경험을 위해 애니메이션 컴포넌트를 다수 구현했습니다.`,
+              `웹뷰의 한계를 극복하고`,
             ].map((each, index) => (
               <div key={index}>{`∙ ${each}`}</div>
             ))}

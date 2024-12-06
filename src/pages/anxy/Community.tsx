@@ -1,8 +1,7 @@
 import CheerUpPost, { CheerPostType } from "@/components/anxy/CheerUpPost";
-import AppScreen from "@/components/common/AppScreen";
 import { useState } from "react";
 
-export default function Community() {
+export default function Community({ scrollTop }: { scrollTop: number }) {
   const mockList = Array(20)
     .fill([
       {
@@ -41,64 +40,64 @@ export default function Community() {
   const [availableCheerList, setAvailableCheerList] =
     useState<CheerPostType[]>(mockList);
 
-  const [scrollTop, setScrollTop] = useState<number>(0);
+  // const [scrollTop, setScrollTop] = useState<number>(0);
 
   return (
-    <AppScreen backgroundColor="#F1EEEB" setScrollTop={setScrollTop}>
-      <div style={{ padding: "20px" }}>
+    // <AppScreen backgroundColor="#F1EEEB" setScrollTop={setScrollTop}>
+    <div style={{ padding: "20px" }}>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          gap: "15px",
+        }}
+      >
         <div
           style={{
-            width: "100%",
+            flex: 1,
             display: "flex",
-            gap: "15px",
+            flexDirection: "column",
+            position: "relative",
           }}
         >
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              position: "relative",
-            }}
-          >
-            {availableCheerList
-              .filter((e, i) => i % 2 === 0)
-              .map(({ cheerId, contents, nickname, isHighlight }) => (
-                <CheerUpPost
-                  key={`post${cheerId}`}
-                  cheerId={cheerId}
-                  contents={contents}
-                  nickname={nickname}
-                  isHighlight={isHighlight}
-                  setAvailableCheerList={setAvailableCheerList}
-                  scrollTop={scrollTop}
-                />
-              ))}
-          </div>
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              position: "relative",
-            }}
-          >
-            {availableCheerList
-              .filter((e, i) => i % 2 === 1)
-              .map(({ cheerId, contents, nickname, isHighlight }) => (
-                <CheerUpPost
-                  key={`post${cheerId}`}
-                  cheerId={cheerId}
-                  contents={contents}
-                  nickname={nickname}
-                  isHighlight={isHighlight}
-                  setAvailableCheerList={setAvailableCheerList}
-                  scrollTop={scrollTop}
-                />
-              ))}
-          </div>
+          {availableCheerList
+            .filter((e, i) => i % 2 === 0)
+            .map(({ cheerId, contents, nickname, isHighlight }) => (
+              <CheerUpPost
+                key={`post${cheerId}`}
+                cheerId={cheerId}
+                contents={contents}
+                nickname={nickname}
+                isHighlight={isHighlight}
+                setAvailableCheerList={setAvailableCheerList}
+                scrollTop={scrollTop}
+              />
+            ))}
+        </div>
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            position: "relative",
+          }}
+        >
+          {availableCheerList
+            .filter((e, i) => i % 2 === 1)
+            .map(({ cheerId, contents, nickname, isHighlight }) => (
+              <CheerUpPost
+                key={`post${cheerId}`}
+                cheerId={cheerId}
+                contents={contents}
+                nickname={nickname}
+                isHighlight={isHighlight}
+                setAvailableCheerList={setAvailableCheerList}
+                scrollTop={scrollTop}
+              />
+            ))}
         </div>
       </div>
-    </AppScreen>
+    </div>
+    // </AppScreen>
   );
 }
