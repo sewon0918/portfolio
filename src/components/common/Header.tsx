@@ -18,15 +18,16 @@ export default function Header() {
         // paddingTop: notchHeight,
         backgroundColor: "transparent",
         width: "100%",
+        pointerEvents: "none",
       }}
     >
-      <div
-        style={{ height: "var(--header-height)" }}
-        onClick={() => {
-          goBack();
-        }}
-      >
-        <div>
+      <div style={{ height: "var(--header-height)" }}>
+        <div
+          style={{ width: "fit-content", pointerEvents: "auto" }}
+          onClick={() => {
+            goBack();
+          }}
+        >
           <svg
             width="52"
             height="44"
