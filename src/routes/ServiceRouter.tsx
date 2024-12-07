@@ -13,7 +13,7 @@ const ServiceRouter = () => {
 
   useEffect(() => {
     // window.scrollTo(0, 0);
-    console.log(prevLocation?.pathname);
+    // console.log(prevLocation?.pathname);
   }, [prevLocation]);
 
   const showHeader = location.pathname.startsWith("/anxy");
