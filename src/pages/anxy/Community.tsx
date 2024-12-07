@@ -1,7 +1,7 @@
 import CheerUpPost, { CheerPostType } from "@/components/anxy/CheerUpPost";
 import { useState } from "react";
 
-export default function Community({ scrollTop }: { scrollTop: number }) {
+export default function Community({ scrollTop }: { scrollTop?: number }) {
   const mockList = Array(20)
     .fill([
       {

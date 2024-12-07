@@ -12,7 +12,7 @@ const ServiceRouter = () => {
   const prevLocation = usePrevious(location);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
     console.log(prevLocation?.pathname);
   }, [prevLocation]);
 
