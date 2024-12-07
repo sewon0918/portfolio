@@ -2,7 +2,8 @@ import { useEffect, useRef } from "react";
 import lottie, { AnimationItem } from "lottie-web";
 
 interface LottieProps {
-  lottieData: object; // Lottie 애니메이션 데이터
+  lottieData?: object; // Lottie 애니메이션 데이터
+  path?: string;
   loop?: boolean; // 루프 여부
   autoplay?: boolean; // 자동 재생 여부
   width?: string | number; // 컨테이너 너비
@@ -10,14 +11,13 @@ interface LottieProps {
   playing?: boolean; // 재생 중인지 여부
   currentTime?: number; // 특정 시점에서 재생/정지
   renderer?: "svg" | "canvas" | "html"; // 렌더링 방식
-  css?: string; // 추가 CSS 클래스
-  style?: React.CSSProperties; // 인라인 스타일
   delay?: number; // 지연 시간 (초 단위)
   reload?: boolean; // 재로드 트리거
 }
 
 export default function Lottie({
   lottieData,
+  path,
   loop = false,
   autoplay = false,
   width,
@@ -25,8 +25,6 @@ export default function Lottie({
   playing,
   currentTime = 0,
   renderer = "svg",
-  css,
-  style,
   delay,
   reload,
 }: LottieProps) {
@@ -41,7 +39,7 @@ export default function Lottie({
         renderer,
         loop,
         autoplay,
-        animationData: lottieData,
+        ...(lottieData ? { animationData: lottieData } : { path: path }),
       });
 
       if (playing !== undefined) {
@@ -72,11 +70,5 @@ export default function Lottie({
     };
   }, [lottieData, playing, currentTime, delay, reload]);
 
-  return (
-    <div
-      className={css}
-      style={{ ...style, width, height }}
-      ref={lottieContainer}
-    />
-  );
+  return <div css={{ width, height }} ref={lottieContainer} />;
 }
