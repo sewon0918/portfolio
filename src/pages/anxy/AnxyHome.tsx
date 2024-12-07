@@ -6,16 +6,37 @@ import AnxyTab from "./AnxyTab";
 
 import WoriTab from "./WoriTab";
 import { useState } from "react";
+import { css } from "@emotion/react";
 
 export default function AnxyHome() {
   const [homeType] = useRecoilState(homeTypeAtom);
   const [scrollTop, setScrollTop] = useState<number>(0);
 
   return (
-    <AppScreen backgroundColor="#F1EEEB" setScrollTop={setScrollTop}>
-      {homeType === "wori" ? <WoriTab /> : <AnxyTab scrollTop={scrollTop} />}
+    <>
+      {/* <AppScreen backgroundColor="#F1EEEB" setScrollTop={setScrollTop}>
+        {homeType === "wori" ? <WoriTab /> : <AnxyTab scrollTop={scrollTop} />}
 
-      <Tabs />
-    </AppScreen>
+        <Tabs />
+      </AppScreen> */}
+      <div
+        css={css({ visibility: homeType === "wori" ? "visible" : "hidden" })}
+      >
+        <AppScreen backgroundColor="#F1EEEB" setScrollTop={setScrollTop}>
+          <WoriTab />
+
+          <Tabs />
+        </AppScreen>
+      </div>
+      <div
+        css={css({ visibility: homeType === "anxy" ? "visible" : "hidden" })}
+      >
+        <AppScreen backgroundColor="#F1EEEB" setScrollTop={setScrollTop}>
+          <AnxyTab scrollTop={scrollTop} />
+
+          <Tabs />
+        </AppScreen>
+      </div>
+    </>
   );
 }

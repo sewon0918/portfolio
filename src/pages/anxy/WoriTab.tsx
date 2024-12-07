@@ -1,17 +1,15 @@
 import { DragWorryScoreSOS } from "@/components/anxy/DragWorryScoreSOS";
 import { useState } from "react";
 import { Wori } from "@/components/anxy/Wori";
-import { useNavigate } from "react-router";
 import { css } from "@emotion/react";
 import { TestLink } from "@/components/common/TestLink";
+import { useNavigate } from "react-router";
 
 export default function WoriTab() {
-  const navigate = useNavigate();
-
   const [woriScore, setWoriScore] = useState(50);
   const [showWoriAnimation, setShowWoriAnimation] = useState<boolean>(false);
   const [score] = useState<number>(50);
-
+  const navigate = useNavigate();
   return (
     <div
       css={css({
@@ -24,13 +22,6 @@ export default function WoriTab() {
         }}
       >
         커뮤니티
-      </TestLink>
-      <TestLink
-        onClick={() => {
-          alert("go leave");
-        }}
-      >
-        구독 취소
       </TestLink>
       <div
         css={css({

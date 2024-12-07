@@ -39,6 +39,10 @@ export default function AppScreen({
     <div
       ref={containerRef}
       css={css({
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
         paddingTop: `calc(var(--header-height) + ${notchHeight})`,
         minHeight: "calc(100vh)",
         height: "100%",
