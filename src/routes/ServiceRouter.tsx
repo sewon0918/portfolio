@@ -6,6 +6,7 @@ import AnxyHome from "@/pages/anxy/AnxyHome.tsx";
 import Community from "@/pages/anxy/Community.tsx";
 import { usePrevious } from "@uidotdev/usehooks";
 import { useEffect } from "react";
+import Store from "@/pages/anxy/Store.tsx";
 
 const ServiceRouter = () => {
   const location = useLocation();
@@ -34,6 +35,7 @@ const ServiceRouter = () => {
             <Route index element={<AnxyHome />} />
             <Route path="community" element={<Community />} />
             <Route path="test" element={<Test />} />
+            <Route path="store" element={<Store />} />
           </Route>
         </Routes>
       </RouteTransition>

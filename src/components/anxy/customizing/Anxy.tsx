@@ -2,20 +2,13 @@ import React from "react";
 import { CSSObject } from "@emotion/react";
 import Lottie from "@/components/common/Lottie";
 import { getImageUrl } from "@/utils/helpers";
-
-export type itemType =
-  | "badge_a"
-  | "sunglasses_a"
-  | "hat_a"
-  | "hat_b"
-  | "shoes_a"
-  | "backpack_a"
-  | "scarf_a";
+import { ItemType } from "@/recoil/anxy/customizing/atom";
 
 export type anxyStateType = "standup" | "walking" | "jumping" | "sitdown";
+
 interface AnxyProps {
   state?: anxyStateType;
-  itemList?: itemType[];
+  itemList?: ItemType[];
   autoplay?: boolean;
   height?: number;
   loop?: boolean;
@@ -41,6 +34,7 @@ const EachLottie = React.memo(
       <div
         css={{
           position: "absolute",
+          width: "100%",
           height: "100%",
           bottom: 0,
           left: 0,
@@ -65,6 +59,7 @@ const Anxy: React.FC<AnxyProps> = ({
   autoplay,
   loop,
   playing,
+  height,
 }) => {
   const zIndexMapping = {
     backpack_back: 1,
@@ -87,7 +82,7 @@ const Anxy: React.FC<AnxyProps> = ({
         justifyContent: "end",
         alignItems: "center",
         position: "relative",
-        height: 153,
+        height: height || 153,
       }}
     >
       {itemList?.map((each) => (

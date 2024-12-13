@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { getImageUrl } from "@/utils/helpers";
-import Anxy, { anxyStateType, itemType } from "../customizing/Anxy";
+import Anxy, { anxyStateType } from "../customizing/Anxy";
 import {
   Bridge,
   Ground,
@@ -13,6 +13,8 @@ import { usePrevious } from "@toss/react";
 import { RewardModal } from "./RewardModal";
 import { MileStoneModal } from "./MileStoneModal";
 import { Text15 } from "../common/Text";
+import { useRecoilValue } from "recoil";
+import customizingAtom from "@/recoil/anxy/customizing/atom";
 
 interface AnxyTravelProps {
   currentStage: number;
@@ -40,14 +42,7 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
   const [isRewardGained, setRewardGained] = useState(false);
   const [rewardState, setRewardState] = useState<RewardState>("LOCKED");
 
-  const itemList = [
-    "backpack_a",
-    "badge_a",
-    "hat_a",
-    "scarf_a",
-    "shoes_a",
-    "sunglasses_a",
-  ] as itemType[];
+  const { itemList } = useRecoilValue(customizingAtom);
 
   useEffect(() => {
     if (bridgeNum) {

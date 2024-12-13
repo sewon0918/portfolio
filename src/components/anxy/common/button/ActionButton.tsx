@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, ReactNode } from "react";
 import { addAlpha } from "@/utils/helpers";
 import { useColorTheme } from "@/hooks/useColorTheme";
 import { Text17 } from "../Text";
@@ -10,9 +10,10 @@ type ThemeType = "primary";
 interface ActionButtonProps {
   state?: "ACTIVE" | "INACTIVE" | "LOADING" | "DONE";
   type?: ThemeType;
-  text: string;
+  text: string | ReactNode;
   action?: () => void;
   bgColor?: string;
+  size?: "small" | "large";
 }
 
 export const ActionButton: React.FC<ActionButtonProps> = (props) => {
@@ -22,6 +23,7 @@ export const ActionButton: React.FC<ActionButtonProps> = (props) => {
     text,
     action,
     bgColor = "#ffffff",
+    size = "large",
   } = props;
 
   const colors = useColorTheme({ type: "anxy" });
@@ -92,9 +94,8 @@ export const ActionButton: React.FC<ActionButtonProps> = (props) => {
           boxShadow:
             colorTheme.borderColor &&
             `inset 0 0 0 1px ${colorTheme.borderColor}`,
-          borderRadius: `${50}px`,
-          padding: "0 20px",
-          height: "54px",
+          borderRadius: size === "small" ? "8px" : "50px",
+          height: size === "small" ? "26px" : "54px",
           position: "relative",
           width: "100%",
           display: "flex",
@@ -155,18 +156,22 @@ export const ActionButton: React.FC<ActionButtonProps> = (props) => {
           setButtonDown(false);
         }}
       >
-        {state !== "LOADING" && state !== "DONE" && (
-          <Text17
-            customCss={{
-              marginBottom: "1px",
-              ...(state === "ACTIVE"
-                ? { fontWeight: 700 }
-                : { fontWeight: 600 }),
-            }}
-          >
-            {text}
-          </Text17>
-        )}
+        {state !== "LOADING" &&
+          state !== "DONE" &&
+          (typeof text === "string" ? (
+            <Text17
+              customCss={{
+                marginBottom: "1px",
+                ...(state === "ACTIVE"
+                  ? { fontWeight: 700 }
+                  : { fontWeight: 600 }),
+              }}
+            >
+              {text}
+            </Text17>
+          ) : (
+            text
+          ))}
 
         {state === "LOADING" && (
           <div className="w-full h-full absolute top-0 left-0 flex items-center justify-center z-[10]">
