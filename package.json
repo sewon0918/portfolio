@@ -19,6 +19,7 @@
     "motion": "^11.13.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-modal-sheet": "^3.3.0",
     "react-router": "^7.0.2",
     "react-transition-group": "^4.4.5",
     "recoil": "^0.7.7"

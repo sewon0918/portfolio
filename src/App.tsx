@@ -10,6 +10,8 @@ declare module "@emotion/react" {
       colors: {
         orange: string;
         oat: string;
+        black: string;
+        green: string;
       };
     };
   }
@@ -21,6 +23,8 @@ function App() {
       colors: {
         orange: "#D66418",
         oat: "#F1EEEB",
+        black: "#26282C",
+        green: "#2B773A",
       },
     },
   };

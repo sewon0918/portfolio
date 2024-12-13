@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import lottie, { AnimationItem } from "lottie-web";
 
 interface LottieProps {
@@ -15,7 +15,7 @@ interface LottieProps {
   reload?: boolean; // 재로드 트리거
 }
 
-export default function Lottie({
+function Lottie({
   lottieData,
   path,
   loop = false,
@@ -23,52 +23,38 @@ export default function Lottie({
   width,
   height,
   playing,
-  currentTime = 0,
   renderer = "svg",
-  delay,
   reload,
 }: LottieProps) {
   const lottieContainer = useRef<HTMLDivElement>(null);
+  const animationInstance = useRef<AnimationItem | null>(null);
 
   useEffect(() => {
-    let instance: AnimationItem | undefined;
-
-    const loadAnimation = () => {
-      instance = lottie.loadAnimation({
-        container: lottieContainer.current as Element,
-        renderer,
-        loop,
-        autoplay,
-        ...(lottieData ? { animationData: lottieData } : { path: path }),
-      });
-
-      if (playing !== undefined) {
-        if (playing) {
-          instance.goToAndPlay(currentTime * 1000, false);
-        } else {
-          instance.goToAndStop(currentTime * 1000, false);
-        }
-      }
-    };
-
-    if (delay) {
-      const timeoutId = setTimeout(loadAnimation, delay * 1000);
-      return () => {
-        clearTimeout(timeoutId);
-        if (instance) {
-          instance.destroy();
-        }
-      };
-    } else {
-      loadAnimation();
-    }
+    animationInstance.current = lottie.loadAnimation({
+      container: lottieContainer.current as Element,
+      renderer,
+      loop,
+      autoplay,
+      ...(lottieData ? { animationData: lottieData } : { path: path }),
+    });
 
     return () => {
-      if (instance) {
-        instance.destroy();
-      }
+      animationInstance.current?.destroy();
     };
-  }, [lottieData, playing, currentTime, delay, reload]);
+  }, [lottieData, path, reload]);
+
+  useEffect(() => {
+    if (animationInstance.current && playing !== undefined) {
+      if (playing) {
+        animationInstance.current.play();
+      } else {
+        animationInstance.current.stop();
+        // animationInstance.current.goToAndStop(0, false);
+      }
+    }
+  }, [playing]);
 
   return <div css={{ width, height }} ref={lottieContainer} />;
 }
+
+export default React.memo(Lottie);

@@ -1,0 +1,11 @@
+.react-modal-sheet-container {
+  border-radius: 20px !important;
+  box-shadow: 0px -4px 16px rgba(0, 0, 0, 0.05) !important;
+  width: calc(100% - 40px) !important;
+  left: 20px !important;
+  bottom: 20px !important;
+  overflow: hidden;
+}
+div.react-modal-sheet-container {
+  width: "90%";
+}
