@@ -7,7 +7,7 @@ export default function AnxyTab({ scrollTop }: { scrollTop: number }) {
     <>
       {/* <AnxyTest /> */}
 
-      <AnxyJourney homeType="anxy" />
+      <AnxyJourney />
       <Community scrollTop={scrollTop} />
     </>
   );

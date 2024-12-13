@@ -6,13 +6,15 @@ import { Store } from "./Asset";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { useNavigate } from "react-router";
 import { Text17, Text24 } from "../common/Text";
+import Seed from "../store/Seed";
+import customizingAtom from "@/recoil/anxy/customizing/atom";
+import { useRecoilValue } from "recoil";
 
 const AnxyJourney = () => {
   const navigate = useNavigate();
 
   const dailyProgramDetail_mock = {
     result: {
-      totalSeedCount: 100,
       programCurrentDate: "2024-12-12",
       programDaysLeft: 10,
       activityList: [
@@ -42,7 +44,6 @@ const AnxyJourney = () => {
   };
   const dailyProgramDetail_mock2 = {
     result: {
-      totalSeedCount: 100,
       programCurrentDate: "2024-12-12",
       programDaysLeft: 10,
       activityList: [
@@ -72,7 +73,6 @@ const AnxyJourney = () => {
   };
   const dailyProgramDetail_mock3 = {
     result: {
-      totalSeedCount: 100,
       programCurrentDate: "2024-12-12",
       programDaysLeft: 10,
       activityList: [
@@ -102,7 +102,6 @@ const AnxyJourney = () => {
   };
   const initialData = {
     result: {
-      totalSeedCount: 100,
       programCurrentDate: "2024-12-12",
       programDaysLeft: 10,
       activityList: [],
@@ -110,7 +109,6 @@ const AnxyJourney = () => {
   };
   const [dailyProgramDetail, setDailyProgramDetail] = useState<{
     result: {
-      totalSeedCount: number;
       programCurrentDate: string;
       programDaysLeft: number;
       activityList: {
@@ -151,7 +149,7 @@ const AnxyJourney = () => {
   const [currentStage, setCurrentStage] = useState<number | undefined>(
     undefined
   );
-  const [totalSeedCount, setTotalSeedCount] = useState<number>(0);
+  const { seedCount } = useRecoilValue(customizingAtom);
 
   useEffect(() => {
     if (
@@ -174,7 +172,6 @@ const AnxyJourney = () => {
 
   useEffect(() => {
     if (dailyProgramDetail) {
-      setTotalSeedCount(dailyProgramDetail.result.totalSeedCount);
       const changedList = dailyProgramDetail.result.activityList
         ? dailyProgramDetail.result.activityList.slice()
         : [];
@@ -236,7 +233,7 @@ const AnxyJourney = () => {
           paddingLeft: "20px",
         }}
       >
-        {totalSeedCount !== undefined && (
+        {seedCount !== undefined && (
           <div
             css={{
               width: "fit-content",
@@ -248,7 +245,7 @@ const AnxyJourney = () => {
               gap: "6px",
             }}
             onClick={() => {
-              navigate("/store");
+              navigate("/anxy/store");
             }}
           >
             <Store />
@@ -262,10 +259,8 @@ const AnxyJourney = () => {
               }}
             />
             <div css={{ display: "flex", gap: "2px" }}>
-              {/* <Seed /> */}
-              <Text17
-                customCss={{ fontWeight: 700 }}
-              >{`${totalSeedCount}`}</Text17>
+              <Seed />
+              <Text17 customCss={{ fontWeight: 700 }}>{`${seedCount}`}</Text17>
             </div>
           </div>
         )}
