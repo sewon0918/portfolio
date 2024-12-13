@@ -23,17 +23,20 @@ interface AnxyProps {
   playing?: boolean;
   css?: CSSObject;
 }
-
-const Anxy: React.FC<AnxyProps> = ({
-  state,
-  itemList,
-  autoplay,
-  loop,
-  reload,
-  playing,
-  css,
-}) => {
-  function EachLottie({ path, zIndex }: { path: string; zIndex?: number }) {
+const EachLottie = React.memo(
+  ({
+    path,
+    zIndex,
+    loop,
+    autoplay,
+    playing,
+  }: {
+    path: string;
+    zIndex?: number;
+    loop?: boolean;
+    autoplay?: boolean;
+    playing?: boolean;
+  }) => {
     return (
       <div
         css={{
@@ -42,7 +45,6 @@ const Anxy: React.FC<AnxyProps> = ({
           bottom: 0,
           left: 0,
           zIndex: zIndex,
-          ...css,
         }}
       >
         <Lottie
@@ -51,13 +53,19 @@ const Anxy: React.FC<AnxyProps> = ({
           autoplay={autoplay}
           width={"100%"}
           height={"100%"}
-          reload={reload}
           playing={playing}
         />
       </div>
     );
   }
-
+);
+const Anxy: React.FC<AnxyProps> = ({
+  state,
+  itemList,
+  autoplay,
+  loop,
+  playing,
+}) => {
   const zIndexMapping = {
     backpack_back: 1,
     hat_b: 2,
@@ -92,6 +100,9 @@ const Anxy: React.FC<AnxyProps> = ({
                   import.meta.url
                 )}
                 zIndex={zIndexMapping["backpack_back"]}
+                loop={loop}
+                autoplay={autoplay}
+                playing={playing}
               />
               <EachLottie
                 path={getImageUrl(
@@ -99,6 +110,9 @@ const Anxy: React.FC<AnxyProps> = ({
                   import.meta.url
                 )}
                 zIndex={zIndexMapping["backpack_front"]}
+                loop={loop}
+                autoplay={autoplay}
+                playing={playing}
               />
             </>
           ) : (
@@ -117,6 +131,9 @@ const Anxy: React.FC<AnxyProps> = ({
                     | "sunglasses"
                 ]
               }
+              loop={loop}
+              autoplay={autoplay}
+              playing={playing}
             />
           )}
         </div>
@@ -128,6 +145,9 @@ const Anxy: React.FC<AnxyProps> = ({
           import.meta.url
         )}
         zIndex={zIndexMapping["body"]}
+        loop={loop}
+        autoplay={autoplay}
+        playing={playing}
       />
       <EachLottie
         path={getImageUrl(
@@ -139,6 +159,9 @@ const Anxy: React.FC<AnxyProps> = ({
           import.meta.url
         )}
         zIndex={zIndexMapping["arms"]}
+        loop={loop}
+        autoplay={autoplay}
+        playing={playing}
       />
     </div>
   );

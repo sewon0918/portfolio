@@ -4,7 +4,8 @@ type HomeType = "wori" | "anxy";
 
 const homeTypeAtom = atom<HomeType>({
   key: "homeType",
-  default: "wori",
+  // default: "wori",
+  default: "anxy",
 });
 
 export default homeTypeAtom;
