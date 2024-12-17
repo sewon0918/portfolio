@@ -25,6 +25,7 @@ function Lottie({
   height,
   playing,
   renderer = "svg",
+  delay,
   reload,
   onComplete,
 }: LottieProps) {
@@ -32,13 +33,28 @@ function Lottie({
   const animationInstance = useRef<AnimationItem | null>(null);
 
   useEffect(() => {
-    animationInstance.current = lottie.loadAnimation({
-      container: lottieContainer.current as Element,
-      renderer,
-      loop,
-      autoplay,
-      ...(lottieData ? { animationData: lottieData } : { path: path }),
-    });
+    if (delay) {
+      setTimeout(() => {
+        animationInstance.current = lottie.loadAnimation({
+          container: lottieContainer.current as Element,
+          renderer,
+          loop,
+          autoplay,
+
+          ...(lottieData ? { animationData: lottieData } : { path: path }),
+        });
+      }, delay * 1000);
+    } else {
+      animationInstance.current = lottie.loadAnimation({
+        container: lottieContainer.current as Element,
+        renderer,
+        loop,
+        autoplay,
+
+        ...(lottieData ? { animationData: lottieData } : { path: path }),
+      });
+    }
+
     if (animationInstance.current) {
       animationInstance.current.addEventListener("complete", () => {
         if (onComplete) {
@@ -62,7 +78,9 @@ function Lottie({
     }
   }, [playing]);
 
-  return <div css={{ width, height }} ref={lottieContainer} />;
+  return (
+    <div css={{ width, height, overflow: "hidden " }} ref={lottieContainer} />
+  );
 }
 
 export default React.memo(Lottie);

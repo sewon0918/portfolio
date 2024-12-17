@@ -6,7 +6,6 @@ import programAtom, {
   dailyProgramDetail_mock3,
 } from "@/recoil/anxy/program/atom";
 import { useSetRecoilState } from "recoil";
-import { cloneDeep } from "es-toolkit";
 
 export default function WorryNote() {
   const navigate = useNavigate();
@@ -22,26 +21,18 @@ export default function WorryNote() {
         state={"ACTIVE"}
         text={"확인"}
         action={() => {
-          goBack();
           setDailyProgramDetailRAW(dailyProgramDetail_mock2);
+          goBack();
         }}
       />
       <ActionButton
         state={"ACTIVE"}
         text={"확인"}
         action={() => {
-          goBack();
           setDailyProgramDetailRAW(dailyProgramDetail_mock3);
+          goBack();
         }}
       />
-      {/* <ActionButton
-        state={"ACTIVE"}
-        text={"확인"}
-        action={() => {
-          goBack();
-          setDailyProgramDetailRAW(dailyProgramDetail_mock2);
-        }}
-      /> */}
     </AppScreen>
   );
 }

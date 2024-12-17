@@ -74,7 +74,7 @@ export default function Home() {
         </IphoneContainer>
         <DescriptionContainer>
           <Title />
-          {/* <Description>
+          <Description>
             {[
               "불안 관리 앱 Anxy입니다.",
               `"'사람들이 정말로 꾸준히 사용하는 디지털 도구’를 만들어 인류의
@@ -89,7 +89,7 @@ export default function Home() {
             ].map((each, index) => (
               <div key={index}>{`∙ ${each}`}</div>
             ))}
-          </Description> */}
+          </Description>
         </DescriptionContainer>
       </ProjectContainer>
     </div>

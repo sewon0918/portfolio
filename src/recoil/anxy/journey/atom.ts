@@ -32,7 +32,7 @@ export const isRewardGainedSelector = selector<boolean>({
   key: "isRewardGainedSelector",
   get: ({ get }) => {
     const state = get(journeyAtom);
-    return state.isRewardGained;
+    return state?.isRewardGained;
   },
   set: ({ set, get }, value) => {
     const currentState = get(journeyAtom);
@@ -47,7 +47,7 @@ export const isMileStoneClickedSelector = selector<boolean>({
   key: "isMileStoneClickedSelector",
   get: ({ get }) => {
     const state = get(journeyAtom);
-    return state.isMileStoneClicked;
+    return state?.isMileStoneClicked;
   },
   set: ({ set, get }, value) => {
     const currentState = get(journeyAtom);

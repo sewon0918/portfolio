@@ -3,17 +3,15 @@ import { AnxyTravel } from "./AnxyTravel";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useLocalStorage } from "@uidotdev/usehooks";
-import { useNavigate } from "react-router";
 import { Text24 } from "../common/Text";
-import { useRecoilState, useRecoilValue } from "recoil";
-import programAtom from "@/recoil/anxy/program/atom";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import programAtom, { ActivityType } from "@/recoil/anxy/program/atom";
 import { usePrevious } from "@toss/react";
 import journeyAtom from "@/recoil/anxy/journey/atom";
 import Seed from "../store/Seed";
+import { DailyProgram } from "../program/DailyProgram";
 
 const AnxyJourney = () => {
-  const navigate = useNavigate();
-
   const dailyProgramDetail_raw = useRecoilValue(programAtom);
   const [dailyProgramDetail, setDailyProgramDetail] =
     useRecoilState(journeyAtom);
@@ -26,12 +24,6 @@ const AnxyJourney = () => {
       activityList: dailyProgramDetail_raw.activityList,
     }));
   }, [dailyProgramDetail_raw]);
-
-  interface ActivityType {
-    activityId: string;
-    progressRate: number;
-    isLock: boolean;
-  }
 
   const [dailyActivityList, setDailyActivityList] = useLocalStorage<
     ActivityType[]
@@ -59,13 +51,44 @@ const AnxyJourney = () => {
       setPreviousCompletedActivitiesCount(
         getDoneActivityNum(previousDailyProgramDetail?.activityList)
       );
-      setDailyActivityList(dailyProgramDetail?.activityList);
+      const changedList = dailyProgramDetail.activityList
+        ? dailyProgramDetail.activityList.slice()
+        : [];
+      if (dailyActivityList) {
+        dailyActivityList.forEach((beforeItem) => {
+          changedList.forEach((afterItem) => {
+            if (beforeItem.activityId === afterItem.activityId) {
+              const updatedAfterItem = {
+                ...afterItem,
+                isFirstUnlocked: beforeItem.isLock && !afterItem.isLock,
+                isFirstComplete:
+                  (beforeItem.progressRate || 0) < 100 &&
+                  afterItem.progressRate === 100,
+                prevProgressRate: beforeItem.progressRate,
+              };
+              changedList[changedList.indexOf(afterItem)] = updatedAfterItem;
+            }
+          });
+        });
+      }
+      setDailyActivityList(changedList);
     }
   }, [dailyProgramDetail]);
+
+  const resetProgramState = useResetRecoilState(programAtom);
+  const resetJourneyState = useResetRecoilState(journeyAtom);
 
   return (
     <div css={{ width: "100%" }}>
       {/* 씨앗 */}
+      <div
+        onClick={() => {
+          resetProgramState();
+          resetJourneyState();
+        }}
+      >
+        reset
+      </div>
       <div
         css={{
           paddingLeft: "20px",
@@ -112,17 +135,7 @@ const AnxyJourney = () => {
                 overflow: "hidden",
               }}
             >
-              <div
-                css={{
-                  width: "100%",
-                  height: "50px",
-                  border: "1px solid black",
-                }}
-                onClick={() => {
-                  navigate("/anxy/worry-note");
-                }}
-              ></div>
-              {/* <DailyProgram activityList={dailyActivityList} /> */}
+              <DailyProgram activityList={dailyActivityList} />
             </motion.div>
           )}
         </div>

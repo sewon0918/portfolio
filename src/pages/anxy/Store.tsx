@@ -6,7 +6,7 @@ import Anxy from "@/components/anxy/customizing/Anxy";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import AppScreen from "@/components/common/AppScreen";
 import { Text15, Text17 } from "@/components/anxy/common/Text";
-import Seed from "@/components/anxy/store/Seed";
+import SeedImage from "@/components/anxy/store/SeedImage";
 import Item from "@/components/anxy/store/Item";
 import customizingAtom, {
   addItemSelector,
@@ -217,7 +217,7 @@ export default function Store() {
           <div css={styles.titleContainer}>
             <Text15 customCss={{ fontWeight: 600 }}>나의 씨앗</Text15>
             <div css={{ display: "flex", alignItems: "center" }}>
-              <Seed containerSize={25} />
+              <SeedImage containerSize={25} />
               <Text17 customCss={{ fontWeight: 700 }}>{`${seedCount}`}</Text17>
             </div>
           </div>

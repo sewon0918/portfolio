@@ -1,13 +1,15 @@
 import { atom } from "recoil";
+export interface ActivityType {
+  activityId?: string;
+  isLock?: boolean;
+  progressRate?: number;
+  prevProgressRate?: number;
+  isFirstComplete?: boolean;
+  isFirstUnlocked?: boolean;
+}
 
 export interface ProgramType {
-  activityList: {
-    progressRate: number;
-    isLock: boolean;
-    isFirstUnlocked: boolean;
-    isFirstComplete: boolean;
-    activityId: string;
-  }[];
+  activityList: ActivityType[];
   seedBox?: {
     rewardType: string;
     rewardAmount: number;
@@ -21,15 +23,11 @@ export const dailyProgramDetail_mock = {
     {
       progressRate: 0,
       isLock: false,
-      isFirstUnlocked: false,
-      isFirstComplete: false,
       activityId: "1",
     },
     {
       progressRate: 0,
-      isLock: false,
-      isFirstUnlocked: false,
-      isFirstComplete: false,
+      isLock: true,
       activityId: "2",
     },
   ],
@@ -39,15 +37,11 @@ export const dailyProgramDetail_mock2 = {
     {
       progressRate: 100,
       isLock: false,
-      isFirstUnlocked: false,
-      isFirstComplete: false,
       activityId: "1",
     },
     {
       progressRate: 0,
       isLock: false,
-      isFirstUnlocked: false,
-      isFirstComplete: false,
       activityId: "2",
     },
   ],
@@ -57,15 +51,11 @@ export const dailyProgramDetail_mock3 = {
     {
       progressRate: 100,
       isLock: false,
-      isFirstUnlocked: false,
-      isFirstComplete: false,
       activityId: "1",
     },
     {
       progressRate: 100,
       isLock: false,
-      isFirstUnlocked: false,
-      isFirstComplete: false,
       activityId: "2",
     },
   ],
