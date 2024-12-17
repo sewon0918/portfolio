@@ -243,9 +243,9 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
 
   return (
     <div css={{ width: "100vw", height: "156px" }}>
-      <Text15 customCss={{ position: "absolute" }}>
+      {/* <Text15 customCss={{ position: "absolute" }}>
         {`${currentStage} ${previousStage} ${state} ${previousState} ${anxyState} ${anxyWalking}`}
-      </Text15>
+      </Text15> */}
 
       <RewardModal
         isModalVisible={showRewardPopup}
@@ -326,7 +326,6 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
                 }}
                 onAnimationComplete={() => {
                   if (state === "ONPROGRESS" || state === "DONE") {
-                    console.log("anxy animation complete");
                     setAnxyWalking(false);
                   }
 

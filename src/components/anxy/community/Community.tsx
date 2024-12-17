@@ -2,6 +2,7 @@ import CheerUpPost, {
   CheerPostType,
 } from "@/components/anxy/community/CheerUpPost";
 import { useState } from "react";
+import { Text24 } from "../common/Text";
 
 export default function Community({ scrollTop }: { scrollTop?: number }) {
   const mockList = Array(20)
@@ -47,6 +48,9 @@ export default function Community({ scrollTop }: { scrollTop?: number }) {
   return (
     // <AppScreen backgroundColor="#F1EEEB" setScrollTop={setScrollTop}>
     <div style={{ padding: "20px" }}>
+      <div css={{ marginBottom: "12px" }}>
+        <Text24>응원하기</Text24>
+      </div>
       <div
         style={{
           width: "100%",

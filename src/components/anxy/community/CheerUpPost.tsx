@@ -340,7 +340,7 @@ export default function CheerUpPost({
       {graphicIdx !== undefined && (
         <motion.img
           src={getImageUrl(
-            `../../assets/anxy/community/graphic${graphicIdx + 1}.png`,
+            `../../../assets/anxy/community/graphic${graphicIdx + 1}.png`,
             import.meta.url
           )}
           animate={{ opacity: clicked ? 0 : 1 }}
