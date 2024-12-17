@@ -53,6 +53,7 @@ export function MileStoneModal({
               lineHeight: "36px",
               fontWeight: "bold",
               color: "black",
+              whiteSpace: "nowrap",
             }}
           >
             {getRemainigTimeString(remainingTime)}

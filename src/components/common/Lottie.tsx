@@ -13,6 +13,7 @@ interface LottieProps {
   renderer?: "svg" | "canvas" | "html"; // 렌더링 방식
   delay?: number; // 지연 시간 (초 단위)
   reload?: boolean; // 재로드 트리거
+  onComplete?: () => void;
 }
 
 function Lottie({
@@ -25,6 +26,7 @@ function Lottie({
   playing,
   renderer = "svg",
   reload,
+  onComplete,
 }: LottieProps) {
   const lottieContainer = useRef<HTMLDivElement>(null);
   const animationInstance = useRef<AnimationItem | null>(null);
@@ -37,7 +39,13 @@ function Lottie({
       autoplay,
       ...(lottieData ? { animationData: lottieData } : { path: path }),
     });
-
+    if (animationInstance.current) {
+      animationInstance.current.addEventListener("complete", () => {
+        if (onComplete) {
+          onComplete();
+        }
+      });
+    }
     return () => {
       animationInstance.current?.destroy();
     };

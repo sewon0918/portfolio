@@ -51,7 +51,7 @@ const RouteTransition = ({
       setIsPopTransition(true);
       setTimeout(() => {
         setIsPopTransition(false);
-      }, TIMEOUT);
+      }, TIMEOUT + 100);
     };
 
     if (window) {

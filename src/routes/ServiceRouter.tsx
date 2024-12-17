@@ -3,10 +3,10 @@ import RouteTransition from "./RouteTransition.tsx";
 import Test from "../pages/Test.tsx";
 import Home from "../pages/Home.tsx";
 import AnxyHome from "@/pages/anxy/AnxyHome.tsx";
-import Community from "@/pages/anxy/Community.tsx";
 import { usePrevious } from "@uidotdev/usehooks";
 import { useEffect } from "react";
 import Store from "@/pages/anxy/Store.tsx";
+import WorryNote from "@/pages/anxy/WorryNote.tsx";
 
 const ServiceRouter = () => {
   const location = useLocation();
@@ -33,9 +33,9 @@ const ServiceRouter = () => {
           <Route path="/" element={<Home />} />
           <Route path="anxy">
             <Route index element={<AnxyHome />} />
-            <Route path="community" element={<Community />} />
             <Route path="test" element={<Test />} />
             <Route path="store" element={<Store />} />
+            <Route path="worry-note" element={<WorryNote />} />
           </Route>
         </Routes>
       </RouteTransition>
