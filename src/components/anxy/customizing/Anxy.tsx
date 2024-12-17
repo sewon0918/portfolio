@@ -15,6 +15,7 @@ interface AnxyProps {
   reload?: boolean;
   playing?: boolean;
   css?: CSSObject;
+  onAnimationComplete?: () => void;
 }
 const EachLottie = React.memo(
   ({
@@ -23,12 +24,14 @@ const EachLottie = React.memo(
     loop,
     autoplay,
     playing,
+    onAnimationComplete,
   }: {
     path: string;
     zIndex?: number;
     loop?: boolean;
     autoplay?: boolean;
     playing?: boolean;
+    onAnimationComplete?: () => void;
   }) => {
     return (
       <div
@@ -48,6 +51,7 @@ const EachLottie = React.memo(
           width={"100%"}
           height={"100%"}
           playing={playing}
+          onComplete={onAnimationComplete}
         />
       </div>
     );
@@ -60,6 +64,7 @@ const Anxy: React.FC<AnxyProps> = ({
   loop,
   playing,
   height,
+  onAnimationComplete,
 }) => {
   const zIndexMapping = {
     backpack_back: 1,
@@ -98,6 +103,7 @@ const Anxy: React.FC<AnxyProps> = ({
                 loop={loop}
                 autoplay={autoplay}
                 playing={playing}
+                onAnimationComplete={onAnimationComplete}
               />
               <EachLottie
                 path={getImageUrl(
@@ -108,6 +114,7 @@ const Anxy: React.FC<AnxyProps> = ({
                 loop={loop}
                 autoplay={autoplay}
                 playing={playing}
+                onAnimationComplete={onAnimationComplete}
               />
             </>
           ) : (
@@ -129,6 +136,7 @@ const Anxy: React.FC<AnxyProps> = ({
               loop={loop}
               autoplay={autoplay}
               playing={playing}
+              onAnimationComplete={onAnimationComplete}
             />
           )}
         </div>
@@ -143,6 +151,7 @@ const Anxy: React.FC<AnxyProps> = ({
         loop={loop}
         autoplay={autoplay}
         playing={playing}
+        onAnimationComplete={onAnimationComplete}
       />
       <EachLottie
         path={getImageUrl(
@@ -157,6 +166,7 @@ const Anxy: React.FC<AnxyProps> = ({
         loop={loop}
         autoplay={autoplay}
         playing={playing}
+        onAnimationComplete={onAnimationComplete}
       />
     </div>
   );

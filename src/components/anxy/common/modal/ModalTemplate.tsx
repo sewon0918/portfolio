@@ -55,7 +55,7 @@ const ModalTemplate: React.FC<ModalTemplateProps> = ({
                 }}
               >
                 <Text18>{title}</Text18>
-                {text && <Text15>{text}</Text15>}
+                {text && <Text15 customCss={{ opacity: 0.6 }}>{text}</Text15>}
               </div>
               {content}
             </div>

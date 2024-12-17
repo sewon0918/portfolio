@@ -3,7 +3,7 @@ import { PressedEffect } from "@/components/common/PressedEffect";
 import { useColorTheme } from "@/hooks/useColorTheme";
 import { ActionButton } from "@/components/anxy/common/button/ActionButton";
 import { Text15 } from "@/components/anxy/common/Text";
-import Seed from "@/components/anxy/store/Seed";
+import SeedImage from "@/components/anxy/store/SeedImage";
 import { StoreItemType } from "@/pages/anxy/Store";
 
 export default function Item({
@@ -68,7 +68,7 @@ export default function Item({
                   gap: "4px",
                 }}
               >
-                <Seed containerSize={19} />
+                <SeedImage containerSize={19} />
                 <Text15
                   customCss={{ color: "#ffffff", fontWeight: 700 }}
                 >{`${item.seedCountRequired}`}</Text15>

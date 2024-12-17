@@ -1,4 +1,6 @@
-import CheerUpPost, { CheerPostType } from "@/components/anxy/CheerUpPost";
+import CheerUpPost, {
+  CheerPostType,
+} from "@/components/anxy/community/CheerUpPost";
 import { useState } from "react";
 
 export default function Community({ scrollTop }: { scrollTop?: number }) {

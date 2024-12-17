@@ -1,5 +1,5 @@
 import ModalTemplate from "@/components/anxy/common/modal/ModalTemplate";
-import { SeedWithShadow } from "@/components/anxy/store/Seed";
+import { SeedWithShadow } from "@/components/anxy/store/SeedImage";
 
 export default function SeedLackModal({
   isModalVisible,

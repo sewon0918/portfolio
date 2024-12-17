@@ -3,8 +3,8 @@ import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import highfive_twinkle from "@/assets/anxy/community/highfive_twinkle.json";
 import highfive_particle from "@/assets/anxy/community/highfive_particle.json";
-import { PressedEffect } from "../common/PressedEffect";
-import Lottie from "../common/Lottie";
+import { PressedEffect } from "../../common/PressedEffect";
+import Lottie from "../../common/Lottie";
 import { getImageUrl } from "@/utils/helpers";
 
 export interface CheerPostType {
@@ -288,7 +288,7 @@ export default function CheerUpPost({
             >
               <img
                 src={getImageUrl(
-                  "../../assets/anxy/community/highfive.png",
+                  "../../../assets/anxy/community/highfive.png",
                   import.meta.url
                 )}
                 alt={"highfive"}

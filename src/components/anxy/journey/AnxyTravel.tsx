@@ -9,15 +9,19 @@ import {
   Reward,
   RewardState,
 } from "./TravelElements";
-import { usePrevious } from "@toss/react";
 import { RewardModal } from "./RewardModal";
 import { MileStoneModal } from "./MileStoneModal";
 import { Text15 } from "../common/Text";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import customizingAtom from "@/recoil/anxy/customizing/atom";
+import {
+  isMileStoneClickedSelector,
+  isRewardGainedSelector,
+} from "@/recoil/anxy/journey/atom";
 
 interface AnxyTravelProps {
-  currentStage: number;
+  completedActivitiesCount: number;
+  previousCompletedActivitiesCount?: number;
   bridgeNum: number;
   seedData?: {
     seedCount: number;
@@ -27,22 +31,47 @@ interface AnxyTravelProps {
   };
 }
 
+export type AnxyTravelStateType =
+  | "WAIT"
+  | "ONPROGRESS"
+  | "ONREWARD"
+  | "DONE"
+  | "REST";
+
 export const AnxyTravel: React.FC<AnxyTravelProps> = ({
-  currentStage,
+  completedActivitiesCount,
+  previousCompletedActivitiesCount,
   bridgeNum,
   seedData,
 }) => {
-  const previousStage = usePrevious(currentStage);
+  const [currentStage, setCurrentStage] = useState<number>(
+    completedActivitiesCount
+  );
+  const [previousStage, setPreviousStage] = useState<number | undefined>(
+    previousCompletedActivitiesCount
+  );
+
+  useEffect(() => {
+    setCurrentStage(completedActivitiesCount);
+    setPreviousStage(previousCompletedActivitiesCount);
+  }, [completedActivitiesCount, previousCompletedActivitiesCount]);
+
   const [bridgeWidth, setBridgeWidth] = useState<number>(0);
   const [showMileStonePopup, setShowMilestonePopup] = useState(false);
   const [showRewardPopup, setShowRewardPopup] = useState(false);
 
   const [focusMilestone, setFocusMilestone] = useState(false);
   const [focusReward, setFocusReward] = useState(false);
-  const [isRewardGained, setRewardGained] = useState(false);
   const [rewardState, setRewardState] = useState<RewardState>("LOCKED");
 
   const { itemList } = useRecoilValue(customizingAtom);
+
+  const [isRewardGained, setRewardGained] = useRecoilState(
+    isRewardGainedSelector
+  );
+  const [isMileStoneClicked, setIsMileStoneClicked] = useRecoilState(
+    isMileStoneClickedSelector
+  );
 
   useEffect(() => {
     if (bridgeNum) {
@@ -50,11 +79,12 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
     }
   }, [bridgeNum]);
 
-  const [state, setState] = useState<
-    "WAIT" | "ONPROGRESS" | "ONREWARD" | "DONE" | "REST" | undefined
+  const [state, setState] = useState<AnxyTravelStateType | undefined>(
+    undefined
+  );
+  const [previousState, setPreviousState] = useState<
+    AnxyTravelStateType | undefined
   >(undefined);
-
-  const previousState = usePrevious(state);
 
   const [anxyState, setAnxyState] = useState<anxyStateType>("walking");
 
@@ -66,34 +96,50 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
     }
   }, [state]);
 
+  const getStateByStage = (currentStage: number, previousStage?: number) => {
+    if (currentStage !== undefined && bridgeNum > 0) {
+      if (currentStage === 0) {
+        if (previousStage === undefined) {
+          return "WAIT";
+        } else {
+          return "ONPROGRESS";
+        }
+      } else if (currentStage === bridgeNum) {
+        if (isMileStoneClicked) {
+          return "REST";
+        } else if (isRewardGained) {
+          return "DONE";
+        } else if (
+          previousStage !== undefined &&
+          previousStage < currentStage
+        ) {
+          return "ONPROGRESS";
+        } else {
+          return "ONREWARD";
+        }
+      } else {
+        return "ONPROGRESS";
+      }
+    }
+  };
+
   useEffect(() => {
-    console.log("[TEST]", currentStage, previousStage);
     if (currentStage !== undefined && bridgeNum > 0) {
       if (currentStage < bridgeNum) {
         setFocusMilestone(false);
       }
-      if (currentStage === -2) {
-        setState("WAIT");
-      } else if (currentStage === bridgeNum) {
-        if (previousStage < currentStage) {
-          setState("ONPROGRESS");
-          setTimeout(() => {
-            setState("ONREWARD");
-          }, 1500);
-        } else {
-          setState("ONREWARD");
-        }
-      } else {
-        setState("ONPROGRESS");
+      setState(getStateByStage(currentStage, previousStage));
+      if (previousStage !== undefined) {
+        setPreviousState(getStateByStage(previousStage, previousStage));
       }
     }
-  }, [currentStage, bridgeNum]);
+  }, [currentStage, previousStage, bridgeNum]);
 
   useEffect(() => {
-    if (previousState != undefined && currentStage !== undefined) {
+    if (state !== previousState || currentStage !== previousStage) {
       setAnxyWalking(true);
     }
-  }, [state, currentStage]);
+  }, [state]);
 
   const [anxyWalking, setAnxyWalking] = useState(false);
   const mileStoneWidth = 124;
@@ -109,12 +155,12 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
   const beforeBridgeOffset =
     window.innerWidth + (window.innerWidth - brokenWidth) / 2 - anxyWidth;
 
-  const positionData = [
+  const positionData = (stage: number) => [
     { state: "WAIT", backgroundX: 0, anxyX: afterMileStoneOffset },
     {
       state: "ONPROGRESS",
       backgroundX: -window.innerWidth,
-      anxyX: beforeBridgeOffset + (bridgeWidth + 4) * (currentStage + 1),
+      anxyX: beforeBridgeOffset + (bridgeWidth + 4) * stage,
     },
     {
       state: "ONREWARD",
@@ -134,12 +180,15 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
     },
   ];
 
-  const currentStatePositionData = positionData.find(
-    (element) => element.state === state
-  );
+  const currentStatePositionData =
+    currentStage !== undefined
+      ? positionData(currentStage).find((element) => element.state === state)
+      : undefined;
 
   const previousStatePositionData = previousState
-    ? positionData.find((element) => element.state === previousState)
+    ? positionData(previousStage || 0).find(
+        (element) => element.state === previousState
+      )
     : undefined;
 
   useEffect(() => {
@@ -148,9 +197,11 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
     } else if (state === "ONPROGRESS" && previousState === "WAIT") {
       setAnxyState("walking");
     } else if (state === "ONREWARD" && previousState === "ONPROGRESS") {
-      setAnxyState("jumping");
+      // setAnxyState("jumping");
     } else if (state === "DONE" && previousState === "ONREWARD") {
       setAnxyState("walking");
+    } else if (state === "REST" && previousState === "REST") {
+      setAnxyState("standup");
     }
   }, [state]);
 
@@ -187,12 +238,13 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
   const milestoneModalAction = () => {
     setState("REST");
     setShowMilestonePopup(false);
+    setIsMileStoneClicked(true);
   };
 
   return (
     <div css={{ width: "100vw", height: "156px" }}>
       <Text15 customCss={{ position: "absolute" }}>
-        {`${currentStage} ${previousStage} ${state} ${previousState} ${anxyState} ${anxyWalking} ${currentStage}`}
+        {`${currentStage} ${previousStage} ${state} ${previousState} ${anxyState} ${anxyWalking}`}
       </Text15>
 
       <RewardModal
@@ -224,7 +276,7 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
             }}
             transition={{
               duration: 2,
-              delay: currentStatePositionData?.delay || 0.5,
+              delay: currentStatePositionData?.delay || 0.2,
             }}
             css={{ width: "300vw", height: "content-fit", overflow: "hidden" }}
           >
@@ -261,7 +313,7 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
                   pointerEvents: "none",
                 }}
                 transition={{
-                  delay: 0.5,
+                  delay: 0.2,
                   duration: 1,
                 }}
                 initial={{
@@ -273,9 +325,23 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
                   x: currentStatePositionData?.anxyX,
                 }}
                 onAnimationComplete={() => {
-                  setAnxyWalking(false);
+                  if (state === "ONPROGRESS" || state === "DONE") {
+                    console.log("anxy animation complete");
+                    setAnxyWalking(false);
+                  }
 
-                  if (state === "REST") {
+                  if (
+                    state === "ONPROGRESS" &&
+                    completedActivitiesCount === bridgeNum
+                  ) {
+                    setState("ONREWARD");
+                    setPreviousStage(bridgeNum);
+                  } else if (state === "ONREWARD") {
+                    setAnxyState("jumping");
+                    setPreviousState("ONREWARD");
+                  } else if (state === "DONE") {
+                    setPreviousState("DONE");
+                  } else if (state === "REST" && previousState === "DONE") {
                     setAnxyState("sitdown");
                   }
                 }}
@@ -284,15 +350,24 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
                   state={anxyState}
                   itemList={itemList}
                   loop={anxyState === "walking"}
-                  autoplay={anxyState === "walking" ? anxyWalking : true}
+                  autoplay={anxyWalking}
                   playing={anxyWalking}
+                  onAnimationComplete={() => {
+                    setAnxyWalking(false);
+                    if (anxyState == "standup") {
+                      setState("ONPROGRESS");
+                      setPreviousState("WAIT");
+                    } else if (anxyState == "sitdown") {
+                      setAnxyState("standup");
+                    }
+                  }}
                 />
               </motion.div>
 
               <GroundWithFlag
                 focused={focusMilestone}
                 onClick={milestoneClickAction}
-                clickable={currentStage === bridgeNum}
+                clickable={completedActivitiesCount === bridgeNum}
               />
               <div css={{ width: "100vw", display: "flex", gap: "4px" }}>
                 <div css={{ flex: 1 }}>
@@ -307,14 +382,26 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
                 >
                   {Array.from({ length: bridgeNum }, (v, i) => i).map((i) => (
                     <div css={{ flex: 1 }}>
-                      {i <= currentStage && (
+                      {i <= currentStage - 1 && (
                         <Bridge
                           key={`bridge${i}`}
                           isFirstAppear={
-                            previousStage < currentStage && i === currentStage
+                            previousStage !== undefined &&
+                            previousStage < currentStage &&
+                            i > previousStage &&
+                            i <= currentStage
                           }
                         />
                       )}
+                      {/* <div css={{ position: "absolute", zIndex: 100, top: 0 }}>
+                        {`${
+                          previousStage !== undefined &&
+                          previousStage <
+                            currentStage &&
+                          i > previousStage &&
+                          i <= currentStage
+                        }`}
+                      </div> */}
                     </div>
                   ))}
                 </div>
@@ -335,7 +422,8 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
                         setShowRewardPopup(true);
                       }}
                       clickable={
-                        currentStage === bridgeNum && seedData !== null
+                        completedActivitiesCount === bridgeNum &&
+                        seedData !== null
                       }
                       state={rewardState}
                     />
@@ -345,7 +433,7 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
               <GroundWithFlag
                 focused={focusMilestone}
                 onClick={milestoneClickAction}
-                clickable={currentStage === bridgeNum}
+                clickable={completedActivitiesCount === bridgeNum}
               />
             </div>
           </motion.div>
