@@ -32,7 +32,7 @@ function App() {
   return (
     <RecoilRoot>
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
+        <BrowserRouter basename="/portfolio/">
           <ServiceRouter />
         </BrowserRouter>
         <GlobalStyles />

@@ -61,7 +61,7 @@ export default function Home() {
           <IphoneImage src={iphone_mockup} alt={"iphone_mockup"}></IphoneImage>
 
           <Iframe
-            src={`${window.location.origin}/anxy`}
+            src={`${window.location.origin}/portfolio/anxy`}
             // src="http://192.0.0.2:5173/anxy"
             // src="http://172.29.112.138:5173/anxy"
             width="100%"
