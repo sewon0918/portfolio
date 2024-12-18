@@ -31,7 +31,7 @@ const ServiceRouter = () => {
       >
         <Routes location={location}>
           <Route path="/" element={<Home />} />
-          <Route path="anxy">
+          <Route path="/anxy">
             <Route index element={<AnxyHome />} />
             <Route path="test" element={<Test />} />
             <Route path="store" element={<Store />} />

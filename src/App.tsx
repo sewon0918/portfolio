@@ -1,4 +1,4 @@
-import { BrowserRouter } from "react-router";
+import { BrowserRouter, HashRouter } from "react-router";
 import ServiceRouter from "./routes/ServiceRouter";
 import GlobalStyles from "./styles/GlobalStyles";
 import { ThemeProvider } from "@emotion/react";
@@ -33,7 +33,9 @@ function App() {
     <RecoilRoot>
       <ThemeProvider theme={theme}>
         <BrowserRouter basename="/portfolio/">
+          {/* <HashRouter basename="/portfolio/"> */}
           <ServiceRouter />
+          {/* </HashRouter> */}
         </BrowserRouter>
         <GlobalStyles />
       </ThemeProvider>
