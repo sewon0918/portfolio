@@ -87,7 +87,7 @@ export const Wori: React.FC<WoriProps> = ({
           </div>
           {/* 몸통 */}
           <motion.div
-            key={`${score}`}
+            // key={`${score}`}
             css={css({
               width: "100%",
               backgroundColor: "#171222",
