@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import Title from "@/components/Title";
 import iphone_mockup from "@/assets/iphone_mockup.png";
-import { useNavigate } from "react-router";
 import { css } from "@emotion/react";
 
 export default function Home() {
@@ -40,11 +39,6 @@ export default function Home() {
   });
 
   const ProjectContainer = styled.div({ display: "flex" });
-
-  const navigate = useNavigate();
-  const onClick = () => {
-    navigate("/anxy");
-  };
 
   return (
     <div
