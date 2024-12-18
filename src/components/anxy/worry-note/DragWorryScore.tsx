@@ -17,8 +17,6 @@ export const DragWorryScore: React.FC<DragWorryScore> = (props) => {
   const {
     baseColor = addAlpha(colorPalette.orange, 0.1),
     pathColor = colorPalette.orange,
-    isInitialMax,
-    initialScore,
     score,
     setScore,
     color,
@@ -64,6 +62,7 @@ export const DragWorryScore: React.FC<DragWorryScore> = (props) => {
   };
   const onEnd = () => {
     setFocus(false);
+    setScore(Math.round(score / 10) * 10);
   };
 
   useEffect(() => {
@@ -78,7 +77,7 @@ export const DragWorryScore: React.FC<DragWorryScore> = (props) => {
       window?.removeEventListener("mousemove", onMouseMove);
       window?.removeEventListener("mouseup", onEnd);
     };
-  }, [focus]);
+  }, [focus, score]);
 
   return (
     <div

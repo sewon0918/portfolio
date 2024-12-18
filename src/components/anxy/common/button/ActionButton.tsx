@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, ReactNode } from "react";
 import { addAlpha } from "@/utils/helpers";
 import { useColorTheme } from "@/hooks/useColorTheme";
 import { Text17 } from "../Text";
+import { keyframes } from "@emotion/react";
 
 export type ButtonStateType = "ACTIVE" | "INACTIVE" | "LOADING" | "DONE";
 
@@ -66,6 +67,13 @@ export const ActionButton: React.FC<ActionButtonProps> = (props) => {
       }, 100);
     }
   }, [disable]);
+
+  const spin = keyframes`
+  to {
+      -webkit-transform: rotate(360deg);
+              transform: rotate(360deg);
+    }
+`;
 
   return (
     <div
@@ -175,7 +183,14 @@ export const ActionButton: React.FC<ActionButtonProps> = (props) => {
 
         {state === "LOADING" && (
           <div className="w-full h-full absolute top-0 left-0 flex items-center justify-center z-[10]">
-            <div className={`flex items-center animate-spin`}>
+            <div
+              className={`flex items-center animate-spin`}
+              css={{
+                display: "flex",
+                alignItems: "center",
+                animation: `${spin} 1s linear infinite`,
+              }}
+            >
               {
                 <svg
                   width="23"

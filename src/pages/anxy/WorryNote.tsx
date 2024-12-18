@@ -1,43 +1,44 @@
 import { useEffect, useState } from "react";
 import AppScreen from "@/components/common/AppScreen";
 import { useColorTheme } from "@/hooks/useColorTheme";
-import { Text15, Text24 } from "@/components/anxy/common/Text";
-import { Input } from "@/components/anxy/common/Input";
-import SelectWithAdditionalInput from "@/components/anxy/worry-note/SelectWithAdditionalInput";
-import { Wori } from "@/components/anxy/Wori";
-import { DragWorryScore } from "@/components/anxy/worry-note/DragWorryScore";
-import { ActionButton } from "@/components/anxy/common/button/ActionButton";
 import { useNavigate } from "react-router";
 import { useSetRecoilState } from "recoil";
 import programAtom, {
   dailyProgramDetail_mock2,
 } from "@/recoil/anxy/program/atom";
-import CategoryTitle from "@/components/anxy/worry-note/CategoryTitle";
+import ContainerWithBottomButton from "@/components/common/ContainerWithBottomButton";
+import WoriScore from "@/components/anxy/worry-note/WoriScore";
+import WorryNoteContent from "@/components/anxy/worry-note/WorryNoteContent";
+import { ButtonStateType } from "@/components/anxy/common/button/ActionButton";
+
+export type CategoryType =
+  | "situation"
+  | "bodyList"
+  | "thought"
+  | "behaviorListByType";
+
+export interface MetaInfoType {
+  id: CategoryType;
+  type: "input" | "select";
+  placeholder?: string | string[];
+  option?: string[] | { [key: string]: string[] };
+}
+
+export type UserInputType = {
+  [key in CategoryType]: string | string[] | { [key: string]: string[] };
+};
 
 export default function WorryNote() {
+  const colorPalette = useColorTheme({ type: "anxy" });
+
   const navigate = useNavigate();
 
   const goBack = () => {
     navigate(-1);
   };
   const setDailyProgramDetailRAW = useSetRecoilState(programAtom);
-
-  type CategoryType =
-    | "situation"
-    | "bodyList"
-    | "thought"
-    | "behaviorListByType";
-
-  interface MetaInfoType {
-    id: CategoryType;
-    type: "input" | "select";
-    placeholder?: string | string[];
-    option?: string[] | { [key: string]: string[] };
-  }
-
-  type UserInputType = {
-    [key in CategoryType]: string | string[] | { [key: string]: string[] };
-  };
+  const [buttonState, setButtonState] = useState<ButtonStateType>("ACTIVE");
+  const [score, setScore] = useState(50);
 
   const initialMetaInfo: MetaInfoType[] = [
     {
@@ -77,315 +78,193 @@ export default function WorryNote() {
 
   const metaInfo: MetaInfoType[] = initialMetaInfo;
   const [userInput, setUserInput] = useState<UserInputType>(
-    getUserInput(metaInfo)
+    getInitialUserInput(metaInfo)
   );
 
-  function getUserInput(metaInfo: MetaInfoType[]) {
-    const userInput2: UserInputType = {} as UserInputType; // 초기화 변경
+  function getInitialUserInput(metaInfo: MetaInfoType[]) {
+    const userInput: UserInputType = {} as UserInputType; // 초기화 변경
 
     for (let i = 0; i < metaInfo.length; i++) {
       const category = metaInfo[i];
       if (category.type === "input") {
-        userInput2[category.id] = "";
+        userInput[category.id] = "";
         if (Array.isArray(category.placeholder)) {
           for (let j = 0; j < category.placeholder.length; j++) {
-            userInput2[category.id] = [
-              ...(userInput2[category.id] as string[]),
+            userInput[category.id] = [
+              ...(userInput[category.id] as string[]),
               "",
             ];
           }
         }
       } else if (category.type === "select") {
         if (Array.isArray(category.option)) {
-          userInput2[category.id] = [];
+          userInput[category.id] = [];
         } else {
-          userInput2[category.id] = {};
+          userInput[category.id] = {};
           Object.keys(category.option as { [key: string]: string[] }).forEach(
             (key) => {
-              (userInput2[category.id] as { [key: string]: string[] })[key] =
-                [];
+              (userInput[category.id] as { [key: string]: string[] })[key] = [];
             }
           );
         }
       }
     }
-    return userInput2;
+    return userInput;
   }
 
   useEffect(() => {
-    console.log(userInput);
+    if (ifUserInputAllFilled(userInput)) {
+      setButtonState("ACTIVE");
+    } else {
+      setButtonState("INACTIVE");
+    }
   }, [userInput]);
 
-  const [score, setScore] = useState(50);
+  function ifUserInputAllFilled(userInput: UserInputType) {
+    for (let i = 0; i < metaInfo.length; i++) {
+      const category = metaInfo[i];
+      if (category.type === "input") {
+        if (
+          (typeof userInput[category.id] === "string" &&
+            userInput[category.id].length === 0) ||
+          (Array.isArray(userInput[category.id]) &&
+            (userInput[category.id] as string[]).every(
+              (element) => element.length === 0
+            ))
+        ) {
+          return false;
+        }
+      } else if (category.type === "select") {
+        if (
+          (Array.isArray(category.option) &&
+            userInput[category.id].length === 0) ||
+          (!Array.isArray(category.option) &&
+            Object.values(
+              userInput[category.id] as { [key: string]: string[] }
+            ).every((options) => options.length === 0))
+        ) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 
-  const behaviorQuestionMappingData: { [key: string]: string } = {
-    avoidance: "상황을 피하거나 외면했나요?",
-    preparation: "걱정하는 일이 생기지 않도록 대비했나요?",
-    checking: "문제가 없는지 계속 확인했나요?",
+  const updateInputValue = (value: string, id: CategoryType) => {
+    setUserInput((state) => ({
+      ...state,
+      [id]: value,
+    }));
   };
 
-  const titleMappingData: { [key: string]: string } = {
-    situation: "상황",
-    bodyList: "신체",
-    thought: "생각",
-    behaviorListByType: "행동",
+  const updateInputArray = (value: string, id: CategoryType, index: number) => {
+    setUserInput((state) => {
+      const newState = {
+        ...state,
+      };
+      (newState[id] as string[])[index] = value as string;
+      return newState;
+    });
   };
 
-  const colorPalette = useColorTheme({ type: "anxy" });
+  const updateSelectedOptions = (
+    selectedOptions: string[],
+    id: CategoryType
+  ) => {
+    setUserInput((state) => ({
+      ...state,
+      [id]: selectedOptions,
+    }));
+  };
 
-  function getVisiblePlaceholders(placeholders: string[], userInput: string[]) {
-    const filledIndex = userInput.findLastIndex(
-      (element) => element.length > 0
-    );
-    return placeholders?.slice(
-      0,
-      filledIndex === undefined ? 1 : filledIndex + 2
-    );
+  const updateNestedSelectedOptions = (
+    selectedOptions: string[],
+    id: CategoryType,
+    key: string
+  ) => {
+    setUserInput((state) => ({
+      ...state,
+      [id]: {
+        ...(state[id] as { [key: string]: string[] }),
+        [key]: selectedOptions,
+      },
+    }));
+  };
+
+  const updateInputOptions = (
+    inputOptions: string[],
+    id: CategoryType,
+    option: string[]
+  ) => {
+    setUserInput((state) => ({
+      ...state,
+      [id]: [
+        ...(state[id] as string[]).filter((element) =>
+          (option as string[])?.includes(element)
+        ),
+        ...inputOptions,
+      ],
+    }));
+  };
+
+  const updateNesedInputOptions = (
+    inputOptions: string[],
+    id: CategoryType,
+    option: {
+      [key: string]: string[];
+    },
+    key: string
+  ) => {
+    setUserInput((state) => ({
+      ...state,
+      [id]: {
+        ...(state[id as keyof UserInputType] as { [key: string]: string[] }),
+        [key]: [
+          ...(
+            (
+              state[id] as {
+                [key: string]: string[];
+              }
+            )[key] as string[]
+          ).filter((element) => (option[key] as string[])?.includes(element)),
+          ...inputOptions,
+        ],
+      },
+    }));
+  };
+  function submit() {
+    setButtonState("LOADING");
+    setDailyProgramDetailRAW(dailyProgramDetail_mock2);
+    setTimeout(() => {
+      setButtonState("DONE");
+      goBack();
+    }, 200);
   }
   return (
     <AppScreen backgroundColor={colorPalette.oat}>
-      <div css={{ height: "100%" }}>
-        <div
-          css={{
-            padding: "12px 20px 20px 20px",
-            height: "100%",
-            overflow: "hidden",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <Text24>{"얼마나 불안했나요?"}</Text24>
-          <div
-            css={{
-              flex: 1,
-              width: "100%",
-              padding: "20px 0",
-              display: "flex",
-              flexDirection: "column",
-              gap: "20px",
-            }}
-          >
-            <div
-              css={{
-                flex: 1,
-                width: "100%",
-                position: "relative",
-              }}
-            >
-              <div
-                css={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: "50%",
-                  transform: `translateX(-50%)`,
-                }}
-              >
-                <Wori score={score} showGuide />
-              </div>
-            </div>
-            <DragWorryScore score={score} setScore={setScore} />
-          </div>
-        </div>
-        {metaInfo && userInput && (
-          <div>
-            <div
-              css={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "40px",
-                paddingBottom: "100px",
-              }}
-            >
-              {metaInfo.map((category, categoryIndex) => (
-                <div
-                  css={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "12px",
-                  }}
-                  key={`${titleMappingData[category.id]}${categoryIndex}`}
-                >
-                  <CategoryTitle
-                    title={titleMappingData[category.id]}
-                    categoryIndex={categoryIndex}
-                  />
-                  {category.type === "input" && (
-                    <div css={{ padding: "0 20px" }}>
-                      {typeof category.placeholder === "string" ? (
-                        <Input
-                          placeholder={category.placeholder}
-                          value={userInput[category.id] as string}
-                          updateValue={(value) => {
-                            setUserInput((state) => ({
-                              ...state,
-                              [category.id]: value,
-                            }));
-                          }}
-                        />
-                      ) : (
-                        <div
-                          css={{
-                            width: "100%",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "4px",
-                          }}
-                        >
-                          {getVisiblePlaceholders(
-                            category.placeholder || [],
-                            userInput[category.id] as string[]
-                          ).map((each, index) => (
-                            <Input
-                              key={each}
-                              placeholder={each}
-                              value={
-                                (userInput[category.id] as string[])[index]
-                              }
-                              updateValue={(value) => {
-                                setUserInput((state) => {
-                                  const newState = {
-                                    ...state,
-                                  };
-                                  (
-                                    newState[
-                                      category.id as keyof UserInputType
-                                    ] as string[]
-                                  )[index] = value as string;
-                                  return newState;
-                                });
-                              }}
-                            />
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {category.type === "select" &&
-                    (Array.isArray(category.option) ? (
-                      <SelectWithAdditionalInput
-                        selectOptions={category.option || []}
-                        inputOptions={[""]}
-                        selectedOptions={userInput[category.id] as string[]}
-                        setSelectedOptions={(selectedOptions: string[]) => {
-                          setUserInput((state) => ({
-                            ...state,
-                            [category.id]: selectedOptions,
-                          }));
-                        }}
-                        setInputOptions={(inputOptions: string[]) => {
-                          setUserInput((state) => ({
-                            ...state,
-                            [category.id]: [
-                              ...(state[category.id] as string[]).filter(
-                                (element) =>
-                                  (category.option as string[])?.includes(
-                                    element
-                                  )
-                              ),
-                              ...inputOptions,
-                            ],
-                          }));
-                        }}
-                      />
-                    ) : (
-                      Object.entries(category.option || {}).map(
-                        ([key, value]) => (
-                          <div
-                            key={key}
-                            css={{
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "8px",
-                            }}
-                          >
-                            <Text15
-                              customCss={{
-                                padding: "0 20px",
-                                opacity: 0.6,
-                              }}
-                            >
-                              {behaviorQuestionMappingData[key]}
-                            </Text15>
-                            <SelectWithAdditionalInput
-                              selectOptions={value}
-                              inputOptions={[]}
-                              selectedOptions={
-                                (
-                                  userInput[category.id] as {
-                                    [key: string]: string[];
-                                  }
-                                )[key]
-                              }
-                              setSelectedOptions={(
-                                selectedOptions: string[]
-                              ) => {
-                                setUserInput((state) => ({
-                                  ...state,
-                                  [category.id]: {
-                                    ...(state[
-                                      category.id as keyof UserInputType
-                                    ] as { [key: string]: string[] }),
-                                    [key]: selectedOptions,
-                                  },
-                                }));
-                              }}
-                              setInputOptions={(inputOptions: string[]) => {
-                                setUserInput((state) => ({
-                                  ...state,
-                                  [category.id]: {
-                                    ...(state[
-                                      category.id as keyof UserInputType
-                                    ] as { [key: string]: string[] }),
-                                    [key]: [
-                                      ...(
-                                        (
-                                          state[category.id] as {
-                                            [key: string]: string[];
-                                          }
-                                        )[key] as string[]
-                                      ).filter((element) =>
-                                        (
-                                          (
-                                            category.option as {
-                                              [key: string]: string[];
-                                            }
-                                          )[key] as string[]
-                                        )?.includes(element)
-                                      ),
-                                      ...inputOptions,
-                                    ],
-                                  },
-                                }));
-                              }}
-                            />
-                          </div>
-                        )
-                      )
-                    ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-      <div
-        css={{
-          position: "fixed",
-          bottom: "20px",
-          left: 0,
-          width: "100%",
-          padding: "0 20px",
-        }}
+      <ContainerWithBottomButton
+        backgroundColor={colorPalette.oat}
+        buttonState={buttonState}
+        buttonText="기록하기"
+        buttonOnClick={submit}
       >
-        <ActionButton
-          state={"ACTIVE"}
-          text={"확인"}
-          action={() => {
-            setDailyProgramDetailRAW(dailyProgramDetail_mock2);
-            goBack();
-          }}
-        />
-      </div>
+        <div css={{ height: "100%", padding: "0 20px" }}>
+          <WoriScore score={score} setScore={setScore} />
+
+          {metaInfo && userInput && (
+            <WorryNoteContent
+              metaInfo={metaInfo}
+              userInput={userInput}
+              updateInputValue={updateInputValue}
+              updateInputArray={updateInputArray}
+              updateSelectedOptions={updateSelectedOptions}
+              updateNestedSelectedOptions={updateNestedSelectedOptions}
+              updateInputOptions={updateInputOptions}
+              updateNesedInputOptions={updateNesedInputOptions}
+            />
+          )}
+        </div>
+      </ContainerWithBottomButton>
     </AppScreen>
   );
 }

@@ -52,7 +52,11 @@ export default function SelectWithAdditionalInput({
   useEffect(() => {
     setExtraBlankInput(inputOptionsWithId, setInputOptionsWithId);
     if (setInputOptions) {
-      setInputOptions(inputOptionsWithId.map((option) => option.value));
+      setInputOptions(
+        inputOptionsWithId
+          .map((option) => option.value)
+          .filter((value) => value.length > 0)
+      );
     }
   }, [inputOptionsWithId]);
 
@@ -82,7 +86,6 @@ export default function SelectWithAdditionalInput({
         css={{
           display: "flex",
           flexWrap: "wrap",
-          padding: "0 15px",
           gap: "5px",
         }}
       >

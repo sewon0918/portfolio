@@ -94,7 +94,7 @@ const ActivityStateIndicator: React.FC<ActivityStateIndicatorProps> = ({
               path: {
                 stroke: colorPalette.orange,
                 strokeWidth: 8,
-                transition: `all 0.7s`,
+                transition: `all 0.2s`,
                 transformOrigin: "center center",
               },
               trail: {
