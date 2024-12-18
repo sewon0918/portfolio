@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import Title from "@/components/Title";
 import iphone_mockup from "@/assets/iphone_mockup.png";
 import { css } from "@emotion/react";
+import { useNavigate, useSearchParams } from "react-router";
+import { useEffect } from "react";
 
 export default function Home() {
   const IphoneContainer = styled.div({
@@ -39,6 +41,15 @@ export default function Home() {
   });
 
   const ProjectContainer = styled.div({ display: "flex" });
+  const [searchParams] = useSearchParams();
+  const path = searchParams.get("path");
+  const navigate = useNavigate();
+  console.log(path);
+  useEffect(() => {
+    if (path) {
+      navigate(path);
+    }
+  }, [path]);
 
   return (
     <div
@@ -61,7 +72,7 @@ export default function Home() {
           <IphoneImage src={iphone_mockup} alt={"iphone_mockup"}></IphoneImage>
 
           <Iframe
-            src={`${window.location.origin}/portfolio/anxy`}
+            src={`${window.location.origin}/portfolio/?path=/anxy`}
             // src="http://192.0.0.2:5173/anxy"
             // src="http://172.29.112.138:5173/anxy"
             width="100%"
