@@ -7,6 +7,8 @@ import { useColorTheme } from "@/hooks/useColorTheme";
 import { addAlpha } from "@/utils/helpers";
 import Lottie from "@/components/common/Lottie";
 import { replaceColor } from "lottie-colorify";
+import { useRecoilValue } from "recoil";
+import homeTypeAtom from "@/recoil/anxy/home/atom";
 
 interface ActivityStateIndicatorProps {
   isLock?: boolean;
@@ -25,13 +27,16 @@ const ActivityStateIndicator: React.FC<ActivityStateIndicatorProps> = ({
   progressRate,
   prevProgressRate,
 }) => {
+  const colorPalette = useColorTheme({ type: "anxy" });
+  const homeType = useRecoilValue(homeTypeAtom);
+
+  const isVisible = homeType === "anxy";
   const [showUnlock, setShowUnlock] = useState(false);
   const [progress, setProgress] = useState(prevProgressRate);
 
   useEffect(() => {
     setProgress(progressRate);
   }, [progressRate]);
-  const colorPalette = useColorTheme({ type: "anxy" });
 
   useEffect(() => {
     if (isFirstUnlocked) {
@@ -70,7 +75,6 @@ const ActivityStateIndicator: React.FC<ActivityStateIndicatorProps> = ({
       </svg>
     </div>
   );
-
   return (
     <div
       css={{
@@ -90,7 +94,7 @@ const ActivityStateIndicator: React.FC<ActivityStateIndicatorProps> = ({
           <CircularProgressbar
             value={progress || 0}
             styles={{
-              root: {},
+              root: { opacity: isVisible ? 1 : 0 },
               path: {
                 stroke: colorPalette.orange,
                 strokeWidth: 8,
