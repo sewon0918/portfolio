@@ -34,6 +34,11 @@ function ArrowTail() {
   );
 }
 
+const activityMappingData: { [key: string]: { title: string; url: string } } = {
+  "worry-note": { title: "걱정기록하기", url: "/anxy/worry-note" },
+  retrospect: { title: "회고하기", url: "/anxy/retrospect" },
+};
+
 export const DailyProgram: React.FC<DailyProgramProps> = ({ activityList }) => {
   const navigate = useNavigate();
 
@@ -61,6 +66,7 @@ export const DailyProgram: React.FC<DailyProgramProps> = ({ activityList }) => {
           ) => (
             <PressedEffect
               key={`activity${index}`}
+              disable={isLock}
               element={
                 <div
                   css={{
@@ -84,13 +90,13 @@ export const DailyProgram: React.FC<DailyProgramProps> = ({ activityList }) => {
                       prevProgressRate={prevProgressRate}
                     />
                     <Text17 customCss={{ fontWeight: 700 }}>
-                      걱정기록하기
+                      {activityMappingData[activityId].title}
                     </Text17>
                   </div>
                 </div>
               }
               action={() => {
-                navigate("/anxy/worry-note");
+                navigate(activityMappingData[activityId].url);
               }}
             />
           )

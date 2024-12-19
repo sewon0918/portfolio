@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 export interface ActivityType {
-  activityId?: string;
+  activityId: string;
   isLock?: boolean;
   progressRate?: number;
   prevProgressRate?: number;
@@ -23,12 +23,12 @@ export const dailyProgramDetail_mock = {
     {
       progressRate: 0,
       isLock: false,
-      activityId: "1",
+      activityId: "worry-note",
     },
     {
       progressRate: 0,
       isLock: true,
-      activityId: "2",
+      activityId: "retrospect",
     },
   ],
 };
@@ -37,12 +37,12 @@ export const dailyProgramDetail_mock2 = {
     {
       progressRate: 100,
       isLock: false,
-      activityId: "1",
+      activityId: "worry-note",
     },
     {
       progressRate: 0,
       isLock: false,
-      activityId: "2",
+      activityId: "retrospect",
     },
   ],
 };
@@ -51,12 +51,12 @@ export const dailyProgramDetail_mock3 = {
     {
       progressRate: 100,
       isLock: false,
-      activityId: "1",
+      activityId: "worry-note",
     },
     {
       progressRate: 100,
       isLock: false,
-      activityId: "2",
+      activityId: "retrospect",
     },
   ],
 };

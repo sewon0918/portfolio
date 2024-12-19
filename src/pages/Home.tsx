@@ -38,13 +38,14 @@ export default function Home() {
     marginTop: "20px",
     fontSize: "16px",
     lineHeight: "24px",
+    opacity: 0.3,
   });
 
   const ProjectContainer = styled.div({ display: "flex" });
   const [searchParams] = useSearchParams();
   const path = searchParams.get("path");
   const navigate = useNavigate();
-  console.log(path);
+
   useEffect(() => {
     if (path) {
       navigate(path);
@@ -91,6 +92,7 @@ export default function Home() {
           레이아웃과 네비게이션 시스템을 구축했습니다.`,
               `친근하고 자연스러운
           사용자 경험을 위해 lottie와 framer-motion을 이용한 애니메이션 컴포넌트를 다수 구현했습니다.`,
+              `효율적인 애니메이션의 구현을 위해 디자이너분과 협업하여 `,
               `웹뷰의 한계를 극복하고, 네이티브 앱처럼 자연스러운 사용자 경험을 제공하기 위한 노력 (예: 키보드 상단 고정, 네비게이션 트랜지션 문제 해결, ui 트랜지션)`,
               `이후 개발한 수면 앱 Somny, 식이장애 앱 Betty 등에서도 사용할 수 있도록 컴포넌트 기반으로 개발했습니다.`,
             ].map((each, index) => (

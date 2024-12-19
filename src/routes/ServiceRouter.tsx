@@ -7,6 +7,7 @@ import { usePrevious } from "@uidotdev/usehooks";
 import { useEffect } from "react";
 import Store from "@/pages/anxy/Store.tsx";
 import WorryNote from "@/pages/anxy/WorryNote.tsx";
+import Retrospect from "@/pages/anxy/Retrospect.tsx";
 
 const ServiceRouter = () => {
   const location = useLocation();
@@ -36,6 +37,7 @@ const ServiceRouter = () => {
             <Route path="test" element={<Test />} />
             <Route path="store" element={<Store />} />
             <Route path="worry-note" element={<WorryNote />} />
+            <Route path="retrospect" element={<Retrospect />} />
           </Route>
         </Routes>
       </RouteTransition>
