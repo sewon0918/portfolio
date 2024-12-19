@@ -2,14 +2,11 @@ import { useEffect, useState } from "react";
 import AppScreen from "@/components/common/AppScreen";
 import { useColorTheme } from "@/hooks/useColorTheme";
 import { useNavigate } from "react-router";
-import { useSetRecoilState } from "recoil";
-import programAtom, {
-  dailyProgramDetail_mock2,
-} from "@/recoil/anxy/program/atom";
 import ContainerWithBottomButton from "@/components/common/ContainerWithBottomButton";
 import WoriScore from "@/components/anxy/worry-note/WoriScore";
 import WorryNoteContent from "@/components/anxy/worry-note/WorryNoteContent";
 import { ButtonStateType } from "@/components/anxy/common/button/ActionButton";
+import useActivityDone from "@/hooks/anxy/useActivityDone";
 
 export type CategoryType =
   | "situation"
@@ -36,7 +33,7 @@ export default function WorryNote() {
   const goBack = () => {
     navigate(-1);
   };
-  const setDailyProgramDetailRAW = useSetRecoilState(programAtom);
+  const completeActivity = useActivityDone();
   const [buttonState, setButtonState] = useState<ButtonStateType>("ACTIVE");
   const [score, setScore] = useState(50);
 
@@ -234,7 +231,7 @@ export default function WorryNote() {
   };
   function submit() {
     setButtonState("LOADING");
-    setDailyProgramDetailRAW(dailyProgramDetail_mock2);
+    completeActivity("worry-note");
     setTimeout(() => {
       setButtonState("DONE");
       goBack();

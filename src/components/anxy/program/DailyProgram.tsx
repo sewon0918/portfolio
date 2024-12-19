@@ -90,13 +90,13 @@ export const DailyProgram: React.FC<DailyProgramProps> = ({ activityList }) => {
                       prevProgressRate={prevProgressRate}
                     />
                     <Text17 customCss={{ fontWeight: 700 }}>
-                      {activityMappingData[activityId].title}
+                      {activityMappingData[activityId]?.title}
                     </Text17>
                   </div>
                 </div>
               }
               action={() => {
-                navigate(activityMappingData[activityId].url);
+                navigate(activityMappingData[activityId]?.url);
               }}
             />
           )
