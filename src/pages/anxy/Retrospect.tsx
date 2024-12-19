@@ -9,6 +9,7 @@ import Lottie from "@/components/common/Lottie";
 import highlight_finger_guide from "@/assets/anxy/retrospect/highlight_finger_guide.json";
 import { Text18 } from "@/components/anxy/common/Text";
 import { addAlpha } from "@/utils/helpers";
+import useActivityDone from "@/hooks/anxy/useActivityDone";
 
 export default function Retrospect() {
   const colorPalette = useColorTheme({ type: "anxy" });
@@ -23,9 +24,11 @@ export default function Retrospect() {
   };
 
   const submit = () => {
+    completeActivity("retrospect");
     goBack();
   };
 
+  const completeActivity = useActivityDone();
   const [selectedSentenceList, setSelectedSentenceList] = useState<string[]>(
     []
   );

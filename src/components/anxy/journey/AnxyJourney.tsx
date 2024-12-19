@@ -86,14 +86,14 @@ const AnxyJourney = () => {
   return (
     <div css={{ width: "100%" }}>
       {/* 씨앗 */}
-      {/* <div
+      <div
         onClick={() => {
           resetProgramState();
           resetJourneyState();
         }}
       >
         reset
-      </div> */}
+      </div>
       <div
         css={{
           paddingLeft: "20px",

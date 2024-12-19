@@ -11,9 +11,10 @@ import {
 } from "./TravelElements";
 import { RewardModal } from "./RewardModal";
 import { MileStoneModal } from "./MileStoneModal";
-import { Text15 } from "../common/Text";
-import { useRecoilState, useRecoilValue } from "recoil";
-import customizingAtom from "@/recoil/anxy/customizing/atom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import customizingAtom, {
+  addSeedSelector,
+} from "@/recoil/anxy/customizing/atom";
 import {
   isMileStoneClickedSelector,
   isRewardGainedSelector,
@@ -214,7 +215,7 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
   const milestoneClickAction = () => {
     setShowMilestonePopup(true);
   };
-
+  const addSeed = useSetRecoilState(addSeedSelector);
   const rewardModalAction = () => {
     if (!isRewardGained) {
       setRewardGained(true);
@@ -222,7 +223,7 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
       setFocusReward(false);
       setShowRewardPopup(false);
       setRewardState("GAINED");
-
+      addSeed(1);
       setTimeout(() => {
         setState("DONE");
       }, 300);
