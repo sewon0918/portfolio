@@ -10,8 +10,11 @@ import { usePrevious } from "@toss/react";
 import journeyAtom from "@/recoil/anxy/journey/atom";
 import Seed from "../store/Seed";
 import { DailyProgram } from "../program/DailyProgram";
+import homeTypeAtom from "@/recoil/anxy/home/atom";
 
 const AnxyJourney = () => {
+  const homeType = useRecoilValue(homeTypeAtom);
+  const isFocused = homeType === "anxy";
   const dailyProgramDetail_raw = useRecoilValue(programAtom);
   const [dailyProgramDetail, setDailyProgramDetail] =
     useRecoilState(journeyAtom);
@@ -19,11 +22,13 @@ const AnxyJourney = () => {
   const previousDailyProgramDetail = usePrevious(dailyProgramDetail);
 
   useEffect(() => {
-    setDailyProgramDetail((state) => ({
-      ...state,
-      activityList: dailyProgramDetail_raw.activityList,
-    }));
-  }, [dailyProgramDetail_raw]);
+    if (isFocused) {
+      setDailyProgramDetail((state) => ({
+        ...state,
+        activityList: dailyProgramDetail_raw.activityList,
+      }));
+    }
+  }, [isFocused, dailyProgramDetail_raw]);
 
   const [dailyActivityList, setDailyActivityList] = useLocalStorage<
     ActivityType[]
@@ -81,14 +86,14 @@ const AnxyJourney = () => {
   return (
     <div css={{ width: "100%" }}>
       {/* 씨앗 */}
-      <div
+      {/* <div
         onClick={() => {
           resetProgramState();
           resetJourneyState();
         }}
       >
         reset
-      </div>
+      </div> */}
       <div
         css={{
           paddingLeft: "20px",
