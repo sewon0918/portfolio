@@ -9,7 +9,7 @@ function parseImagePath(imagePath: string) {
 
   // 'assets/'가 포함된 경로를 반환
   if (parts.length > 1) {
-    return `assets${parts[1]}`; // 'assets/'와 나머지 경로 결합
+    return `src/assets${parts[1]}`; // 'assets/'와 나머지 경로 결합
   }
 
   // 'assets/'가 없는 경우 원래 경로 반환
