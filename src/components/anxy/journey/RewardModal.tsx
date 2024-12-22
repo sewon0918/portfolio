@@ -5,10 +5,6 @@ import { Text15 } from "../common/Text";
 import Lottie from "@/components/common/Lottie";
 import reward_twinkle from "@/assets/anxy/journey/reward_twinkle.json";
 import reward_gain from "@/assets/anxy/journey/reward_gain.json";
-import customizingAtom, {
-  addSeedSelector,
-} from "@/recoil/anxy/customizing/atom";
-import { useSetRecoilState } from "recoil";
 
 export function RewardModal({
   isModalVisible,

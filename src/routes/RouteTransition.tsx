@@ -49,9 +49,9 @@ const RouteTransition = ({
   useEffect(() => {
     const handlePopState = () => {
       setIsPopTransition(true);
-      setTimeout(() => {
-        setIsPopTransition(false);
-      }, TIMEOUT + 100);
+      // setTimeout(() => {
+      //   setIsPopTransition(false);
+      // }, TIMEOUT + 500);
     };
 
     if (window) {
@@ -78,7 +78,11 @@ const RouteTransition = ({
             exit: TIMEOUT,
           }}
           nodeRef={nodeRef}
-          // unmountOnExit
+          onExited={() => {
+            // transition이 끝났을 때 실행할 코드
+            console.log("Transition has ended");
+            setIsPopTransition(false);
+          }}
         >
           {(status: TransitionStatus) => (
             <div
@@ -91,7 +95,8 @@ const RouteTransition = ({
                 // height: "100vh",
                 // overflow: "hidden",
                 visibility: status === "exited" ? "hidden" : "visible", // 페이지 숨기기
-                ...getTransitionStyles[status],
+
+                ...(duration > 0 && getTransitionStyles[status]),
                 zIndex: zIndex,
               }}
             >
