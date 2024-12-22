@@ -9,7 +9,7 @@ function parseImagePath(imagePath: string) {
 
   // 'assets/'가 포함된 경로를 반환
   if (parts.length > 1) {
-    return `assets${parts[1]}`; // 'assets/'와 나머지 경로 결합
+    return `${import.meta.env.BASE_URL}assets${parts[1]}`; // 'assets/'와 나머지 경로 결합
   }
 
   // 'assets/'가 없는 경우 원래 경로 반환
@@ -17,7 +17,6 @@ function parseImagePath(imagePath: string) {
 }
 
 export function getImageUrl(imagePath: string, callerUrl: string) {
-  const baseUrl = new URL(callerUrl).origin + import.meta.env.BASE_URL; // base URL 설정
   let parsedImagePath = imagePath;
   const isProd = import.meta.env.PROD;
   if (isProd) {
@@ -28,16 +27,11 @@ export function getImageUrl(imagePath: string, callerUrl: string) {
     console.log(
       parsedImagePath,
       callerUrl,
-      baseUrl,
-      new URL(`${parsedImagePath}`, callerUrl).href,
-      new URL(`${parsedImagePath}`, baseUrl).href
+      new URL(`${parsedImagePath}`, callerUrl).href
     );
   }
-  if (isProd) {
-    return new URL(`${parsedImagePath}`, isProd ? baseUrl : callerUrl).pathname;
-  } else {
-    return new URL(`${parsedImagePath}`, isProd ? baseUrl : callerUrl).href;
-  }
+
+  return new URL(`${parsedImagePath}`, callerUrl).href;
 }
 export function getRemainigTime(dday: string) {
   const offset = new Date().getTimezoneOffset() * 60000;
