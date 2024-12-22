@@ -5,6 +5,14 @@ export function addAlpha(hex: string, alpha: number) {
 }
 
 export function getImageUrl(imagePath: string, callerUrl: string) {
+  const baseUrl = new URL(callerUrl).origin + import.meta.env.BASE_URL; // base URL 설정
+  console.log(
+    callerUrl,
+    baseUrl,
+    new URL(`${imagePath}`, callerUrl).href,
+    new URL(`${imagePath}`, baseUrl).href
+  );
+
   return new URL(`${imagePath}`, callerUrl).href;
 }
 export function getRemainigTime(dday: string) {
