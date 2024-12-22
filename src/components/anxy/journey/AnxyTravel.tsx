@@ -381,7 +381,7 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
                   }}
                 >
                   {Array.from({ length: bridgeNum }, (v, i) => i).map((i) => (
-                    <div css={{ flex: 1 }}>
+                    <div key={`bridge${i}`} css={{ flex: 1 }}>
                       {i <= currentStage - 1 && (
                         <Bridge
                           key={`bridge${i}`}

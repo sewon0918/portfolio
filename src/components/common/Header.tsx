@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router";
-
-export const isInIframe = window.self !== window.top; // iframe 안에 있는지 확인
+import { isInIframe } from "@/utils/isInIframe";
 
 export default function Header() {
   const notchHeight = isInIframe ? "var(--notch-height)" : "0px";
@@ -14,8 +13,6 @@ export default function Header() {
         position: "fixed",
         zIndex: 100,
         top: notchHeight,
-        // ...(isInIframe && { paddingTop: "var(--notch-height)" }),
-        // paddingTop: notchHeight,
         backgroundColor: "transparent",
         width: "100%",
         pointerEvents: "none",

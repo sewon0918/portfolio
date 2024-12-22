@@ -1,3 +1,4 @@
+import { isInIframe } from "@/utils/isInIframe";
 import { css, Global } from "@emotion/react";
 
 const GlobalStyles = () => (
@@ -8,6 +9,8 @@ const GlobalStyles = () => (
         -webkit-user-select: none; /* Safari */
         --header-height: 48px;
         --notch-height: 50px;
+        --Sidebar-width: ${isInIframe ? `${window.innerWidth}px` : "320px"};
+        --StickyHeader-height: 60px;
       }
       *,
       *::before,

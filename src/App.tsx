@@ -1,18 +1,15 @@
-import { BrowserRouter, HashRouter } from "react-router";
+import { BrowserRouter } from "react-router";
 import ServiceRouter from "./routes/ServiceRouter";
 import GlobalStyles from "./styles/GlobalStyles";
 import { ThemeProvider } from "@emotion/react";
 import { RecoilRoot } from "recoil";
+import { CssVarsProvider } from "@mui/joy";
+import { theme as joyuiTheme } from "./styles/theme";
 
 declare module "@emotion/react" {
   export interface Theme {
     anxy: {
-      colors: {
-        orange: string;
-        oat: string;
-        black: string;
-        green: string;
-      };
+      colors: { [key: string]: string };
     };
   }
 }
@@ -32,12 +29,14 @@ function App() {
   return (
     <RecoilRoot>
       <ThemeProvider theme={theme}>
-        <BrowserRouter basename="/portfolio/">
-          {/* <HashRouter basename="/portfolio/"> */}
-          <ServiceRouter />
-          {/* </HashRouter> */}
-        </BrowserRouter>
-        <GlobalStyles />
+        <CssVarsProvider theme={joyuiTheme}>
+          <BrowserRouter basename="/portfolio/">
+            {/* <HashRouter basename="/portfolio/"> */}
+            <ServiceRouter />
+            {/* </HashRouter> */}
+          </BrowserRouter>
+          <GlobalStyles />
+        </CssVarsProvider>
       </ThemeProvider>
     </RecoilRoot>
   );

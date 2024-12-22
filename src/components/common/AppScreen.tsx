@@ -1,8 +1,8 @@
+import { useLayout } from "@/hooks/useLayout";
+import { isInIframe } from "@/utils/isInIframe";
 import { css } from "@emotion/react";
 import { useThrottle } from "@toss/react";
 import React, { useEffect, useRef } from "react";
-
-export const isInIframe = window.self !== window.top; // iframe 안에 있는지 확인
 
 export default function AppScreen({
   backgroundColor = "#F1EEEB",
@@ -13,7 +13,9 @@ export default function AppScreen({
   children: React.ReactNode;
   setScrollTop?: React.Dispatch<React.SetStateAction<number>>;
 }>) {
+  const { showHeader } = useLayout();
   const notchHeight = isInIframe ? "var(--notch-height)" : "0px";
+  const headerHeight = showHeader ? "var(--header-height)" : "0px";
   const containerRef = useRef<HTMLDivElement>(null);
 
   const setCurrentPosition = useThrottle(() => {
@@ -43,7 +45,7 @@ export default function AppScreen({
         top: 0,
         left: 0,
         width: "100%",
-        paddingTop: `calc(var(--header-height) + ${notchHeight})`,
+        paddingTop: `calc(${headerHeight} + ${notchHeight})`,
         minHeight: "calc(100vh)",
         height: "100%",
         backgroundColor: backgroundColor,

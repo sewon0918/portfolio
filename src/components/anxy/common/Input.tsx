@@ -111,7 +111,6 @@ export const Input: React.FC<InputProps> = (props) => {
   const [isFocused, setFocused] = useState(autofocus);
   const [inputValue, setInputValue] = useState(value);
 
-  const [isInvisible, setInvisible] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const inputHeight = lineHeight + (noPadding ? 0 : 30);
 
@@ -143,7 +142,6 @@ export const Input: React.FC<InputProps> = (props) => {
       width: "fit-content",
       position: "relative",
       display: "flex",
-      // display: isInvisible ? "none" : "flex",
 
       border:
         isFocused || inputValue !== ""
@@ -277,7 +275,6 @@ export const Input: React.FC<InputProps> = (props) => {
             } else {
               setFocused(false);
               if (inputValue === "" && deleteIfEmpty) {
-                setInvisible(true);
                 if (deleteAction) {
                   deleteAction();
                 }

@@ -7,6 +7,6 @@ const StyledTitle = styled.div({
   height: "fit-content",
 });
 
-export default function Title() {
-  return <StyledTitle>{"ANXY"}</StyledTitle>;
+export default function Title({ title }: { title: string }) {
+  return <StyledTitle>{title}</StyledTitle>;
 }

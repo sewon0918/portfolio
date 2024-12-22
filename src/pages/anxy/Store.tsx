@@ -6,7 +6,6 @@ import Anxy from "@/components/anxy/customizing/Anxy";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import AppScreen from "@/components/common/AppScreen";
 import { Text15, Text17 } from "@/components/anxy/common/Text";
-import SeedImage from "@/components/anxy/store/SeedImage";
 import Item from "@/components/anxy/store/Item";
 import customizingAtom, {
   addItemSelector,
@@ -18,6 +17,7 @@ import SeedLackModal from "@/components/anxy/store/SeedLackModal";
 import PurchaseConfirmModal from "@/components/anxy/store/PurchaseConfirmModal";
 import { Interpolation } from "@emotion/react";
 import { Theme } from "@emotion/react";
+import SeedImage from "@/components/anxy/store/SeedImage";
 
 export interface StoreItemType {
   itemId: ItemType;

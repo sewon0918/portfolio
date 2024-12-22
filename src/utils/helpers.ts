@@ -39,3 +39,17 @@ export function getDateByToday(num: number) {
   const result = new Date(today.setDate(today.getDate() + num));
   return result.toISOString().substring(0, 10);
 }
+
+export function extractHexColor(cssVar: string) {
+  // 정규 표현식을 사용하여 기본값(#xxxxxx 또는 #xxxxxxxx)을 추출
+  const regex = /var\(--[\w-]+,\s*(#[0-9a-fA-F]{6}(?:[0-9a-fA-F]{2})?)\)/;
+  const match = cssVar.match(regex);
+
+  // 매치된 결과가 있으면 첫 번째 캡처 그룹(#xxxxxx 또는 #xxxxxxxx)을 반환
+  if (match) {
+    return match[1];
+  }
+
+  // 매치된 결과가 없으면 null을 반환
+  return "";
+}

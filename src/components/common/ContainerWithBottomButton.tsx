@@ -5,8 +5,6 @@ import {
 } from "../anxy/common/button/ActionButton";
 import { addAlpha } from "@/utils/helpers";
 
-export const isInIframe = window.self !== window.top; // iframe 안에 있는지 확인
-
 export default function ContainerWithBottomButton({
   backgroundColor = "#000000",
   children,
