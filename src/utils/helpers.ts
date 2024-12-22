@@ -17,7 +17,7 @@ function parseImagePath(imagePath: string) {
 }
 
 export function getImageUrl(imagePath: string, callerUrl: string) {
-  const baseUrl = import.meta.env.BASE_URL; // base URL 설정
+  const baseUrl = new URL(callerUrl).origin + import.meta.env.BASE_URL; // base URL 설정
   let parsedImagePath = imagePath;
   const isProd = import.meta.env.PROD;
   if (isProd) {
@@ -30,11 +30,14 @@ export function getImageUrl(imagePath: string, callerUrl: string) {
       callerUrl,
       baseUrl,
       new URL(`${parsedImagePath}`, callerUrl).href,
-      isProd ? new URL(`${parsedImagePath}`, baseUrl).href : ""
+      new URL(`${parsedImagePath}`, baseUrl).href
     );
   }
-
-  return new URL(`${parsedImagePath}`, isProd ? baseUrl : callerUrl).href;
+  if (isProd) {
+    return new URL(`${parsedImagePath}`, isProd ? baseUrl : callerUrl).pathname;
+  } else {
+    return new URL(`${parsedImagePath}`, isProd ? baseUrl : callerUrl).href;
+  }
 }
 export function getRemainigTime(dday: string) {
   const offset = new Date().getTimezoneOffset() * 60000;
