@@ -9,7 +9,7 @@ function parseImagePath(imagePath: string) {
 
   // 'assets/'가 포함된 경로를 반환
   if (parts.length > 1) {
-    return `src/assets${parts[1]}`; // 'assets/'와 나머지 경로 결합
+    return `assets${parts[1]}`; // 'assets/'와 나머지 경로 결합
   }
 
   // 'assets/'가 없는 경우 원래 경로 반환
@@ -17,7 +17,7 @@ function parseImagePath(imagePath: string) {
 }
 
 export function getImageUrl(imagePath: string, callerUrl: string) {
-  const baseUrl = new URL(callerUrl).origin + import.meta.env.BASE_URL; // base URL 설정
+  const baseUrl = import.meta.env.BASE_URL; // base URL 설정
   let parsedImagePath = imagePath;
   const isProd = import.meta.env.PROD;
   if (isProd) {
@@ -30,7 +30,7 @@ export function getImageUrl(imagePath: string, callerUrl: string) {
       callerUrl,
       baseUrl,
       new URL(`${parsedImagePath}`, callerUrl).href,
-      new URL(`${parsedImagePath}`, baseUrl).href
+      isProd ? new URL(`${parsedImagePath}`, baseUrl).href : ""
     );
   }
 
