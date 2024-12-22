@@ -3,17 +3,38 @@ export function addAlpha(hex: string, alpha: number) {
     .toString(16)
     .padStart(2, "0")}`;
 }
+function parseImagePath(imagePath: string) {
+  // 'assets/'로 경로를 나누고, 두 번째 부분을 가져옴
+  const parts = imagePath.split("assets");
+
+  // 'assets/'가 포함된 경로를 반환
+  if (parts.length > 1) {
+    return `assets${parts[1]}`; // 'assets/'와 나머지 경로 결합
+  }
+
+  // 'assets/'가 없는 경우 원래 경로 반환
+  return imagePath;
+}
 
 export function getImageUrl(imagePath: string, callerUrl: string) {
   const baseUrl = new URL(callerUrl).origin + import.meta.env.BASE_URL; // base URL 설정
-  console.log(
-    callerUrl,
-    baseUrl,
-    new URL(`${imagePath}`, callerUrl).href,
-    new URL(`${imagePath}`, baseUrl).href
-  );
+  let parsedImagePath = imagePath;
+  const isProd = import.meta.env.PROD;
+  if (isProd) {
+    parsedImagePath = parseImagePath(imagePath);
+  }
 
-  return new URL(`${imagePath}`, callerUrl).href;
+  if (parsedImagePath.includes("highfive.png")) {
+    console.log(
+      parsedImagePath,
+      callerUrl,
+      baseUrl,
+      new URL(`${parsedImagePath}`, callerUrl).href,
+      new URL(`${parsedImagePath}`, baseUrl).href
+    );
+  }
+
+  return new URL(`${parsedImagePath}`, isProd ? baseUrl : callerUrl).href;
 }
 export function getRemainigTime(dday: string) {
   const offset = new Date().getTimezoneOffset() * 60000;
