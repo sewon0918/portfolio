@@ -289,8 +289,8 @@ export default function CheerUpPost({
               <img
                 src={getImageUrl(
                   "../../../assets/anxy/community/highfive.png",
-                  // import.meta.url
-                  import.meta.env.BASE_URL
+                  import.meta.url
+                  // import.meta.env.BASE_URL
                 )}
                 alt={"highfive"}
                 style={{ width: "100%", height: "100%" }}

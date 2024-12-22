@@ -15,4 +15,5 @@ export default defineConfig({
       { find: "@", replacement: "/src" },
     ],
   },
+  assetsInclude: ["**/*.gltf"],
 });
