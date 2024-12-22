@@ -1,9 +1,4 @@
-import {
-  SingleSelectionType,
-  TextareaType,
-  CellType,
-  ContentType,
-} from "../data/CellComponent";
+import { TextareaType, CellType, ContentType } from "../data/CellComponent";
 import { ProgramContentType } from "../data/BlockComponent";
 import { TaskMetaData } from "../data/programData";
 import { cloneDeep } from "es-toolkit";
@@ -37,15 +32,7 @@ export function isBlockUserFieldFilled(data: ProgramContentType) {
       (each) => ((each.content as TextareaType)?.value || "").trim().length > 0
     );
 
-  const isAllSelectFilled = elements
-    .filter((element) => element.type === "select")
-    .every((each) => (each.content as SingleSelectionType)?.value);
-
-  const isAllButtonGroupClicked = elements
-    .filter((element) => element.type === "buttongroup")
-    .every((each) => (each.content as SingleSelectionType)?.value);
-
-  return isAllTextareaFilled && isAllSelectFilled && isAllButtonGroupClicked;
+  return isAllTextareaFilled;
 }
 
 export function isAllUserFieldFilled(
@@ -53,10 +40,6 @@ export function isAllUserFieldFilled(
   exceptComment?: boolean
 ) {
   if (data && data.length > 0) {
-    const reversedData = cloneDeep(data)?.reverse();
-    const reversed = reversedData.findIndex((element) => element.isShown);
-    const lastIndex = data.length - 1 - reversed;
-
     const isLastShown =
       (!data[data.length - 1].isHidden && data[data.length - 1].isShown) ||
       false;
