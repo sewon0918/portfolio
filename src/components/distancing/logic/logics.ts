@@ -57,35 +57,21 @@ export function isAllUserFieldFilled(
     const reversed = reversedData.findIndex((element) => element.isShown);
     const lastIndex = data.length - 1 - reversed;
 
-    const isTempDone =
-      (lastIndex < data.length &&
-        data
-          .slice(0, lastIndex + 1)
-          .some(
-            (element) => element.isShown && !element.isHidden && element.isEnd
-          )) ||
-      false;
-
     const isLastShown =
       (!data[data.length - 1].isHidden && data[data.length - 1].isShown) ||
       false;
 
     const lines = data
       .filter((element) => (exceptComment ? !element.isHighlight : true))
+      .slice(0, data.length)
       .filter((element) =>
-        isTempDone ? element.isShown && !element.isHidden : true
-      )
-      .slice(0, isTempDone ? lastIndex + 1 : data.length)
-      .filter((element) =>
-        isLastShown
-          ? !element.isAlwaysHidden && element.isShown && !element.isHidden
-          : true
+        isLastShown ? element.isShown && !element.isHidden : true
       );
 
     const isAllBlockFieldFilled = lines.every((each) =>
       isBlockUserFieldFilled(each)
     );
-    return (isLastShown || isTempDone) && isAllBlockFieldFilled;
+    return isLastShown && isAllBlockFieldFilled;
   }
   return false;
 }

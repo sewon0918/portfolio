@@ -20,30 +20,28 @@ function PatientMenuBar({
   );
   return (
     <Stack direction={"row"} justifyContent="end" onClick={onClick}>
-      {!disabled && (
-        <motion.div
-          style={{
-            cursor: "pointer",
-            paddingTop: "4px",
-          }}
-          animate={{
-            opacity: highlight && !disabled ? [1, 0, 1] : 1,
-          }}
-          transition={{
-            delay: 1,
-            duration: highlight && !disabled ? 1 : 0,
-            repeat: highlight && !disabled ? Infinity : 0,
-          }}
-        >
-          <IconButton disabled={disabled}>
-            <SvgIcon sx={{ width: "14px", height: "14px" }} inheritViewBox>
-              <NextArrowSvg
-                color={!disabled ? activatedColor : deactivatedColor}
-              />
-            </SvgIcon>
-          </IconButton>
-        </motion.div>
-      )}
+      <motion.div
+        style={{
+          cursor: "pointer",
+          paddingTop: "4px",
+        }}
+        animate={{
+          opacity: highlight && !disabled ? [1, 0, 1] : 1,
+        }}
+        transition={{
+          delay: 1,
+          duration: highlight && !disabled ? 1 : 0,
+          repeat: highlight && !disabled ? Infinity : 0,
+        }}
+      >
+        <IconButton disabled={disabled}>
+          <SvgIcon sx={{ width: "14px", height: "14px" }} inheritViewBox>
+            <NextArrowSvg
+              color={!disabled ? activatedColor : deactivatedColor}
+            />
+          </SvgIcon>
+        </IconButton>
+      </motion.div>
     </Stack>
   );
 }

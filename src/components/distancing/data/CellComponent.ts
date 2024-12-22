@@ -36,60 +36,9 @@ export interface TypographyType extends ElementType {
   isLabel?: boolean;
 }
 
-export interface OptionType {
-  dataMapping?: DataMappingType;
-  translationKey?: string;
-  translationKey_additional?: string;
-  text?: string;
-  hideFromId?: string;
-  showFromId?: string;
-  blockIdForBranch?: string;
-  hideBlockIdList?: string[];
-  showBlockIdList?: string[];
-  subjectiveOption?: { optional?: boolean; id?: string; placeholder?: string };
-  additionalContent?: CellType[][];
-}
-
 export interface TextareaType extends ElementType {
   placeholder?: string;
   htmlString?: string;
-}
-
-export interface AiCommentType extends ElementType {
-  aiCommentKey: string;
-  aiCommentValue: string;
-}
-
-export interface PercentageType extends TextareaType {
-  percentage?: number;
-  placeholder?: string;
-  min?: number;
-  max?: number;
-  step?: number;
-}
-
-export interface SingleSelectionType extends ElementType {
-  options?: OptionType[];
-  selectedIndex?: number;
-}
-
-export interface MultipleSelectionType extends ElementType {
-  options?: OptionType[];
-  selectedIndices?: number[];
-  requiredSelectionCount?: number;
-}
-export interface DataMappingType {
-  [key: string]: {
-    taskId?: string;
-    id?: string;
-    index?: number;
-    additional?: boolean;
-    value?: string;
-  };
-}
-
-export interface TypographyFromDataType extends TypographyType {
-  dataMapping?: DataMappingType;
 }
 
 export interface ImageType extends ElementType {
@@ -99,51 +48,12 @@ export interface ImageType extends ElementType {
 export type ContentType =
   | TypographyType
   | TextareaType
-  | SingleSelectionType
-  | MultipleSelectionType
   | ImageType
-  | TypographyFromDataType
-  | PercentageType
-  | AiCommentType
   | ElementType;
 
 export interface CellType {
   type: celltype;
   content: ContentType;
-}
-
-export function DateSelect(arg?: ElementType): {
-  type: "date";
-  content: ElementType;
-} {
-  return {
-    type: "date",
-    content: {
-      ...(arg && arg),
-    },
-  };
-}
-export function TimeSelect(arg?: ElementType): {
-  type: "time";
-  content: ElementType;
-} {
-  return {
-    type: "time",
-    content: {
-      ...(arg && arg),
-    },
-  };
-}
-export function Date(value: string): {
-  type: "dateHeader";
-  content: ElementType;
-} {
-  return {
-    type: "dateHeader",
-    content: {
-      value: value,
-    },
-  };
 }
 
 export function Typography(
@@ -159,31 +69,6 @@ export function Typography(
   };
 }
 
-export function TypographyFromData(
-  dataMapping: DataMappingType,
-  translationKey: string,
-  arg?: TypographyFromDataType
-): { type: "typographyFromData"; content: TypographyFromDataType } {
-  return {
-    type: "typographyFromData",
-    content: {
-      dataMapping: dataMapping,
-      translationKey: translationKey,
-      ...(arg && arg),
-    },
-  };
-}
-
-export function Percentage(arg?: PercentageType): {
-  type: "percentage";
-  content: PercentageType;
-} {
-  return {
-    type: "percentage",
-    content: { ...(arg && arg) },
-  };
-}
-
 export function Textarea(arg?: TextareaType): {
   type: "textarea";
   content: TextareaType;
@@ -191,20 +76,6 @@ export function Textarea(arg?: TextareaType): {
   return {
     type: "textarea",
     content: { ...(arg && arg) },
-  };
-}
-
-export function Select(
-  options: OptionType[],
-  arg?: SingleSelectionType
-): { type: "select"; content: SingleSelectionType } {
-  return {
-    type: "select",
-    content: {
-      options: options,
-
-      ...(arg && arg),
-    },
   };
 }
 

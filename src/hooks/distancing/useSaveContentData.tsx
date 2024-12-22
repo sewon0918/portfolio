@@ -38,16 +38,6 @@ export default function useSaveContentData({
 
   useEffect(() => {
     if (data && data.length > 0) {
-      if (previousData) {
-        // const changedIndex = data.findIndex(
-        //   (element, index) => !_.isEqual(element, previousData[index])
-        // );
-        // console.log(
-        //   "달라진거: ",
-        //   data[changedIndex],
-        //   previousData[changedIndex]
-        // );
-      }
       if (!isEqual(previousData, data)) {
         save(data);
       }
