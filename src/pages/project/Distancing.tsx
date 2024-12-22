@@ -89,38 +89,17 @@ export default function Distancing() {
           <Title title="Distancing" />
           <Button buttonText="데스크탑 버전" onClick={goDistancing} />
           <Description>
-            {["코치와 함께하는 디지털 인지치료 프로그램입니다"].map(
-              (each, index) => (
-                <div key={index}>{`∙ ${each}`}</div>
-              )
-            )}
+            {[
+              "코치와 함께하는 디지털 인지치료 프로그램입니다",
+              "코치가 매일 개인화된 활동지를 제공하고, 완료한 활동지에는 코멘트를 달아줍니다.",
+              "활동지에 새로운 컴포넌트가 들어와도 쉽게 추가할 수 있도록 확장성있게 개발했습니다.",
+              "변동성이 큰 활동지를 쉽게 관리할 수 있도록 활동지별로 텍스트 파일을 버전 별로 관리했습니다.",
+            ].map((each, index) => (
+              <div key={index}>{`∙ ${each}`}</div>
+            ))}
           </Description>
         </DescriptionContainer>
       </ProjectContainer>
-      {/* <ProjectContainer>
-        <div
-          css={{
-            position: "relative",
-            width: "1030px",
-            height: "750px",
-            borderRadius: "20px",
-            border: "14px solid black",
-            backgroundColor: "black",
-          }}
-        >
-          <iframe
-            src={`${window.location.origin}/portfolio/?path=/distancing`}
-            width="100%"
-            allowFullScreen
-            css={{
-              width: "100%",
-              height: "100%",
-              border: "0px",
-              borderRadius: "10px",
-            }}
-          />
-        </div>
-      </ProjectContainer> */}
     </div>
   );
 }

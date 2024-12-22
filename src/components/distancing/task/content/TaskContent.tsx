@@ -87,8 +87,7 @@ export default function TaskContent({
         if (data) {
           if (
             // isBlockUserFieldFilled(data[index], data, user) &&
-            !isLastBlock &&
-            !data[index].isEnd
+            !isLastBlock
           ) {
             const data_temp = cloneDeep(data);
             const nextBlockIndex = data_temp.findIndex(
@@ -105,8 +104,6 @@ export default function TaskContent({
               data_temp[index + 1].isHidden = false;
             }
             return data_temp;
-          } else if (isLastBlock || data[index].isEnd) {
-            // setDoneWithEnter(true);
           }
           return data;
         }
@@ -119,10 +116,7 @@ export default function TaskContent({
   const complete = useCallback(
     (index: number) => {
       (document.activeElement as HTMLElement)?.blur();
-      if (
-        data &&
-        (data[index].isAlwaysHidden || isBlockUserFieldFilled(data[index]))
-      ) {
+      if (data && isBlockUserFieldFilled(data[index])) {
         openNextBlock(index);
       }
     },

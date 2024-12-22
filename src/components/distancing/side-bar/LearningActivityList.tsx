@@ -3,8 +3,6 @@ import { useEffect } from "react";
 import { TaskType } from "../task/Task";
 import ActivityList from "./ActivityList";
 
-export const onboardingTaskId = "0-0-A";
-
 export default function LearningActivityList({ data }: { data: TaskType[] }) {
   const [listData, setListData] = useState<
     | {

@@ -45,12 +45,7 @@ const Block = React.forwardRef<HTMLDivElement, PropsType>(
 
     const highlight = blockData && blockData.isHighlight;
 
-    const isHidden =
-      blockData &&
-      (blockData.isHidden ||
-        blockData.isAlwaysHidden ||
-        !blockData.isShown ||
-        blockData.hideIfPatient);
+    const isHidden = blockData && (blockData.isHidden || !blockData.isShown);
 
     return blockData ? (
       <div
@@ -135,7 +130,7 @@ const Block = React.forwardRef<HTMLDivElement, PropsType>(
                 }
               />
             ))}
-            {(isLastIndex || blockData.isEnd) && !taskKey.includes("Tool") && (
+            {isLastIndex && (
               <Box sx={{ mt: "12px" }}>
                 <DoneButton taskKey={taskKey} />
               </Box>
@@ -143,22 +138,14 @@ const Block = React.forwardRef<HTMLDivElement, PropsType>(
           </Sheet>
         </div>
 
-        {!isLastIndex && !blockData.isEnd && (
-          <>
-            {!blockData.noArrow && (
-              <PatientMenuBar
-                highlight={
-                  getTaskIdFromTaskKey(taskKey) === "0-0-A" && index === 0
-                }
-                disabled={
-                  !(isCurrentIndex && isBlockUserFieldFilled(blockData))
-                }
-                onClick={() => {
-                  complete(index);
-                }}
-              />
-            )}
-          </>
+        {isCurrentIndex && !blockData.noArrow && (
+          <PatientMenuBar
+            highlight={getTaskIdFromTaskKey(taskKey) === "0-0-A" && index === 0}
+            disabled={!(isCurrentIndex && isBlockUserFieldFilled(blockData))}
+            onClick={() => {
+              complete(index);
+            }}
+          />
         )}
       </div>
     ) : (

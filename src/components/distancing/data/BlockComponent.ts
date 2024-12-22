@@ -11,18 +11,11 @@ export interface StructureType {
   blockId?: string;
   noBorder?: boolean;
   noArrow?: boolean;
-  isEnd?: boolean;
   isShown?: boolean;
   isHidden?: boolean;
   nextBlockId?: string;
   indentation?: boolean;
-  hideIfPatient?: boolean;
-  hideIfCoach?: boolean;
-  removable?: boolean;
-  disableGoNext?: boolean;
   isHighlight?: boolean;
-  isAlwaysHidden?: boolean;
-  autoOpenNext?: boolean;
 }
 export interface ProgramContentType extends StructureType {
   lines: CellType[][];
@@ -94,36 +87,4 @@ export function InstructionWithTextarea(
     [TextareaLine({ ...(textareaArg && textareaArg) })],
     arg
   );
-}
-
-export function InstructionWithTempContent(
-  translationKey: string,
-  content: CellType[][],
-  arg?: StructureType
-): ProgramContentType {
-  return {
-    lines: [TypographyLine(translationKey), ...content],
-    ...(arg && arg),
-  };
-}
-
-export function ThoughtTrap(
-  title: string,
-  explanation: string,
-  example: string
-): ProgramContentType {
-  return {
-    lines: [
-      TypographyLine(title, { level: "title-lg" }),
-      TypographyLine(explanation),
-      TypographyLine(example, { color: "primary.solid" }),
-    ],
-  };
-}
-
-export function OptionalCard(): ProgramContentType {
-  return {
-    lines: [],
-    removable: true,
-  };
 }
