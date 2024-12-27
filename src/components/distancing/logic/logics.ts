@@ -1,4 +1,9 @@
-import { TextareaType, CellType, ContentType } from "../data/CellComponent";
+import {
+  TextareaType,
+  CellType,
+  ContentType,
+  SingleSelectionType,
+} from "../data/CellComponent";
 import { ProgramContentType } from "../data/BlockComponent";
 import { TaskMetaData } from "../data/programData";
 import { cloneDeep } from "es-toolkit";
@@ -22,7 +27,6 @@ export function hasBlockUserField(data: ProgramContentType) {
 
 export function isBlockUserFieldFilled(data: ProgramContentType) {
   const elements = data.lines
-
     .flat()
     .filter((element) => !element.content.coach && !element.content.optional);
 
@@ -31,8 +35,14 @@ export function isBlockUserFieldFilled(data: ProgramContentType) {
     .every(
       (each) => ((each.content as TextareaType)?.value || "").trim().length > 0
     );
+  const isAllButtonGroupFilled = elements
+    .filter((element) => element.type === "buttongroup")
+    .every(
+      (each) =>
+        ((each.content as SingleSelectionType)?.value || "").trim().length > 0
+    );
 
-  return isAllTextareaFilled;
+  return isAllTextareaFilled && isAllButtonGroupFilled;
 }
 
 export function isAllUserFieldFilled(

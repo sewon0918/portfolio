@@ -18,7 +18,7 @@ const ServiceRouter = () => {
   const prevLocation = usePrevious(location);
 
   const { showHeader } = useLayout();
-  console.log(location.pathname);
+
   const isAppFirstEnter = prevLocation.pathname === "/";
   return (
     <>

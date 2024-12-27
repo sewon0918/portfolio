@@ -4,54 +4,59 @@ export const translation_0_0_A = {
   },
   ko: {
     v1: {
-      typography_0_0_0:
+      typography_0:
         "안녕하세요. 디스턴싱에 오신 것을 환영해요. 아래 화살표를 눌러볼까요?",
-      typography_1_0_0:
+      typography_1:
         "잘했어요. 디스턴싱은 인지심리학에 기반한 멘탈 테라피 프로그램이에요.",
-      typography_2_0_0:
+      typography_2:
         "특히 생각과 거리를 두고, 다시 내가 원하는 삶의 가치를 향해 나아갈 수 있도록 도와주죠.",
-      typography_3_0_0:
+      typography_3:
         "아마 다양한 문제로 괴로워하다가 여기까지 도착하셨을 거예요.",
-      typography_4_0_0:
+      typography_4:
         "고단한 직장 생활, 어려운 인간관계, 거듭되는 실패 등 저마다 다른 이유가 있겠죠.",
-      typography_5_0_0:
+      typography_5:
         "이유가 무엇이든 언제부터인가 삶은 이 문제를 해결하는 것이 전부인 양 흘러가고 있을 거예요.",
-      typography_6_0_0: "삶에서 활기차고 흥미로운 일들은 점점 사라져가고요.",
-      typography_7_0_0:
+      typography_6: "삶에서 활기차고 흥미로운 일들은 점점 사라져가고요.",
+      typography_7:
         '“인생에 재밌는 일이 하나도 없어. 언제부터 이렇게 꼬여버린 걸까"라면서요.',
-      typography_8_0_0:
+      typography_8:
         "그렇담 잘 찾아오셨어요. 우리가 당신을 변화시켜 드릴 거예요.",
-      typography_9_0_0: "과학적으로 검증된 모든 방법을 동원해서요.",
-      typography_10_0_0:
-        "시작하기에 앞서 한 가지 재밌는 사실을 하나 알려드릴게요.",
-      typography_11_0_0:
+      typography_9: "과학적으로 검증된 모든 방법을 동원해서요.",
+      typography_10: "시작하기에 앞서 한 가지 재밌는 사실을 하나 알려드릴게요.",
+      typography_11:
         "지금 여기까지 읽은 사람들은 4주 뒤 우울감 또는 불안감을 호전시킬 확률이 50% 증가해요.",
-      typography_12_0_0: "이미 중요한 단계를 넘은 셈이죠.",
-      typography_13_0_0:
+      typography_12: "이미 중요한 단계를 넘은 셈이죠.",
+      typography_13:
         "알아요. 마음이 힘들 땐 이 글을 읽는 것조차 벅차고 힘들다는 사실을요.",
-      typography_14_0_0:
+      typography_14:
         "하지만 이 단계만 넘어도 우울감이나 불안감을 호전시킬 확률이 50%나 증가한다는 사실을 잊지 마세요.",
-      typography_15_0_0: "보이진 않겠지만 변화는 벌써 시작되고 있답니다.",
-      typography_16_0_0:
+      typography_15: "보이진 않겠지만 변화는 벌써 시작되고 있답니다.",
+      typography_16:
         "디스턴싱이 지향하는 건 단 하나, 오직 ‘생각과 거리두기'예요.",
-      typography_17_0_0:
+      typography_17:
         "위대한 학자들은 자기 생각을 마치 다른 사람의 생각인 양 관찰하는 것이 문제 해결의 열쇠라는 사실을 밝혀냈어요.",
-      typography_18_0_0: "마음속에 떠오르는 생각에 좌지우지되는 것이 아니라",
-      typography_19_0_0:
+      typography_18: "마음속에 떠오르는 생각에 좌지우지되는 것이 아니라",
+      typography_19:
         "생각과 거리를 두고 그로부터 영향을 덜 받을 수 있다고 말이죠.",
-      typography_20_0_0:
+      typography_20:
         "우리는 당신이 깊은 구덩이에서 빠져나와 다시 적극적으로 삶을 누릴 수 있도록 도울 거예요.",
-      typography_21_0_0:
+      typography_21:
         "디스턴싱은 그러한 변화를 촉진하기 위해 설계되어 있답니다.",
-      typography_22_0_0:
+      typography_22:
         "물론 쉬운 일은 아니랍니다. 그렇기 때문에 훈련받은 전문 코치 선생님이 모든 과정을 도와줄 거예요.",
-      typography_23_0_0:
+      typography_23:
         "자, 그러면 그 변화가 어떻게 만들어지는지 조금 더 자세히 살펴볼까요?",
-      typography_24_0_0:
+      typography_24:
         "아차, 우리가 당신을 뭐라고 불러드리면 될까요? 원하는 닉네임을 적어주세요.",
-      typography_25_0_0:
+      typography_25:
         "좋아요. 마지막으로 하나만 여쭤요. 디스턴싱은 어디서 처음 알게 되셨나요?",
-      typography_26_0_0:
+      buttongroup_option_0: "트위터",
+      buttongroup_option_1: "스레드",
+      buttongroup_option_2: "네이버카페/블로그",
+      buttongroup_option_3: "인스타그램",
+      buttongroup_option_4: "지인 추천",
+      buttongroup_option_5: "기타",
+      typography_26:
         "좋습니다. 그러면 이제 본격적으로 건강하고 가치있는 삶으로의 여정을 시작해볼까요?",
     },
   },

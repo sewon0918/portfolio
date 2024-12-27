@@ -38,7 +38,6 @@ export default function Anxy() {
     marginTop: "20px",
     fontSize: "16px",
     lineHeight: "24px",
-    opacity: 0.3,
   });
 
   const ProjectContainer = styled.div({ display: "flex" });

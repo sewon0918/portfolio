@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { Sheet } from "@mui/joy";
 import Activity from "./Activity";
+import Payment from "../payment/Payment";
 
 export interface TaskType {
   taskKey: string;
@@ -21,7 +22,11 @@ export default function Task({ taskKey }: { taskKey: string }) {
       }}
       ref={containerRef}
     >
-      <Activity taskKey={taskKey} />
+      {taskKey.includes("payment") ? (
+        <Payment />
+      ) : (
+        <Activity taskKey={taskKey} />
+      )}
     </Sheet>
   );
 }

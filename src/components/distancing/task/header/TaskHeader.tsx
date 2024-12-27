@@ -12,16 +12,11 @@ export default function TaskHeader({
   title,
   contentData,
   setMoveToIndex,
-  extraContent,
 }: {
   taskKey: string;
   title?: string;
   contentData?: ProgramContentType[];
   setMoveToIndex?: React.Dispatch<React.SetStateAction<number | undefined>>;
-
-  isDone?: boolean;
-  extraContent?: React.ReactNode;
-  lastDoneAt?: string;
 }) {
   const hasData = !!contentData;
   const taskTitle = getTaskTitleFromTaskKey(taskKey);
@@ -92,7 +87,6 @@ export default function TaskHeader({
             )}
           </Stack>
         </Stack>
-        {extraContent}
       </Stack>
       {setMoveToIndex && <TaskProgressBar data={contentData} />}
     </>

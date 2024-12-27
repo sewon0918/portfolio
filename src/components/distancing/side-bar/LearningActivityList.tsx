@@ -15,8 +15,8 @@ export default function LearningActivityList({ data }: { data: TaskType[] }) {
 
   useEffect(() => {
     if (data && data.length > 0) {
-      const todoList = data.filter((element) => element.isDone);
-      const doneList = data.filter((element) => !element.isDone);
+      const todoList = data.filter((element) => !element.isDone);
+      const doneList = data.filter((element) => element.isDone);
       setListData([
         ...(todoList.length > 0
           ? [

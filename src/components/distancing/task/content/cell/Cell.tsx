@@ -5,6 +5,7 @@ import {
   ImageType,
   ContentType,
   celltype,
+  SingleSelectionType,
 } from "../../../data/CellComponent";
 import { ProgramContentType } from "../../../data/BlockComponent";
 
@@ -15,6 +16,7 @@ import CellContainer from "./CellContainer";
 import TextareaCell from "./TextareaCell";
 import ImageCell from "./ImageCell";
 import TypographyCell from "./TypographyCell";
+import ButtonGroupCell from "./ButtonGroupCell";
 
 function Cell({
   type,
@@ -41,6 +43,9 @@ function Cell({
 
   const translationKey = (content as TypographyType).translationKey;
 
+  const { t: t_common } = useTranslation("translation", {
+    keyPrefix: "task.activity.common",
+  });
   const { t } = useTranslation("translation", {
     keyPrefix: `task.activity.${getTaskIdFromTaskKey(
       taskKey
@@ -53,19 +58,17 @@ function Cell({
     ? translationKey || ""
     : (content as TypographyType)?.isLabel
     ? translationKey || ""
+    : translationKey?.startsWith("common")
+    ? t_common(translationKey?.split(":")[1] || "")
     : translatedText_noCommon;
 
-  const isCoachField = content.coach;
+  const translatedOptions =
+    (content as SingleSelectionType)["options"]?.map((each) =>
+      t(each.translationKey || "")
+    ) || [];
 
   return (
-    <CellContainer
-      readOnly={isCoachField}
-      isCoachFieldEmpty={
-        !content.optional &&
-        isCoachField &&
-        (content.value || "").trim().length === 0
-      }
-    >
+    <CellContainer>
       {type === "typography" ? (
         <TypographyCell
           {...content}
@@ -91,6 +94,16 @@ function Cell({
           blockIndex={blockIndex}
           editorKey={(content as TextareaType)?.editorKey}
           id={(content as TextareaType)?.id}
+        />
+      ) : type === "buttongroup" ? (
+        <ButtonGroupCell
+          defaultValue={(content as SingleSelectionType).value}
+          selectedIndex={(content as SingleSelectionType).selectedIndex}
+          blockIndex={blockIndex}
+          options={translatedOptions}
+          setData={setData}
+          lineIndex={lineIndex}
+          cellIndex={cellIndex}
         />
       ) : (
         <div></div>

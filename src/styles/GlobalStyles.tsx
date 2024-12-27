@@ -22,6 +22,7 @@ const GlobalStyles = () => (
         box-sizing: border-box;
         margin: 0;
         font-family: Arial, sans-serif;
+        font-family: "IBM Plex Mono";
         background-color: var(--primary-color);
       }
     `}

@@ -7,13 +7,7 @@ import useGetTaskData from "@/hooks/distancing/useGetTaskData";
 import TaskHeader from "./header/TaskHeader";
 import TaskContent from "./content/TaskContent";
 
-export default function Activity({
-  taskKey,
-  noHeader,
-}: {
-  taskKey: string;
-  noHeader?: boolean;
-}) {
+export default function Activity({ taskKey }: { taskKey: string }) {
   const [data, setData] = useState<ProgramType | undefined>();
 
   const [contentData, setContentData] = useState<
@@ -50,13 +44,11 @@ export default function Activity({
           flex: "none",
         }}
       >
-        {!noHeader && (
-          <TaskHeader
-            taskKey={taskKey}
-            contentData={contentData}
-            setMoveToIndex={setMoveToIndex}
-          />
-        )}
+        <TaskHeader
+          taskKey={taskKey}
+          contentData={contentData}
+          setMoveToIndex={setMoveToIndex}
+        />
       </Box>
 
       <Stack sx={{ flex: 1, overflow: "hidden" }}>

@@ -138,7 +138,7 @@ const Block = React.forwardRef<HTMLDivElement, PropsType>(
           </Sheet>
         </div>
 
-        {isCurrentIndex && !blockData.noArrow && (
+        {!isLastIndex && isCurrentIndex && !blockData.noArrow && (
           <PatientMenuBar
             highlight={getTaskIdFromTaskKey(taskKey) === "0-0-A" && index === 0}
             disabled={!(isCurrentIndex && isBlockUserFieldFilled(blockData))}

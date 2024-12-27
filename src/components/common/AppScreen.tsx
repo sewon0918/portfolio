@@ -44,12 +44,13 @@ export default function AppScreen({
         position: "absolute",
         top: 0,
         left: 0,
-        width: "100%",
+        width: "100vw",
         paddingTop: `calc(${headerHeight} + ${notchHeight})`,
         minHeight: "calc(100vh)",
         height: "100%",
         backgroundColor: backgroundColor,
         overflowY: "scroll",
+        fontFamily: "Arial, sans-serif",
       })}
     >
       {children}

@@ -2,37 +2,71 @@ import {
   Instruction,
   InstructionWithTextarea,
   InstructionWithImage,
+  InstructionWithContent,
 } from "../BlockComponent";
+import { ButtonGroup } from "../CellComponent";
 import { LastCardWithTextarea } from "./common";
 
 export const Content_0_0_A = () => {
   return [
-    Instruction("typography_3_0_0"),
-    Instruction("typography_4_0_0"),
-    InstructionWithImage("typography_5_0_0", "v3_2"),
-    Instruction("typography_6_0_0"),
-    Instruction("typography_7_0_0"),
-    InstructionWithImage("typography_8_0_0", "v3_3"),
-    Instruction("typography_9_0_0"),
-    Instruction("typography_10_0_0"),
-    InstructionWithImage("typography_11_0_0", "v3_4"),
-    Instruction("typography_12_0_0"),
-    Instruction("typography_13_0_0"),
-    Instruction("typography_14_0_0"),
-    Instruction("typography_15_0_0"),
-    InstructionWithImage("typography_16_0_0", "v3_5"),
-    Instruction("typography_17_0_0"),
-    InstructionWithImage("typography_18_0_0", "v3_6"),
-    InstructionWithImage("typography_19_0_0", "v3_7"),
+    Instruction("typography_3"),
+    Instruction("typography_4"),
+    InstructionWithImage("typography_5", "v3_2"),
+    Instruction("typography_6"),
+    Instruction("typography_7"),
+    InstructionWithImage("typography_8", "v3_3"),
+    Instruction("typography_9"),
+    Instruction("typography_10"),
+    InstructionWithImage("typography_11", "v3_4"),
+    Instruction("typography_12"),
+    Instruction("typography_13"),
+    Instruction("typography_14"),
+    Instruction("typography_15"),
+    InstructionWithImage("typography_16", "v3_5"),
+    Instruction("typography_17"),
+    InstructionWithImage("typography_18", "v3_6"),
+    InstructionWithImage("typography_19", "v3_7"),
 
-    Instruction("typography_20_0_0"),
-    Instruction("typography_21_0_0"),
-    Instruction("typography_22_0_0"),
-    Instruction("typography_23_0_0"),
+    Instruction("typography_20"),
+    Instruction("typography_21"),
+    Instruction("typography_22"),
+    Instruction("typography_23"),
 
-    InstructionWithTextarea("typography_24_0_0", { id: "nickname" }),
+    InstructionWithTextarea("typography_24", { id: "nickname" }),
+    InstructionWithContent("typography_25", [
+      [
+        ButtonGroup(
+          [
+            {
+              translationKey: "buttongroup_option_0",
+            },
+            {
+              translationKey: "buttongroup_option_1",
+            },
+            {
+              translationKey: "buttongroup_option_2",
+            },
+            {
+              translationKey: "buttongroup_option_3",
+            },
+            {
+              translationKey: "buttongroup_option_4",
+            },
+            {
+              translationKey: "buttongroup_option_5",
+              subjectiveOption: {
+                // optional: true,
+                id: "acquisition_other",
+                placeholder: "어떻게 알고 오셨는지 알려주세요",
+              },
+            },
+          ],
+          { id: "acquisition" }
+        ),
+      ],
+    ]),
 
-    Instruction("typography_26_0_0"),
+    Instruction("typography_26"),
     // ...LastCard,
     ...LastCardWithTextarea,
   ];

@@ -4,6 +4,7 @@ import { Stack } from "@mui/joy";
 import useOpenTask from "@/hooks/distancing/useOpenTask";
 import { extractHexColor } from "@/utils/helpers";
 import { theme } from "@/styles/theme";
+import { getTaskTitleFromTaskKey } from "../logic/logics";
 
 const CheckIcon = () => {
   return (
@@ -40,8 +41,11 @@ export function Status({
         borderRadius: "50%",
         ...(!isDone
           ? {
-              borderWidth: "1.6px",
-              borderColor: isOpen ? "primary.solid" : "#B6B9BC",
+              border: `1.6px solid ${
+                isOpen
+                  ? `${extractHexColor(theme.vars.palette.primary.solid)}`
+                  : "#B6B9BC"
+              }`,
             }
           : {
               backgroundColor: "#B6B9BC",
@@ -92,7 +96,7 @@ function TaskItem({
   const openTask = useOpenTask(`${taskKey}`);
   const openPayment = useOpenTask("payment");
 
-  const title = "mock title";
+  const title = getTaskTitleFromTaskKey(taskKey);
   return (
     <Stack
       direction="row"

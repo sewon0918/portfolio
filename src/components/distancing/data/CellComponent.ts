@@ -45,10 +45,22 @@ export interface ImageType extends ElementType {
   imageUrl: string;
 }
 
+export interface OptionType {
+  translationKey?: string;
+  subjectiveOption?: { optional?: boolean; id?: string; placeholder?: string };
+  additionalContent?: CellType[][];
+}
+
+export interface SingleSelectionType extends ElementType {
+  options?: OptionType[];
+  selectedIndex?: number;
+}
+
 export type ContentType =
   | TypographyType
   | TextareaType
   | ImageType
+  | SingleSelectionType
   | ElementType;
 
 export interface CellType {
@@ -86,6 +98,20 @@ export function Image(url: string): { type: "image"; content: ImageType }[] {
       content: { imageUrl: url },
     },
   ];
+}
+
+export function ButtonGroup(
+  options: OptionType[],
+  arg?: SingleSelectionType
+  // width?: number
+): { type: "buttongroup"; content: SingleSelectionType } {
+  return {
+    type: "buttongroup",
+    content: {
+      options: options,
+      ...(arg && arg),
+    },
+  };
 }
 
 export function TypographyLine(

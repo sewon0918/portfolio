@@ -23,14 +23,6 @@ export function getImageUrl(imagePath: string, callerUrl: string) {
     parsedImagePath = parseImagePath(imagePath);
   }
 
-  if (parsedImagePath.includes("highfive.png")) {
-    console.log(
-      parsedImagePath,
-      callerUrl,
-      new URL(`${parsedImagePath}`, callerUrl).href
-    );
-  }
-
   return new URL(`${parsedImagePath}`, callerUrl).href;
 }
 export function getRemainigTime(dday: string) {

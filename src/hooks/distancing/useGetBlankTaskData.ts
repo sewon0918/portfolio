@@ -68,7 +68,6 @@ export default function useGetBlankTaskData({ taskKey }: { taskKey: string }) {
   const ProgramData = useGetProgramData(getTaskIdFromTaskKey(taskKey));
 
   const getDefaultRawData = () => {
-    console.log("저장됨", programDataState);
     return (programDataState?.[taskKey] ||
       cloneDeep(ProgramData)) as ProgramType;
   };
@@ -80,7 +79,6 @@ export default function useGetBlankTaskData({ taskKey }: { taskKey: string }) {
   useEffect(() => {
     getRawData().then((rawData) => {
       if (rawData) {
-        console.log("RAW: ", rawData);
         setData(setDataWithEditorKeyAndTranslationVersion(rawData));
       }
     });
