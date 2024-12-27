@@ -36,7 +36,7 @@ export default function BottomSheet({
       });
 
       if (!down) {
-        if (velocity > 0.5 || my > 10) {
+        if (my > 10) {
           setIsVisible(false);
         } else {
           setIsVisible(true);
