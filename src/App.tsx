@@ -30,7 +30,6 @@ function App() {
     <RecoilRoot>
       <ThemeProvider theme={theme}>
         <CssVarsProvider theme={joyuiTheme}>
-          {/* <BrowserRouter basename="/portfolio"> */}
           <BrowserRouter basename="/">
             <ServiceRouter />
           </BrowserRouter>

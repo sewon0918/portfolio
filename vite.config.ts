@@ -16,7 +16,6 @@ export default defineConfig({
       ],
     }),
   ],
-  // base: "/portfolio",
   base: "/",
   server: {
     host: "0.0.0.0", // 모든 IP 주소에서 접근 가능하도록 설정
