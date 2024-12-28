@@ -4,6 +4,7 @@ import loading from "@/assets/inside/counselor-search-wizard/loading_white.json"
 import check_white from "@/assets/common/check_white.json";
 import Lottie from "@/components/common/Lottie";
 import { useInterval } from "@toss/react";
+import { Text24 } from "@/components/common/Text";
 
 export default function Analysis() {
   const instructionData = [
@@ -55,6 +56,7 @@ export default function Analysis() {
             position: "absolute",
             display: "flex",
             flexDirection: "column",
+            gap: "30px",
             justifyContent: "center",
             alignItems: "center",
           }}
@@ -66,19 +68,16 @@ export default function Analysis() {
               autoplay
             />
           </div>
-          <div
-            css={{
-              fontSize: "24px",
-              lineHeight: "30px",
-              marginTop: "30px",
-              fontWeight: "bold",
-              textAlign: "center",
+
+          <Text24
+            customCss={{
               color: "white",
+              textAlign: "center",
               wordBreak: "keep-all",
             }}
           >
             {instructionData[currentIdx].text}
-          </div>
+          </Text24>
         </motion.div>
       </AnimatePresence>
     </div>

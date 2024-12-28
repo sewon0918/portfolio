@@ -77,7 +77,8 @@ export default function Distancing() {
           <IphoneImage src={iphone_mockup} alt={"iphone_mockup"}></IphoneImage>
 
           <Iframe
-            src={`${window.location.origin}/portfolio/?path=/distancing`}
+            // src={`${window.location.origin}/portfolio/?path=/distancing`}
+            src={`${window.location.origin}/?path=/distancing`}
             // src="http://192.0.0.2:5173/anxy"
             // src="http://172.29.112.138:5173/anxy"
             width="100%"

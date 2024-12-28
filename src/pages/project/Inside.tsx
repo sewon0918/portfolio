@@ -65,7 +65,8 @@ export default function Inside() {
           <IphoneImage src={iphone_mockup} alt={"iphone_mockup"}></IphoneImage>
 
           <Iframe
-            src={`${window.location.origin}/portfolio/?path=/inside/begin`}
+            // src={`${window.location.origin}/portfolio/?path=/inside/begin`}
+            src={`${window.location.origin}/?path=/inside/begin`}
             width="100%"
             allowFullScreen
           ></Iframe>

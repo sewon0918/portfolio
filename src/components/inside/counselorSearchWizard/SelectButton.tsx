@@ -1,3 +1,5 @@
+import { Text15 } from "@/components/common/Text";
+
 const CheckIcon = ({ isClicked }: { isClicked: boolean }) => {
   return (
     <div>
@@ -36,13 +38,12 @@ export default function SelectButton({
         padding: `14px ${px}`,
         borderRadius: "100px",
         width: "content-fit",
-
         display: "flex",
         gap: "8px",
       }}
     >
       {hasCheck && <CheckIcon isClicked={isClicked} />}
-      <div css={{ text: "15px", lineHeight: "21px" }}> {text}</div>
+      <Text15>{text}</Text15>
     </div>
   );
 }

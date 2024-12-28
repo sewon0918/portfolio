@@ -22,6 +22,9 @@ export default function NextButton({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        ...(disabled && {
+          pointerEvents: "none",
+        }),
       }}
       onClick={onClick}
     >

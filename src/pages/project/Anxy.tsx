@@ -72,7 +72,8 @@ export default function Anxy() {
           <IphoneImage src={iphone_mockup} alt={"iphone_mockup"}></IphoneImage>
 
           <Iframe
-            src={`${window.location.origin}/portfolio/?path=/anxy`}
+            // src={`${window.location.origin}/portfolio/?path=/anxy`}
+            src={`${window.location.origin}/?path=/anxy`}
             // src="http://192.0.0.2:5173/anxy"
             // src="http://172.29.112.138:5173/anxy"
             width="100%"

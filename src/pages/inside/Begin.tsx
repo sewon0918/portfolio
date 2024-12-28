@@ -2,11 +2,12 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router";
 import { useInterval } from "@toss/react";
+import { Text24 } from "@/components/common/Text";
 
 export default function Begin() {
   const navigate = useNavigate();
 
-  const instructionList = [
+  const instructionList: string[] = [
     "지금부터 마음 속 이야기를 하나씩 꺼내볼게요",
     "떠오르는 대로 솔직하게 선택해주세요",
   ];
@@ -54,15 +55,17 @@ export default function Begin() {
             css={{
               width: "100%",
               position: "absolute",
-              fontSize: "24px",
-              lineHeight: "30px",
-              fontWeight: "bold",
-              textAlign: "center",
-              color: "white",
               wordBreak: "keep-all",
             }}
           >
-            {instructionList[currentIdx]}
+            <Text24
+              customCss={{
+                color: "white",
+                textAlign: "center",
+              }}
+            >
+              {instructionList[currentIdx]}
+            </Text24>
           </motion.div>
         </AnimatePresence>
       </div>

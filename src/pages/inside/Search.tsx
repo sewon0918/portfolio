@@ -9,6 +9,7 @@ import MultipleSelectTemplate from "@/components/inside/counselorSearchWizard/Mu
 import { counselorSearchWizardAtom } from "@/recoil/inside/counselor-search-wizard/atom";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router";
+import { Text24 } from "@/components/common/Text";
 
 export default function Search() {
   const navigate = useNavigate();
@@ -198,18 +199,14 @@ export default function Search() {
           >
             {question && (
               <>
-                <div
-                  css={{
+                <Text24
+                  customCss={{
                     color: "white",
-                    fontSize: "24px",
-                    lineHeight: "30px",
-                    fontWeight: 700,
                     marginBottom: "30px",
                   }}
                 >
                   {question.title}
-                </div>
-
+                </Text24>
                 {question.type === "select" ? (
                   <SingleSelectTemplate
                     questionId={question.id}
