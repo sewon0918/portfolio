@@ -21,7 +21,7 @@ export default function Begin() {
     showNextText();
     if (currentIdx === instructionList.length - 1) {
       setTimeout(() => {
-        navigate("/inside/search");
+        navigate("/inside/search", { replace: true });
       }, 500);
     }
   }, 2000);

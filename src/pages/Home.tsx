@@ -31,18 +31,20 @@ export default function Home() {
           flex: 1,
           display: "flex",
           flexDirection: "row",
-          gap: "30px",
+          flexWrap: "wrap",
           alignItems: "center",
         }}
       >
         <div
           css={{
             flex: 1,
+            padding: "40px",
           }}
         >
           <div
             css={{
-              width: "360px",
+              maxWidth: "360px",
+              minWidth: "200px",
               display: "flex",
               flexDirection: "column",
               // gap: "30px",
@@ -108,7 +110,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div css={{ flex: 1 }}>
+        <div css={{ flex: 1, padding: "40px" }}>
           <Button buttonText="Inside" onClick={goInside} />
           <Button buttonText="Anxy" onClick={goAnxy} />
           <Button buttonText="Distancing" onClick={goDistancing} />

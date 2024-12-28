@@ -65,30 +65,19 @@ export default function ActivityList({
       }}
       spacing={"8px"}
     >
-      <Stack
-        direction="row"
-        justifyContent={"space-between"}
-        alignItems={"center"}
-      >
-        <Typography
-          level="body-md"
-          sx={{ fontWeight: 600, cursor: "pointer" }}
-          startDecorator={
-            <Stack
-              sx={{
-                width: "20px",
-                height: "20px",
-                mr: "4px",
-                borderRadius: "3px",
-                // backgroundColor: "primary.solid",
-              }}
-              justifyContent="center"
-              alignItems={"center"}
-            >
-              {currentData?.icon}
-            </Stack>
-          }
+      <Stack direction="row" alignItems={"center"} spacing={"8px"}>
+        <Stack
+          sx={{
+            width: "20px",
+            height: "20px",
+            borderRadius: "3px",
+          }}
+          justifyContent="center"
+          alignItems={"center"}
         >
+          {currentData?.icon}
+        </Stack>
+        <Typography level="body-md" sx={{ fontWeight: 600, cursor: "pointer" }}>
           {title}
         </Typography>
       </Stack>

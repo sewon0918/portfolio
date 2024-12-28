@@ -132,7 +132,7 @@ export const DragWorryScoreSOS: React.FC<DragWorryScoreSOS> = ({
     if (isInGoGroundingRange) {
       setDragScore(0);
       setTimeout(() => {
-        alert("go grounding");
+        console.log("go grounding");
       }, 500);
     } else {
       setDragScore(score);

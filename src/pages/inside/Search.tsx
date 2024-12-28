@@ -26,7 +26,7 @@ export default function Search() {
   useEffect(() => {
     if (currentId === "goNext") {
       setTimeout(() => {
-        navigate("/inside/analysis");
+        navigate("/inside/analysis", { replace: true });
       }, 500);
     }
     if (currentId === "crc-2") {

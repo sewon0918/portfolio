@@ -72,7 +72,7 @@ export function LockIcon() {
       <path
         d="M14 8V6C14 3.79086 12.2091 2 10 2V2C7.79086 2 6 3.79086 6 6V8"
         stroke={color}
-        stroke-width="2"
+        strokeWidth="2"
       />
       <path
         fillRule="evenodd"
