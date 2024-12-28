@@ -1,11 +1,7 @@
-import { useNavigate, useSearchParams } from "react-router";
-import { useEffect } from "react";
+import { useNavigate } from "react-router";
 import Button from "@/components/common/Button";
-import { isInIframe } from "@/utils/isInIframe";
 
 export default function Home() {
-  const [searchParams] = useSearchParams();
-  const path = searchParams.get("path");
   const navigate = useNavigate();
 
   const goInside = () => {
@@ -18,15 +14,7 @@ export default function Home() {
     navigate("/project/distancing");
   };
 
-  useEffect(() => {
-    if (path) {
-      navigate(path, { replace: true });
-    }
-  }, [path]);
-
-  return isInIframe ? (
-    <></>
-  ) : (
+  return (
     <div
       css={{
         width: "100%",
