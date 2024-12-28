@@ -1,7 +1,7 @@
 import React from "react";
 import Stack from "@mui/joy/Stack";
 import Typography from "@mui/joy/Typography";
-import { ProgramContentType } from "../../data/BlockComponent";
+import { ProgramContentType } from "../../../../data/distancing/BlockComponent";
 import TaskProgressBar from "./TaskProgressBar";
 import { getTaskTitleFromTaskKey } from "../../logic/logics";
 import DoneButton from "./DoneButton";

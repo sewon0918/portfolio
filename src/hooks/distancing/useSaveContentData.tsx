@@ -6,7 +6,7 @@ import {
 import { usePrevious } from "@uidotdev/usehooks";
 
 import { useSetRecoilState } from "recoil";
-import { ProgramContentType } from "@/components/distancing/data/BlockComponent";
+import { ProgramContentType } from "@/data/distancing/BlockComponent";
 import { isEqual } from "es-toolkit";
 import { programDataAtom } from "@/recoil/distancing/program/atom";
 

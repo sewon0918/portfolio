@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useGetBlankTaskData from "./useGetBlankTaskData";
-import { ProgramType } from "@/components/distancing/data/programData";
+import { ProgramType } from "@/data/distancing/programData";
 
 export default function useGetTaskData({ taskKey }: { taskKey: string }) {
   const [data, setData] = useState<ProgramType>();

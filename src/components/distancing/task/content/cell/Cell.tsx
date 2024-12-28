@@ -6,8 +6,8 @@ import {
   ContentType,
   celltype,
   SingleSelectionType,
-} from "../../../data/CellComponent";
-import { ProgramContentType } from "../../../data/BlockComponent";
+} from "../../../../../data/distancing/CellComponent";
+import { ProgramContentType } from "../../../../../data/distancing/BlockComponent";
 
 import { getTaskIdFromTaskKey } from "../../../logic/logics";
 

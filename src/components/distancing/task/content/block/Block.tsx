@@ -5,7 +5,7 @@ import {
 } from "@/components/distancing/logic/logics";
 import React, { memo } from "react";
 import Line from "./Line";
-import { ProgramContentType } from "../../../data/BlockComponent";
+import { ProgramContentType } from "../../../../../data/distancing/BlockComponent";
 import DoneButton from "../../header/DoneButton";
 import PatientMenuBar from "./PatientMenuBar";
 import { CommentArrowSvg } from "../../../../../assets/distancing/SvgAssets";

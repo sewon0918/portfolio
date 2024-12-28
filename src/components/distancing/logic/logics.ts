@@ -3,9 +3,9 @@ import {
   CellType,
   ContentType,
   SingleSelectionType,
-} from "../data/CellComponent";
-import { ProgramContentType } from "../data/BlockComponent";
-import { TaskMetaData } from "../data/programData";
+} from "../../../data/distancing/CellComponent";
+import { ProgramContentType } from "../../../data/distancing/BlockComponent";
+import { TaskMetaData } from "../../../data/distancing/programData";
 import { cloneDeep } from "es-toolkit";
 
 // 바로 다음블록 열어야하는 경우

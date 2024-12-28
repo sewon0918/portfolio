@@ -4,7 +4,7 @@ import {
   isBlockUserFieldFilled,
 } from "@/components/distancing/logic/logics";
 import { CircularProgress, Sheet, Stack } from "@mui/joy";
-import { ProgramContentType } from "../../data/BlockComponent";
+import { ProgramContentType } from "../../../../data/distancing/BlockComponent";
 import useSaveContentData from "@/hooks/distancing/useSaveContentData";
 import { usePrevious } from "@toss/react";
 import Block from "./block/Block";

@@ -1,6 +1,6 @@
 import { Sheet } from "@mui/joy";
 import { memo, useEffect, useState } from "react";
-import { ProgramContentType } from "../../../data/BlockComponent";
+import { ProgramContentType } from "../../../../../data/distancing/BlockComponent";
 import PlainTextarea from "./textarea/PlainTextarea";
 import { setProgramContentData } from "../../../logic/logics";
 import { theme } from "@/styles/theme";

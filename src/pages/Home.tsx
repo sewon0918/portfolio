@@ -8,6 +8,9 @@ export default function Home() {
   const path = searchParams.get("path");
   const navigate = useNavigate();
 
+  const goInside = () => {
+    navigate("/project/inside");
+  };
   const goAnxy = () => {
     navigate("/project/anxy");
   };
@@ -118,8 +121,12 @@ export default function Home() {
           </div>
         </div>
         <div css={{ flex: 1 }}>
+          <Button buttonText="Inside" onClick={goInside} />
           <Button buttonText="Anxy" onClick={goAnxy} />
           <Button buttonText="Distancing" onClick={goDistancing} />
+          <div css={{ marginTop: "20px" }}>
+            <Button buttonText="MVP" onClick={() => {}} />
+          </div>
         </div>
       </div>
     </div>

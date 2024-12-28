@@ -1,4 +1,4 @@
-import { ProgramType } from "@/components/distancing/data/programData";
+import { ProgramType } from "@/data/distancing/programData";
 import { atom } from "recoil";
 
 export interface ProgramDataType {

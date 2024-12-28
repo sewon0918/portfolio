@@ -1,7 +1,7 @@
 import { Box } from "@mui/joy";
 
 import { useEffect, useState } from "react";
-import { ProgramContentType } from "../../data/BlockComponent";
+import { ProgramContentType } from "../../../../data/distancing/BlockComponent";
 import { getLastShownIndex } from "../../logic/logics";
 
 export default function TaskProgressBar({

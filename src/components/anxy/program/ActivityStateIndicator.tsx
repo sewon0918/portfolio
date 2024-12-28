@@ -1,5 +1,5 @@
 import { useEffect, useState, memo } from "react";
-import check_solid from "@/assets/anxy/common/check_solid.json";
+import check_solid from "@/assets/common/check_solid.json";
 import unlock from "@/assets/anxy/common/unlock.json";
 import { motion } from "framer-motion";
 import { CircularProgressbar } from "react-circular-progressbar";

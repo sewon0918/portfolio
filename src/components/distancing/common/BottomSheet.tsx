@@ -24,7 +24,7 @@ export default function BottomSheet({
   }, [isVisible, setY]);
 
   const bind = useDrag(
-    ({ down, movement: [, my], velocity, direction: [, dy], cancel }) => {
+    ({ down, movement: [, my], cancel }) => {
       if (my < 0) {
         cancel();
       }

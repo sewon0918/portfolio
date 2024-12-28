@@ -1,5 +1,5 @@
-import { ProgramType } from "@/components/distancing/data/programData";
-import { Content_0_0_A } from "@/components/distancing/data/task/0-0-A";
+import { ProgramType } from "@/data/distancing/programData";
+import { Content_0_0_A } from "@/data/distancing/task/0-0-A";
 
 export default function useGetProgramData(taskId: string) {
   const programData: ProgramType[] = [

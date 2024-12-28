@@ -1,12 +1,12 @@
 import { Stack } from "@mui/joy";
 import React, { memo } from "react";
 import Cell from "../cell/Cell";
-import { ProgramContentType } from "../../../data/BlockComponent";
+import { ProgramContentType } from "../../../../../data/distancing/BlockComponent";
 import {
   CellType,
   TextareaType,
   TypographyType,
-} from "../../../data/CellComponent";
+} from "../../../../../data/distancing/CellComponent";
 
 function Line({
   lineStr,

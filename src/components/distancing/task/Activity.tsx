@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 import { Box, Stack } from "@mui/joy";
-import { ProgramContentType } from "../data/BlockComponent";
-import { ProgramType } from "../data/programData";
+import { ProgramContentType } from "../../../data/distancing/BlockComponent";
+import { ProgramType } from "../../../data/distancing/programData";
 import useGetTaskData from "@/hooks/distancing/useGetTaskData";
 import TaskHeader from "./header/TaskHeader";
 import TaskContent from "./content/TaskContent";

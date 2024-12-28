@@ -1,8 +1,8 @@
-import { ProgramContentType } from "@/components/distancing/data/BlockComponent";
+import { ProgramContentType } from "@/data/distancing/BlockComponent";
 import {
   SingleSelectionType,
   TextareaLine,
-} from "@/components/distancing/data/CellComponent";
+} from "@/data/distancing/CellComponent";
 import { Box, Stack } from "@mui/joy";
 import Button from "@mui/joy/Button";
 import { cloneDeep } from "es-toolkit";

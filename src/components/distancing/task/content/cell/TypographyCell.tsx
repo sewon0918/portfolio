@@ -1,6 +1,6 @@
 import { Typography } from "@mui/joy";
 import { memo } from "react";
-import { levelType } from "../../../data/CellComponent";
+import { levelType } from "../../../../../data/distancing/CellComponent";
 
 function TypographyCell({
   text,

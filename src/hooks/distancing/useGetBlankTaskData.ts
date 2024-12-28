@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { v4 as uuidv4 } from "uuid";
-import { ProgramContentType } from "@/components/distancing/data/BlockComponent";
-import { ProgramType } from "@/components/distancing/data/programData";
-import { TextareaType } from "@/components/distancing/data/CellComponent";
+import { ProgramContentType } from "@/data/distancing/BlockComponent";
+import { ProgramType } from "@/data/distancing/programData";
+import { TextareaType } from "@/data/distancing/CellComponent";
 import { ko } from "@/components/distancing/translation/ko";
 import { getTaskIdFromTaskKey } from "@/components/distancing/logic/logics";
 import useGetProgramData from "./useGetProgramData";
