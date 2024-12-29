@@ -2,20 +2,18 @@ import Box from "@mui/joy/Box";
 import Sheet from "@mui/joy/Sheet";
 import { Stack } from "@mui/joy";
 import LearningActivityList from "./LearningActivityList";
-import { isInIframe } from "@/utils/isInIframe";
 import { useRecoilValue } from "recoil";
 import { taskListAtom } from "@/recoil/distancing/task-list/atom";
+import { isMobileVersion } from "@/utils/isMobileVersion";
 
 export default function HomeTaskList() {
-  const isInappWebview = isInIframe;
-
   const taskList = useRecoilValue(taskListAtom);
 
   return (
     <Sheet
       sx={{
         backgroundColor: "transparent",
-        ...(isInappWebview && { px: "20px" }),
+        ...(isMobileVersion && { px: "20px" }),
       }}
     >
       <Box

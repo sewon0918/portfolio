@@ -9,29 +9,45 @@ import Retrospect from "@/pages/anxy/Retrospect.tsx";
 import Anxy from "@/pages/project/Anxy.tsx";
 import Distancing from "@/pages/project/Distancing.tsx";
 import DistancingHome from "@/pages/distancing/DistancingHome.tsx";
-import { isInIframe } from "@/utils/isInIframe";
 import { useLayout } from "@/hooks/useLayout.ts";
-import { usePrevious } from "@toss/react";
 import InsideHome from "@/pages/inside/InsideHome.tsx";
 import Inside from "@/pages/project/Inside.tsx";
+import { useEffect } from "react";
+import { isMobileVersion } from "@/utils/isMobileVersion.ts";
 
 const ServiceRouter = () => {
   const location = useLocation();
-  const prevLocation = usePrevious(location);
 
   const { showHeader } = useLayout();
 
-  const isAppFirstEnter = prevLocation.pathname === "/";
-  const isInside = location.pathname.includes("inside");
-  const showTransition = isInIframe && !isInside && !isAppFirstEnter;
+  const showTransition =
+    isMobileVersion &&
+    (location.pathname.startsWith("/anxy") ||
+      location.pathname.startsWith("/distancing"));
+
+  useEffect(() => {
+    const body = document.body;
+    body.style.position = "fixed";
+    body.style.overflow = "hidden";
+  }, []);
+
+  const handleResize = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
-      {/* <Routes location={location}>
-        <Route path="/" element={<Home />} />
-      </Routes> */}
       <RouteTransition
         location={location}
-        duration={showTransition ? 300 : 0}
+        duration={showTransition ? 0.2 : 0}
         showHeader={showHeader}
       >
         <Routes location={location}>

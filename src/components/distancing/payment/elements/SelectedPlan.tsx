@@ -1,10 +1,9 @@
 import { Typography } from "@mui/joy";
-import { planData } from "./SubscriptionPlan";
+import { useRecoilValue } from "recoil";
+import { subscriptionAtom } from "@/recoil/distancing/subscription/atom";
 
 export default function SelectedPlan() {
-  const selectedPlan = planData.find(
-    (element) => element.productId === "subscription2"
-  );
+  const selectedPlan = useRecoilValue(subscriptionAtom);
 
   return (
     <Typography>

@@ -1,4 +1,4 @@
-import { isInIframe } from "@/utils/isInIframe";
+import { isMobileVersion } from "@/utils/isMobileVersion";
 import React, { useEffect, useRef } from "react";
 
 export default function ContentTemplate({
@@ -22,7 +22,9 @@ export default function ContentTemplate({
     <div
       ref={containerRef}
       css={{
-        width: isInIframe ? "100vw" : `calc(100vw - var(--Sidebar-width, 0))`,
+        width: isMobileVersion
+          ? "100vw"
+          : `calc(100vw - var(--Sidebar-width, 0))`,
         overflow: "auto",
       }}
     >

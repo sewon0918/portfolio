@@ -5,9 +5,11 @@ import { useRecoilState } from "recoil";
 export default function DoneButton({
   taskKey,
   size,
+  disabled,
 }: {
   taskKey: string;
   size?: "sm" | "lg";
+  disabled?: boolean;
 }) {
   const navigate = useNavigate();
   const [taskList, setTaskList] = useRecoilState(taskListAtom);
@@ -35,7 +37,7 @@ export default function DoneButton({
   };
 
   return (
-    <Button size={size} onClick={done} disabled={isDone}>
+    <Button size={size} onClick={done} disabled={disabled || isDone}>
       {`마치기`}
     </Button>
   );

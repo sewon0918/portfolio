@@ -1,13 +1,11 @@
 import { Box, Stack } from "@mui/joy";
 import Sheet from "@mui/joy/Sheet";
 import HomeTaskList from "./HomeTaskList";
-import { isInIframe } from "@/utils/isInIframe";
 import { LogoWithTextSvg } from "../../../assets/distancing/SvgAssets";
+import { isMobileVersion } from "@/utils/isMobileVersion";
 
 export default function Sidebar({ isHome }: { isHome?: boolean }) {
-  const isInappWebview = isInIframe;
-
-  const backgroundColor = isInappWebview
+  const backgroundColor = isMobileVersion
     ? "background.level1"
     : "background.level2";
 
@@ -15,12 +13,13 @@ export default function Sidebar({ isHome }: { isHome?: boolean }) {
     <Sheet
       className="Sidebar"
       sx={{
-        position: !isHome && isInappWebview ? "absolute" : "sticky",
+        position: !isHome && isMobileVersion ? "absolute" : "sticky",
         transform:
-          !isHome && isInappWebview ? "translateX(-100%)" : "translateX(0)",
+          !isHome && isMobileVersion ? "translateX(-100%)" : "translateX(0)",
         width: "var(--Sidebar-width)",
 
         paddingBottom: `${20}px`,
+
         height: "100%",
         top: 0,
         flexShrink: 0,

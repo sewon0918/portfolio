@@ -1,6 +1,6 @@
 import { theme } from "@/styles/theme";
 import { extractHexColor } from "@/utils/helpers";
-import { isInIframe } from "@/utils/isInIframe";
+import { isMobileVersion } from "@/utils/isMobileVersion";
 import { Box, Stack } from "@mui/joy";
 import { forwardRef } from "react";
 
@@ -9,7 +9,6 @@ interface FloatingAreaProps {
 }
 const FloatingArea = forwardRef<HTMLDivElement, FloatingAreaProps>(
   ({ children }, ref) => {
-    const isInappWebview = isInIframe;
     const backgroundColor = extractHexColor(
       theme.vars.palette.background.level1
     );
@@ -22,8 +21,8 @@ const FloatingArea = forwardRef<HTMLDivElement, FloatingAreaProps>(
           zIndex: 10,
           bottom: 0,
           ...{
-            left: isInappWebview ? 0 : "var(--Sidebar-width)",
-            width: isInappWebview
+            left: isMobileVersion ? 0 : "var(--Sidebar-width)",
+            width: isMobileVersion
               ? "100%"
               : `calc(100% - var(--Sidebar-width, 0))`,
           },

@@ -1,4 +1,4 @@
-import { isInIframe } from "@/utils/isInIframe";
+import { isMobileVersion } from "@/utils/isMobileVersion";
 import { css, Global } from "@emotion/react";
 
 const GlobalStyles = () => (
@@ -9,7 +9,9 @@ const GlobalStyles = () => (
         -webkit-user-select: none; /* Safari */
         --header-height: 48px;
         --notch-height: 50px;
-        --Sidebar-width: ${isInIframe ? `${window.innerWidth}px` : "320px"};
+        --Sidebar-width: ${isMobileVersion
+          ? `${window.innerWidth}px`
+          : "320px"};
         --StickyHeader-height: 60px;
       }
       *,

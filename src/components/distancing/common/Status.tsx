@@ -36,8 +36,7 @@ export function Status({
         borderRadius: "50%",
         ...(!isChecked
           ? {
-              borderWidth: "1.6px",
-              borderColor: "#B6B9BC",
+              border: "1.6px solid #B6B9BC",
             }
           : {
               backgroundColor: checkedBackgroundColor || "primary.solid",

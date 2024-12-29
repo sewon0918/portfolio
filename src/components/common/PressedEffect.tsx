@@ -23,57 +23,23 @@ export const PressedEffect: React.FC<PressedEffectProps> = (
       transition={{ duration: 0.2 }}
       className={`w-full h-full  ${className} `}
       ref={pressedRef}
-      onMouseDown={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      onMouseDown={() => {
         setButtonDown(true);
       }}
-      onMouseUp={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      onTouchStart={() => {
+        setButtonDown(true);
+      }}
+      onMouseUp={() => {
+        setButtonDown(false);
+      }}
+      onTouchEnd={() => {
         setButtonDown(false);
       }}
       onClick={() => {
         if (!disable && action) {
-          // e.preventDefault();
-          // e.stopPropagation();
           action();
         }
       }}
-      // onTouchStart={(e) => {
-      //   setTouchStartY(e.changedTouches[0].clientY);
-      //   setTouchStartX(e.changedTouches[0].clientX);
-
-      //   if (!disable) {
-      //     e.preventDefault();
-      //     e.stopPropagation();
-      //     setButtonDown(true);
-      //   }
-      // }}
-      // onTouchMove={(e) => {
-      //   if (
-      //     Math.abs(e.changedTouches[0].clientY - touchStartY) > 0 ||
-      //     Math.abs(e.changedTouches[0].clientX - touchStartX) > 0
-      //   ) {
-      //     setButtonDown(false);
-      //   }
-      // }}
-      // onTouchEnd={(e) => {
-      //   setButtonDown(false);
-
-      //   if (
-      //     !(
-      //       Math.abs(e.changedTouches[0].clientY - touchStartY) > 5 ||
-      //       Math.abs(e.changedTouches[0].clientX - touchStartX) > 5
-      //     )
-      //   ) {
-      //     if (!disable && action && !hasButton) {
-      //       e.preventDefault();
-      //       e.stopPropagation();
-      //       action();
-      //     }
-      //   }
-      // }}
     >
       {element}
     </motion.div>

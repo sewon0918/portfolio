@@ -1,24 +1,14 @@
 import { Stack, Typography } from "@mui/joy";
 import Chip from "../../common/Chip";
 import { Status } from "../../common/Status";
-
-export const planData = [
-  {
-    price: "240,000원",
-    duration: "3개월",
-    description: "첫 3개월 이후, 구독은 매 월 8만 원에 자동 갱신됩니다.",
-    label: "환불 보장",
-    productId: "subscription1",
-  },
-  {
-    price: "80,000원",
-    duration: "1개월",
-    description: "구독은 매 월 8만 원에 자동 갱신됩니다.",
-    productId: "subscription2",
-  },
-];
+import {
+  planData,
+  subscriptionAtom,
+} from "@/recoil/distancing/subscription/atom";
+import { useRecoilState } from "recoil";
 
 export default function SubscriptionPlan() {
+  const [selectedPlan, setSelectedPlan] = useRecoilState(subscriptionAtom);
   return (
     <Stack
       sx={{
@@ -44,7 +34,7 @@ export default function SubscriptionPlan() {
               }),
             }}
             onClick={() => {
-              alert("플랜 변경");
+              setSelectedPlan(planData[index]);
             }}
           >
             <Stack direction={"column"} sx={{ gap: "2px", width: "100%" }}>
@@ -66,7 +56,7 @@ export default function SubscriptionPlan() {
                 flexShrink: 0,
               }}
             >
-              <Status isChecked={productId === "subscription1"} />
+              <Status isChecked={productId === selectedPlan.productId} />
             </Stack>
           </Stack>
         )

@@ -1,11 +1,8 @@
-import Header from "@/components/common/Header";
+import AppHeader from "@/components/common/AppHeader";
 import { useEffect, useRef, useState } from "react";
 import { Location } from "react-router";
-import {
-  TransitionGroup,
-  TransitionStatus,
-  Transition,
-} from "react-transition-group";
+import { AnimatePresence, motion } from "framer-motion";
+
 const RouteTransition = ({
   location,
   children,
@@ -17,8 +14,9 @@ const RouteTransition = ({
   duration?: number;
   showHeader?: boolean;
 }) => {
+  const [isBackGesture, setIsBackGesture] = useState<boolean>(false);
+
   const nodeRef = useRef<HTMLDivElement>(null);
-  const TIMEOUT = duration; // 애니메이션 지속 시간(ms)
   const [isPopTransition, setIsPopTransition] = useState<boolean>(false);
 
   const [zIndex, setZIndex] = useState<number>(1); // 초기 z-index
@@ -27,31 +25,9 @@ const RouteTransition = ({
     setZIndex((prevZIndex) => prevZIndex + 1); // location이 변경될 때마다 z-index 증가
   }, [location]);
 
-  const getTransitionStyles: {
-    [key in TransitionStatus]: React.CSSProperties;
-  } = {
-    unmounted: {},
-    entering: {
-      transform: `translateX(${isPopTransition ? -100 : 100}%)`,
-    },
-    entered: {
-      transition: `opacity ${TIMEOUT}ms ease-in-out, transform ${TIMEOUT}ms ease-in-out`,
-    },
-    exiting: {
-      transform: `translateX(${isPopTransition ? 20 : -20}%)`,
-      transition: `opacity ${TIMEOUT}ms ease-in-out, transform ${TIMEOUT}ms ease-in-out`,
-    },
-    exited: {
-      transition: `opacity ${TIMEOUT}ms ease-in-out, transform ${TIMEOUT}ms ease-in-out`,
-    },
-  };
-
   useEffect(() => {
     const handlePopState = () => {
       setIsPopTransition(true);
-      // setTimeout(() => {
-      //   setIsPopTransition(false);
-      // }, TIMEOUT + 500);
     };
 
     if (window) {
@@ -62,49 +38,78 @@ const RouteTransition = ({
       };
     }
   }, []);
+
+  const touchStartX = useRef<number>(0);
+
+  useEffect(() => {
+    const touchStart = (e: TouchEvent) => {
+      touchStartX.current = e.touches[0].pageX;
+    };
+    const touchMove = (e: TouchEvent) => {
+      if (
+        (touchStartX.current <= 20 ||
+          touchStartX.current >= window.innerWidth - 20) &&
+        Math.abs(e.touches[0].pageX - touchStartX.current) > 0
+      ) {
+        setIsBackGesture(true);
+      }
+    };
+    const touchEnd = () => {
+      touchStartX.current = 0;
+    };
+    window.addEventListener("touchstart", touchStart);
+    window.addEventListener("touchmove", touchMove);
+    window.addEventListener("touchend", touchEnd);
+
+    return () => {
+      window.removeEventListener("touchstart", touchStart);
+      window.removeEventListener("touchmove", touchMove);
+      window.removeEventListener("touchend", touchEnd);
+    };
+  }, []);
+
   return (
     <div
       style={{
         width: "100vw",
         minHeight: "100vh",
+        position: "relative",
       }}
     >
-      {showHeader && <Header />}
-      <TransitionGroup component={null}>
-        <Transition
-          key={location.pathname} // 각 pathname에 대해 고유한 key 사용
-          timeout={{
-            enter: TIMEOUT / 10,
-            exit: TIMEOUT,
+      {showHeader && <AppHeader />}
+      <AnimatePresence
+        initial={false}
+        onExitComplete={() => {
+          setIsPopTransition(false);
+          setIsBackGesture(false);
+        }}
+      >
+        <motion.div
+          key={location.pathname}
+          transition={{
+            delay: 0,
+            duration: isBackGesture ? 0 : duration,
+            ease: [0.4, 0, 0.2, 1],
           }}
-          nodeRef={nodeRef}
-          onExited={() => {
-            // transition이 끝났을 때 실행할 코드
-            console.log("Transition has ended");
-            setIsPopTransition(false);
-          }}
+          initial={{ x: isPopTransition ? -300 : 300, opacity: 1 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: isPopTransition ? 300 : -300, opacity: 1 }}
+          css={{ position: "absolute", width: "100%", height: "100%" }}
         >
-          {(status: TransitionStatus) => (
-            <div
-              ref={nodeRef}
-              style={{
-                position: "absolute",
-                width: "100%",
-                height: "100%",
-                // width: "100vw",
-                // height: "100vh",
-                // overflow: "hidden",
-                visibility: status === "exited" ? "hidden" : "visible", // 페이지 숨기기
+          <div
+            ref={nodeRef}
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
 
-                ...(duration > 0 && getTransitionStyles[status]),
-                zIndex: zIndex,
-              }}
-            >
-              {children}
-            </div>
-          )}
-        </Transition>
-      </TransitionGroup>
+              zIndex: zIndex,
+            }}
+          >
+            {children}
+          </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };

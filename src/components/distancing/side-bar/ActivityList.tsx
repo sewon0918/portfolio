@@ -3,7 +3,7 @@ import { CircularProgress, Stack } from "@mui/joy";
 import { TaskType } from "../task/Task";
 import { LearningActivityIcon } from "../../../assets/distancing/SvgAssets";
 import NestedList from "./NestedList";
-import { isInIframe } from "@/utils/isInIframe";
+import { isMobileVersion } from "@/utils/isMobileVersion";
 
 export function RightArrow() {
   return (
@@ -40,8 +40,6 @@ export default function ActivityList({
     initiallyOpen?: boolean;
   }[];
 }) {
-  const isInappWebview = isInIframe;
-
   const dataByTitle = [
     {
       title: "배움활동지",
@@ -57,7 +55,7 @@ export default function ActivityList({
         mt: "8px",
         borderRadius: "12px",
         p: "20px",
-        ...(isInappWebview && {
+        ...(isMobileVersion && {
           backgroundColor: "white",
           borderWidth: "1px",
           borderColor: "divider",

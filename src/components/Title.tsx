@@ -5,6 +5,7 @@ const StyledTitle = styled.div({
   color: "black",
   fontWeight: 700,
   height: "fit-content",
+  // letterSpacing: "-0.02em",
 });
 
 export default function Title({ title }: { title: string }) {

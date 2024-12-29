@@ -3,7 +3,10 @@ import Stack from "@mui/joy/Stack";
 import Typography from "@mui/joy/Typography";
 import { ProgramContentType } from "../../../../data/distancing/BlockComponent";
 import TaskProgressBar from "./TaskProgressBar";
-import { getTaskTitleFromTaskKey } from "../../logic/logics";
+import {
+  getTaskTitleFromTaskKey,
+  isAllUserFieldFilled,
+} from "../../logic/logics";
 import DoneButton from "./DoneButton";
 import BackButton from "./BackButton";
 
@@ -81,7 +84,11 @@ export default function TaskHeader({
                 sx={{ py: 0 }}
               >
                 <>
-                  <DoneButton taskKey={taskKey} size="sm" />
+                  <DoneButton
+                    taskKey={taskKey}
+                    size="sm"
+                    disabled={!isAllUserFieldFilled(contentData)}
+                  />
                 </>
               </Stack>
             )}

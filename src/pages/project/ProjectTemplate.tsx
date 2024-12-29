@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
 import Title from "@/components/Title";
 import iphone_mockup from "@/assets/iphone_mockup.png";
-import { css } from "@emotion/react";
-import { useNavigate, useSearchParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import OpenInNewRoundedIcon from "@mui/icons-material/OpenInNewRounded";
 import { isMobile } from "react-device-detect";
+import { useNavigate } from "react-router";
+import { addAlpha } from "@/utils/helpers";
+import PageContainer from "@/components/common/PageContainer";
 
 export default function ProjectTemplate({
   pathname,
@@ -22,25 +23,31 @@ export default function ProjectTemplate({
   description: { [key: string]: string[] };
   hasDesktopVersion?: boolean;
 }) {
-  console.log(isMobile);
+  const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [iphoneMaxHeight, setIphoneMaxHeight] = useState<number>();
 
   useEffect(() => {
-    setIphoneMaxHeight(containerRef.current?.offsetHeight || 764);
+    setIphoneMaxHeight(containerRef.current?.offsetHeight);
   }, [containerRef.current?.offsetHeight]);
 
+  const PrpjectLayout = styled.div({
+    flex: 1,
+    padding: isMobile ? 0 : "20px 0 0 0",
+    overflow: "hidden",
+    display: "flex",
+  });
+
   const ProjectContainer = styled.div({
-    paddingLeft: "40px",
     flex: 1,
     display: "flex",
-    gap: "40px",
     justifyContent: "center",
     alignItems: "center",
   });
   const IphoneContainer = styled.div({
     position: "relative",
+    marginLeft: "40px",
     borderRadius: "100px",
     minWidth: "375px",
     width: "375px",
@@ -66,10 +73,43 @@ export default function ProjectTemplate({
 
   const DescriptionContainer = styled.div({
     flex: 1,
-    padding: "40px 40px 40px 0",
+    height: isMobile ? "100%" : `${Math.min(iphoneMaxHeight || 764, 764)}px`,
     maxWidth: "800px",
-    alignSelf: "stretch",
-    overflow: "scroll",
+    overflow: "hidden",
+    position: "relative",
+  });
+  const TopScrollIndicator = styled.div({
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "40px",
+    background: `linear-gradient(to bottom, #ffffff, ${addAlpha(
+      "#ffffff",
+      0
+    )})`,
+  });
+  const BottomScrollIndicator = styled.div({
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    width: "100%",
+    height: "80px",
+    background: `linear-gradient(to top, #ffffff, ${addAlpha("#ffffff", 0)})`,
+  });
+
+  const TitleContainer = styled.div({
+    display: "flex",
+    alignItems: "center",
+    gap: "20px",
+    flexWrap: "wrap",
+  });
+
+  const DescriptionScrollArea = styled.div({
+    width: "100%",
+    height: "100%",
+    padding: "20px 40px 80px 40px",
+    overflow: "auto",
   });
 
   const Description = styled.div({
@@ -79,36 +119,30 @@ export default function ProjectTemplate({
     wordBreak: "keep-all",
   });
 
-  const [searchParams] = useSearchParams();
-  const path = searchParams.get("path");
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (path) {
-      navigate(path);
-    }
-  }, [path]);
-
-  return (
-    <div
-      css={css({
-        backgroundColor: "white",
-        padding: "40px 0",
-        minHeight: "100%",
-        height: "100%",
-        overflow: "hidden",
-        display: "flex",
-        flexDirection: "column",
-      })}
-    >
-      <div css={{ fontWeight: 600, textAlign: "center" }}>PORTFOLIO</div>
+  const OpenPageButton = () => {
+    return (
       <div
-        css={{
-          flex: 1,
-          overflow: "hidden",
-          display: "flex",
+        css={{ fontSize: "24px", paddingTop: "10px" }}
+        onClick={() => {
+          navigate(pathname);
         }}
       >
+        <OpenInNewRoundedIcon />
+      </div>
+    );
+  };
+  const ScrollIndicator = () => {
+    return (
+      <>
+        <TopScrollIndicator />
+        <BottomScrollIndicator />
+      </>
+    );
+  };
+
+  return (
+    <PageContainer>
+      <PrpjectLayout>
         <ProjectContainer ref={containerRef}>
           {!isMobile && (
             <IphoneContainer>
@@ -124,44 +158,32 @@ export default function ProjectTemplate({
               ></Iframe>
             </IphoneContainer>
           )}
-          <DescriptionContainer>
-            <div css={{ display: "flex", alignItems: "center", gap: "20px" }}>
-              <Title title={title} />
-              {isMobile && (
-                <div
-                  css={{ fontSize: "24px", paddingTop: "10px" }}
-                  onClick={() => {
-                    navigate(pathname);
-                  }}
-                >
-                  <OpenInNewRoundedIcon />
-                </div>
-              )}
-              {hasDesktopVersion && (
-                <div
-                  css={{ fontSize: "24px", paddingTop: "10px" }}
-                  onClick={() => {
-                    navigate(pathname);
-                  }}
-                >
-                  <OpenInNewRoundedIcon />
-                </div>
-              )}
-            </div>
 
-            <Description>{devDuration}</Description>
-            <Description>{techStack}</Description>
-            {Object.entries(description).map(([key, value]) => (
-              <Description key={key}>
-                <div>{key}</div>
-                {value.map((each, index) => (
-                  <div key={index}>{`∙ ${each}`}</div>
-                ))}
-              </Description>
-            ))}
+          <DescriptionContainer>
+            <ScrollIndicator />
+            <DescriptionScrollArea>
+              <TitleContainer>
+                <Title title={title} />
+                {(isMobile || (!isMobile && hasDesktopVersion)) && (
+                  <OpenPageButton />
+                )}
+              </TitleContainer>
+
+              <Description>{devDuration}</Description>
+              <Description>{techStack}</Description>
+              {Object.entries(description).map(([key, value]) => (
+                <Description key={key}>
+                  <div>{key}</div>
+                  {value.map((each, index) => (
+                    <div key={index}>{`∙ ${each}`}</div>
+                  ))}
+                </Description>
+              ))}
+            </DescriptionScrollArea>
           </DescriptionContainer>
         </ProjectContainer>
-      </div>
-    </div>
+      </PrpjectLayout>
+      {/* </div> */}
+    </PageContainer>
   );
 }

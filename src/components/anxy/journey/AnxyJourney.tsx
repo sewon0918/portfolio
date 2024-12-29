@@ -80,20 +80,20 @@ const AnxyJourney = () => {
     }
   }, [dailyProgramDetail]);
 
-  const resetProgramState = useResetRecoilState(programAtom);
-  const resetJourneyState = useResetRecoilState(journeyAtom);
+  // const resetProgramState = useResetRecoilState(programAtom);
+  // const resetJourneyState = useResetRecoilState(journeyAtom);
 
   return (
     <div css={{ width: "100%" }}>
       {/* 씨앗 */}
-      <div
+      {/* <div
         onClick={() => {
           resetProgramState();
           resetJourneyState();
         }}
       >
         reset
-      </div>
+      </div> */}
       <div
         css={{
           paddingLeft: "20px",
