@@ -4,6 +4,53 @@ import "react-multi-carousel/lib/styles.css";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import { addAlpha, extractHexColor } from "@/utils/helpers";
 import { theme } from "@/styles/theme";
+import { useRef } from "react";
+import usePreventScrollWhenHorizontalSwipe from "@/hooks/usePreventScrollWhenHorizontalSwipe";
+
+const CustomRightArrow = (props: any) => {
+  const { onClick } = props;
+  return (
+    <div onClick={onClick}>
+      <svg
+        width="20"
+        height="21"
+        viewBox="0 0 20 21"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect y="0.5" width="20" height="20" rx="3" fill="none" />
+        <path
+          d="M8 16L12 11L8 6"
+          stroke="#20242B"
+          strokeOpacity="0.3"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
+  );
+};
+
+const CustomDot = (props: any) => {
+  const { onClick, active } = props;
+
+  return (
+    <Box
+      sx={{
+        width: "8px",
+        height: "8px",
+        borderRadius: "50%",
+        backgroundColor: active
+          ? "common.black"
+          : addAlpha(extractHexColor(theme.vars.palette.common.black), 0.1),
+        mx: "4px",
+        mt: "10px",
+      }}
+      onClick={onClick}
+    ></Box>
+  );
+};
 
 export default function ReviewCarousel() {
   const data: {
@@ -40,55 +87,13 @@ export default function ReviewCarousel() {
     },
   ];
 
-  const CustomRightArrow = (props: any) => {
-    const { onClick } = props;
-    return (
-      <div onClick={onClick}>
-        <svg
-          width="20"
-          height="21"
-          viewBox="0 0 20 21"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect y="0.5" width="20" height="20" rx="3" fill="none" />
-          <path
-            d="M8 16L12 11L8 6"
-            stroke="#20242B"
-            strokeOpacity="0.3"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
-    );
-  };
-
-  const CustomDot = (props: any) => {
-    const { onClick, active } = props;
-
-    return (
-      <Box
-        sx={{
-          width: "8px",
-          height: "8px",
-          borderRadius: "50%",
-          backgroundColor: active
-            ? "common.black"
-            : addAlpha(extractHexColor(theme.vars.palette.common.black), 0.1),
-          mx: "4px",
-          mt: "10px",
-        }}
-        onClick={onClick}
-      ></Box>
-    );
-  };
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const backgroundColor = "#ffffff";
+  usePreventScrollWhenHorizontalSwipe({ carouselRef });
 
   return (
-    <Stack sx={{ position: "relative", width: "100%" }}>
+    <Stack sx={{ position: "relative", width: "100%" }} ref={carouselRef}>
       <Box
         sx={{
           position: "absolute",

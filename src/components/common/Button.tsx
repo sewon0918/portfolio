@@ -5,11 +5,12 @@ const Page = styled.div({
   fontWeight: 700,
   backgroundColor: "transparent",
   borderWidth: "0px",
+  // fontFamily: "Arial, sans-serif",
+  fontFamily: "Noto Sans, serif",
   "&:hover": {
-    // '&' 기호를 문자열로 감싸기
     cursor: "pointer",
-    backgroundColor: "transparent", // camelCase로 변경
-    textDecoration: "underline", // camelCase로 변경
+    backgroundColor: "transparent",
+    textDecoration: "underline",
     color: "orange",
     // transition: all 0.1s ease; // 부드러운 전환 효과 추가
   },

@@ -2,6 +2,7 @@ import { Stack } from "@mui/joy";
 import { useRef } from "react";
 import Carousel from "react-multi-carousel";
 import { addAlpha, getImageUrl } from "@/utils/helpers";
+import usePreventScrollWhenHorizontalSwipe from "@/hooks/usePreventScrollWhenHorizontalSwipe";
 
 const CustomDot = (props: any) => {
   const { onClick, active } = props;
@@ -23,36 +24,9 @@ const CustomDot = (props: any) => {
 };
 
 export default function ScreenShotCarousel({ srcList }: { srcList: string[] }) {
-  const startX = useRef<number>(0);
-  const startY = useRef<number>(0);
-  const isHorizontalScroll = useRef<boolean>(false);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  usePreventScrollWhenHorizontalSwipe({ carouselRef });
 
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    startX.current = e.touches[0].clientX;
-    startY.current = e.touches[0].clientY;
-    isHorizontalScroll.current = false; // 초기화
-  };
-
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    const currentX = e.touches[0].clientX;
-    const currentY = e.touches[0].clientY;
-
-    const deltaX = Math.abs(currentX - startX.current);
-    const deltaY = Math.abs(currentY - startY.current);
-
-    // 가로 스크롤이 감지되면 세로 이동을 억제
-    if (deltaX > deltaY && deltaX > 10) {
-      isHorizontalScroll.current = true;
-    } else if (deltaY > deltaX) {
-      // 세로 스크롤 감지 시 무시하여 가로 스크롤만 동작하게 함
-      isHorizontalScroll.current = false;
-    }
-
-    // 세로 스크롤이 아니라면 스크롤 동작을 차단
-    if (!isHorizontalScroll.current) {
-      e.stopPropagation(); // 세로 스크롤 막기
-    }
-  };
   return (
     <Stack
       sx={{
@@ -60,8 +34,7 @@ export default function ScreenShotCarousel({ srcList }: { srcList: string[] }) {
         paddingBottom: "20px",
         position: "relative",
       }}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
+      ref={carouselRef}
     >
       <Carousel
         showDots

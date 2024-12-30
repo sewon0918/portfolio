@@ -1,4 +1,4 @@
-# React + TypeScript + Vite
+<!-- # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -47,4 +47,20 @@ export default tseslint.config({
     ...react.configs['jsx-runtime'].rules,
   },
 })
-```
+``` -->
+
+# Portfolio
+
+이전 작업들을 정리한 포트폴리오입니다. 다양한 인터랙션과 애니메이션 요소들을 직접 경험해보실 수 있도록 주요 프로젝트에는 데모를 포함했습니다.
+
+## 목차
+
+- [기술 스택](#기술-스택)
+
+## 기술 스택
+
+- **코어**: TypeScript, React
+- **스타일링**: Emotion, Framer-motion
+- **빌드 도구**: Vite
+- **패키지 매니저**: Yarn
+- **CI/CD**: Vercel
