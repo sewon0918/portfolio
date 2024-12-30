@@ -34,14 +34,14 @@ export default function Project({
         css={{
           flex: 1,
           minWidth: "300px",
-          padding: "20px",
+          padding: "20px 20px",
         }}
       >
         <ScreenShotCarousel
           srcList={screenshots?.map((each) => `../../${each}`) || []}
         />
       </div>
-      <div css={{ flex: 1, minWidth: "300px", padding: "20px" }}>
+      <div css={{ flex: 1, minWidth: "300px", padding: "20px 40px" }}>
         <Title title={name} />
         <Description>{devDuration}</Description>
         <Description>{techStack}</Description>

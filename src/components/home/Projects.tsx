@@ -18,13 +18,14 @@ export default function Projects() {
   };
 
   return (
-    <>
-      <Button buttonText="Inside" onClick={goInside} />
-      <Button buttonText="Anxy" onClick={goAnxy} />
+    <div css={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       <Button buttonText="Distancing" onClick={goDistancing} />
-      <div css={{ marginTop: "20px" }}>
-        <Button buttonText="Others" onClick={goOthers} />
-      </div>
-    </>
+
+      {/* <div css={{ marginTop: "20px" }}> */}
+      <Button buttonText="Endless Trials" onClick={goOthers} />
+      {/* </div> */}
+      <Button buttonText="Anxy" onClick={goAnxy} />
+      <Button buttonText="Inside" onClick={goInside} />
+    </div>
   );
 }

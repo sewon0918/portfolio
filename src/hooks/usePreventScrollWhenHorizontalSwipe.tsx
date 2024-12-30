@@ -32,8 +32,12 @@ export default function usePreventScrollWhenHorizontalSwipe({
   };
 
   useEffect(() => {
-    carouselRef.current?.addEventListener("touchstart", handleTouchStart);
-    carouselRef.current?.addEventListener("touchmove", handleTouchMove);
+    carouselRef.current?.addEventListener("touchstart", handleTouchStart, {
+      passive: false,
+    });
+    carouselRef.current?.addEventListener("touchmove", handleTouchMove, {
+      passive: false,
+    });
 
     return () => {
       carouselRef.current?.removeEventListener("touchstart", handleTouchStart);

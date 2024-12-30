@@ -1,4 +1,5 @@
 import Duration from "@/components/common/Duration";
+import { Link } from "../common/Link";
 
 export const About = () => {
   return (
@@ -46,16 +47,18 @@ export const Career = () => {
         },
         {
           career: "Orwell Health",
+          link: "https://orwell.distancing.im/",
           duration: { from: "2022.4", to: "2024.12" },
         },
-      ].map(({ career, duration: { from, to } }) => (
+      ].map(({ career, link, duration: { from, to } }) => (
         <div
           css={{
             display: "flex",
             justifyContent: "space-between",
           }}
         >
-          <div>{career}</div>
+          {!link ? <div>{career}</div> : <Link link={link}>{career}</Link>}
+
           <Duration from={from} to={to} />
         </div>
       ))}

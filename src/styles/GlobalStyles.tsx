@@ -26,6 +26,7 @@ const GlobalStyles = () => (
         font-family: Arial, sans-serif;
         font-family: "IBM Plex Mono";
         background-color: var(--primary-color);
+        color: #131314;
       }
     `}
   />

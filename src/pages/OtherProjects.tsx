@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { addAlpha } from "@/utils/helpers";
 import PageContainer from "@/components/common/PageContainer";
 import Project from "@/components/other-projects/Project";
+import { Link } from "@/components/common/Link";
 
 const projectData = [
   {
@@ -140,27 +141,64 @@ export default function OtherProjects() {
               gap: "40px",
             }}
           >
-            {projectData.map(
-              ({
-                name,
-                devDuration,
-                techStack,
-                assetDirectory,
-                screenshots,
-                description,
-              }) => (
-                <Project
-                  key={name}
-                  name={name}
-                  devDuration={devDuration}
-                  techStack={techStack}
-                  screenshots={screenshots.map(
-                    (each) => `${assetDirectory}/${each}`
-                  )}
-                  description={description}
-                />
-              )
-            )}
+            <div css={{ padding: "20px 40px 0 40px", wordBreak: "keep-all" }}>
+              사람들의 마음은 갈수록 척박해지고 있습니다. 전세계적으로 항우울제
+              산업에 수백 조의 돈을 쏟아붓고 있지만 정신건강 수치는 지속적으로
+              악화되고 있고, 대한민국의 우울증 유병률은 OECD 국가 중 1위를
+              기록하고 있죠.
+              <br /> 저희는 사람들에게 더 쉽고 효과적으로 자신의 마음을 관리할
+              수 있는 새로운 도구가 필요하다고 생각했어요. 수많은 테스트를 하며
+              "효과 있는, 동시에 사람들이 정말로 꾸준히 사용하는 디지털 도구" 를
+              찾아 나섰습니다. ‘총알 먼저 쏘고 대포를 쏜다’ 라는 규칙 하에 작은
+              단위부터 단계적으로 검증해나가며, 발전시킬만한 아이디어라고
+              판단되는 경우에 한해 피드백을 반영해 제품을 발전시켰습니다.
+              <Link
+                link={
+                  "https://orwell.distancing.im/orwell-health/mental-health-improved"
+                }
+              >
+                {"PMF 여정 알아보기"}
+              </Link>
+            </div>
+            <div
+              css={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+                "& > div:not(:last-child)::after": {
+                  content: '""',
+                  height: "1px",
+                  backgroundColor: addAlpha("#2E2B2B", 0.1),
+                  display: "block",
+                  margin: "40px 30px",
+                },
+              }}
+            >
+              {projectData.map(
+                ({
+                  name,
+                  devDuration,
+                  techStack,
+                  assetDirectory,
+                  screenshots,
+                  description,
+                }) => (
+                  <div>
+                    <Project
+                      key={name}
+                      name={name}
+                      devDuration={devDuration}
+                      techStack={techStack}
+                      screenshots={screenshots.map(
+                        (each) => `${assetDirectory}/${each}`
+                      )}
+                      description={description}
+                    />
+                    {/* <div css={{ height: "1px", backgroundColor: "gray" }} /> */}
+                  </div>
+                )
+              )}
+            </div>
           </div>
         </ProjectContainer>
       </ProjectLayout>

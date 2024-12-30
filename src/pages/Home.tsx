@@ -27,7 +27,6 @@ export default function Home() {
     display: "flex",
     flexDirection: "column",
     margin: "0 auto",
-    color: "#131314",
     "& > div:not(:last-child)::after": {
       content: '""',
       height: "1px",
