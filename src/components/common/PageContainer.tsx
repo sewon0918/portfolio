@@ -1,4 +1,5 @@
 import { isMobile } from "react-device-detect";
+import Header from "./Header";
 export default function PageContainer({
   noBottomPadding,
   children,
@@ -21,9 +22,7 @@ export default function PageContainer({
           : `40px 0 ${noBottomPadding ? 0 : "60px"} 0`,
       }}
     >
-      <div css={{ fontWeight: 600, textAlign: "center", color: "#8E8E93" }}>
-        PORTFOLIO
-      </div>
+      <Header />
       {children}
     </div>
   );

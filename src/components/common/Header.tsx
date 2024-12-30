@@ -6,7 +6,10 @@ export default function Header() {
     navigate("/");
   };
   return (
-    <div css={{ fontWeight: 600, textAlign: "center" }} onClick={goHome}>
+    <div
+      css={{ fontWeight: 600, textAlign: "center", color: "#8E8E93" }}
+      onClick={goHome}
+    >
       PORTFOLIO
     </div>
   );
