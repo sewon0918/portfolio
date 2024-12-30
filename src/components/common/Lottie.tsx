@@ -63,7 +63,14 @@ function Lottie({
       });
     }
     return () => {
-      animationInstance.current?.destroy();
+      if (animationInstance.current) {
+        animationInstance.current.removeEventListener(
+          "complete",
+          onComplete || (() => {})
+        );
+        animationInstance.current.destroy();
+        animationInstance.current = null;
+      }
     };
   }, [lottieData, path, reload]);
 

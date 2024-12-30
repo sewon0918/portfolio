@@ -1,6 +1,7 @@
 import { Text24 } from "@/components/anxy/common/Text";
 import { Wori } from "@/components/anxy/Wori";
 import { DragWorryScore } from "@/components/anxy/worry-note/DragWorryScore";
+import { useRef } from "react";
 
 export default function WoriScore({
   score,
@@ -9,6 +10,7 @@ export default function WoriScore({
   score: number;
   setScore: React.Dispatch<React.SetStateAction<number>>;
 }) {
+  const woriContainerRef = useRef<HTMLDivElement>(null);
   return (
     <div
       css={{
@@ -36,6 +38,7 @@ export default function WoriScore({
             width: "100%",
             position: "relative",
           }}
+          ref={woriContainerRef}
         >
           <div
             css={{
@@ -43,6 +46,8 @@ export default function WoriScore({
               bottom: 0,
               left: "50%",
               transform: `translateX(-50%)`,
+              scale: (woriContainerRef.current?.offsetHeight || 0) / 378,
+              transformOrigin: "bottom left",
             }}
           >
             <Wori score={score} showGuide />

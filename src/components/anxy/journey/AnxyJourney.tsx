@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { Text24 } from "../common/Text";
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import programAtom, { ActivityType } from "@/recoil/anxy/program/atom";
 import { usePrevious } from "@toss/react";
 import journeyAtom from "@/recoil/anxy/journey/atom";
@@ -80,20 +80,8 @@ const AnxyJourney = () => {
     }
   }, [dailyProgramDetail]);
 
-  // const resetProgramState = useResetRecoilState(programAtom);
-  // const resetJourneyState = useResetRecoilState(journeyAtom);
-
   return (
     <div css={{ width: "100%" }}>
-      {/* 씨앗 */}
-      {/* <div
-        onClick={() => {
-          resetProgramState();
-          resetJourneyState();
-        }}
-      >
-        reset
-      </div> */}
       <div
         css={{
           paddingLeft: "20px",
@@ -132,7 +120,7 @@ const AnxyJourney = () => {
               transition={{
                 duration:
                   previousCompletedActivitiesCount === undefined ? 0.2 : 0,
-                delay: previousCompletedActivitiesCount === undefined ? 1.5 : 0,
+                delay: previousCompletedActivitiesCount === undefined ? 3.5 : 0,
               }}
               css={{
                 padding: "0 20px",

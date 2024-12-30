@@ -30,6 +30,9 @@ export default function Anxy() {
           `친근하고 자연스러운 ui를 위해 lottie와 framer-motion을 이용한 애니메이션 컴포넌트를 다수 구현했습니다.`,
         ],
       }}
+      appStoreLink={
+        "https://apps.apple.com/kr/app/anxy-no-worries/id6443537001"
+      }
     ></ProjectTemplate>
   );
 }

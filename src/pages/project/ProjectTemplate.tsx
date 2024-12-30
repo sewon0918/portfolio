@@ -7,6 +7,8 @@ import { isMobile } from "react-device-detect";
 import { useNavigate } from "react-router";
 import { addAlpha } from "@/utils/helpers";
 import PageContainer from "@/components/common/PageContainer";
+import apple_store from "@/assets/common/apple_store.png";
+import google_play_store from "@/assets/common/google_play_store.png";
 
 export default function ProjectTemplate({
   pathname,
@@ -15,6 +17,8 @@ export default function ProjectTemplate({
   techStack,
   description,
   hasDesktopVersion,
+  appStoreLink,
+  playStoreLink,
 }: {
   pathname: string;
   title: string;
@@ -22,10 +26,13 @@ export default function ProjectTemplate({
   techStack: string;
   description: { [key: string]: string[] };
   hasDesktopVersion?: boolean;
+  appStoreLink?: string;
+  playStoreLink?: string;
 }) {
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const [isIphoneImageLoaded, setIsIphoneImageLoaded] = useState(false);
   const [iphoneMaxHeight, setIphoneMaxHeight] = useState<number>();
 
   useEffect(() => {
@@ -69,6 +76,16 @@ export default function ProjectTemplate({
     height: "calc(100% - 41px)",
     border: "0px",
     borderRadius: "40px",
+  });
+  const Placeholder = styled.iframe({
+    position: "absolute",
+    left: "21px",
+    top: "18.7px",
+    width: "calc(100% - 41px)",
+    height: "calc(100% - 41px)",
+    border: "0px",
+    borderRadius: "40px",
+    backgroundColor: "#f0f0f0",
   });
 
   const DescriptionContainer = styled.div({
@@ -149,13 +166,20 @@ export default function ProjectTemplate({
               <IphoneImage
                 src={iphone_mockup}
                 alt={"iphone_mockup"}
+                onLoad={() => {
+                  setIsIphoneImageLoaded(true);
+                }}
               ></IphoneImage>
 
-              <Iframe
-                src={`${window.location.origin}${pathname}`}
-                width="100%"
-                allowFullScreen
-              ></Iframe>
+              {isIphoneImageLoaded ? (
+                <Iframe
+                  src={`${window.location.origin}${pathname}`}
+                  width="100%"
+                  allowFullScreen
+                ></Iframe>
+              ) : (
+                <Placeholder />
+              )}
             </IphoneContainer>
           )}
 
@@ -167,6 +191,34 @@ export default function ProjectTemplate({
                 {(isMobile || (!isMobile && hasDesktopVersion)) && (
                   <OpenPageButton />
                 )}
+                <div css={{ display: "flex", gap: "10px" }}>
+                  {appStoreLink && (
+                    <img
+                      src={apple_store}
+                      css={{
+                        width: "32px",
+                        borderRadius: "6px",
+                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                      }}
+                      onClick={() => {
+                        window.open(appStoreLink);
+                      }}
+                    />
+                  )}
+                  {playStoreLink && (
+                    <img
+                      src={google_play_store}
+                      css={{
+                        width: "32px",
+                        borderRadius: "6px",
+                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                      }}
+                      onClick={() => {
+                        window.open(playStoreLink);
+                      }}
+                    />
+                  )}
+                </div>
               </TitleContainer>
 
               <Description>{devDuration}</Description>

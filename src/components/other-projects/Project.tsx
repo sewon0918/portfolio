@@ -7,11 +7,13 @@ export default function Project({
   devDuration,
   techStack,
   screenshots,
+  description,
 }: {
   name: string;
   devDuration: string;
   techStack: string;
   screenshots: string[];
+  description: string[];
 }) {
   const Description = styled.div({
     marginTop: "20px",
@@ -43,6 +45,11 @@ export default function Project({
         <Title title={name} />
         <Description>{devDuration}</Description>
         <Description>{techStack}</Description>
+        <Description>
+          {description.map((each, index) => (
+            <div key={index}>{`∙ ${each}`}</div>
+          ))}
+        </Description>
       </div>
     </div>
   );

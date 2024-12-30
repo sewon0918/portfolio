@@ -29,6 +29,12 @@ export default function Distancing() {
           "코치와 유저의 화면을 한 벌로 관리할 수 있도록, 코치와 유저가 같은 활동지를 수정할 수 있도록 설계했습니다.",
         ],
       }}
+      appStoreLink={
+        "https://apps.apple.com/kr/app/디스턴싱-distancing-마음-문제-해결/id6471821968"
+      }
+      playStoreLink={
+        "https://play.google.com/store/apps/details?id=com.orwellhealth.distancing&hl=ko-KR"
+      }
     ></ProjectTemplate>
   );
 }

@@ -86,14 +86,17 @@ const RouteTransition = ({
       >
         <motion.div
           key={location.pathname}
-          transition={{
-            delay: 0,
-            duration: isBackGesture ? 0 : duration,
-            ease: [0.4, 0, 0.2, 1],
-          }}
-          initial={{ x: isPopTransition ? -300 : 300, opacity: 1 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: isPopTransition ? 300 : -300, opacity: 1 }}
+          {...(duration > 0 &&
+            !isBackGesture && {
+              transition: {
+                delay: 0,
+                duration: isBackGesture ? 0 : duration,
+                ease: [0.4, 0, 0.2, 1],
+              },
+              initial: { x: isPopTransition ? -300 : 300, opacity: 1 },
+              animate: { x: 0, opacity: 1 },
+              exit: { x: isPopTransition ? 300 : -300, opacity: 1 },
+            })}
           css={{ position: "absolute", width: "100%", height: "100%" }}
         >
           <div
