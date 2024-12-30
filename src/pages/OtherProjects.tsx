@@ -1,18 +1,66 @@
 import styled from "@emotion/styled";
-import Title from "@/components/Title";
-import iphone_mockup from "@/assets/iphone_mockup.png";
-import { useEffect, useRef, useState } from "react";
-import OpenInNewRoundedIcon from "@mui/icons-material/OpenInNewRounded";
-import { isMobile } from "react-device-detect";
-import { useNavigate } from "react-router";
 import { addAlpha } from "@/utils/helpers";
 import PageContainer from "@/components/common/PageContainer";
 import Project from "@/components/other-projects/Project";
 
-export default function OtherProjects() {
-  const navigate = useNavigate();
-  const containerRef = useRef<HTMLDivElement>(null);
+const projectData = [
+  {
+    name: "Betty",
+    assetDirectory: "assets/betty",
+    screenshots: ["1.png", "2.png", "3.png"],
+    devDuration: "2022.10 - 2023.2",
+    techStack:
+      "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo",
+  },
+  {
+    name: "Loomy",
+    assetDirectory: "assets/loomy",
+    screenshots: ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png"],
+    devDuration: "2022.12",
+    techStack:
+      "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo",
+  },
+  {
+    name: "Somny",
+    assetDirectory: "assets/somny",
+    screenshots: ["1.png", "2.png", "3.png", "4.png", "5.png"],
+    devDuration: "2022.11",
+    techStack:
+      "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo",
+  },
+  {
+    name: "Socrates",
+    assetDirectory: "assets/socrates",
+    screenshots: ["1.png", "2.png", "3.png"],
+    devDuration: "2023.4",
+    techStack: "React, Typescript, Recoil, Tailwindcss, Framer-motion",
+  },
+  {
+    name: "Wallflower Society",
+    assetDirectory: "assets/wallflower_society",
+    screenshots: [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png",
+      "5.png",
+      "6.png",
+      "7.png",
+    ],
+    devDuration: "2023.5",
+    techStack:
+      "React Native, TypeScript, Expo, Recoil, Sentry, AppsFlyer, Legend-motion",
+  },
+  {
+    name: "Distancing Isolation Tool",
+    assetDirectory: "assets/distancing_isolation",
+    screenshots: ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png"],
+    devDuration: "2024.7",
+    techStack: "React, Typescript, Recoil, Jou-UI, Framer-motion",
+  },
+];
 
+export default function OtherProjects() {
   const ProjectLayout = styled.div({
     flex: 1,
     padding: 0,
@@ -27,13 +75,6 @@ export default function OtherProjects() {
     padding: "20px 0 60px 0",
   });
 
-  const DescriptionContainer = styled.div({
-    flex: 1,
-    height: "100%",
-    maxWidth: "800px",
-    overflow: "hidden",
-    position: "relative",
-  });
   const TopScrollIndicator = styled.div({
     position: "absolute",
     top: 0,
@@ -52,27 +93,6 @@ export default function OtherProjects() {
     width: "100%",
     height: "80px",
     background: `linear-gradient(to top, #ffffff, ${addAlpha("#ffffff", 0)})`,
-  });
-
-  const TitleContainer = styled.div({
-    display: "flex",
-    alignItems: "center",
-    gap: "20px",
-    flexWrap: "wrap",
-  });
-
-  const DescriptionScrollArea = styled.div({
-    width: "100%",
-    height: "100%",
-    padding: "20px 40px 80px 40px",
-    overflow: "auto",
-  });
-
-  const Description = styled.div({
-    marginTop: "20px",
-    fontSize: "16px",
-    lineHeight: "24px",
-    wordBreak: "keep-all",
   });
 
   const ScrollIndicator = () => {
@@ -99,48 +119,25 @@ export default function OtherProjects() {
               gap: "40px",
             }}
           >
-            <Project
-              name={"Betty"}
-              devDuration={"2022.10 - 2023.2"}
-              techStack={
-                "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo"
-              }
-            />
-            <Project
-              name={"Loomy"}
-              devDuration={"2022.12"}
-              techStack={
-                "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo"
-              }
-            />
-            <Project
-              name={"Somny"}
-              devDuration={"2022.12"}
-              techStack={
-                "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo"
-              }
-            />
-            <Project
-              name={"Socates"}
-              devDuration={"2022.12"}
-              techStack={
-                "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo"
-              }
-            />
-            <Project
-              name={"Wallflower Society"}
-              devDuration={"2022.12"}
-              techStack={
-                "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo"
-              }
-            />
-            <Project
-              name={"Distancing Isolation Tool"}
-              devDuration={"2022.12"}
-              techStack={
-                "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo"
-              }
-            />
+            {projectData.map(
+              ({
+                name,
+                devDuration,
+                techStack,
+                assetDirectory,
+                screenshots,
+              }) => (
+                <Project
+                  key={"name"}
+                  name={name}
+                  devDuration={devDuration}
+                  techStack={techStack}
+                  screenshots={screenshots.map(
+                    (each) => `${assetDirectory}/${each}`
+                  )}
+                />
+              )
+            )}
           </div>
         </ProjectContainer>
       </ProjectLayout>
