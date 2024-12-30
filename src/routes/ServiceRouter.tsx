@@ -14,6 +14,7 @@ import InsideHome from "@/pages/inside/InsideHome.tsx";
 import Inside from "@/pages/project/Inside.tsx";
 import { useEffect } from "react";
 import { isMobileVersion } from "@/utils/isMobileVersion.ts";
+import OtherProjects from "@/pages/OtherProjects.tsx";
 
 const ServiceRouter = () => {
   const location = useLocation();
@@ -68,6 +69,7 @@ const ServiceRouter = () => {
           <Route path="/inside/:state">
             <Route index element={<InsideHome />} />
           </Route>
+          <Route path="/project/others" element={<OtherProjects />} />
         </Routes>
       </RouteTransition>
     </>

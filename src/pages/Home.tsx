@@ -23,11 +23,11 @@ export default function Home() {
   });
 
   const SelfInstruction = styled.div({
-    maxWidth: `400px`,
     minWidth: "200px",
     display: "flex",
     flexDirection: "column",
     margin: "0 auto",
+    color: "#131314",
     "& > div:not(:last-child)::after": {
       content: '""',
       height: "1px",
@@ -46,9 +46,12 @@ export default function Home() {
 
   const FlexContainer = styled.div({
     flex: 1,
+    maxWidth: "1000px",
+    margin: "0 auto",
     overflow: "auto",
     display: "flex",
     flexDirection: "row",
+    gap: "40px",
     flexWrap: "wrap",
     alignItems: "center",
   });

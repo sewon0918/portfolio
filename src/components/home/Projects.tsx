@@ -13,6 +13,9 @@ export default function Projects() {
   const goDistancing = () => {
     navigate("/project/distancing");
   };
+  const goOthers = () => {
+    navigate("/project/others");
+  };
 
   return (
     <>
@@ -20,7 +23,7 @@ export default function Projects() {
       <Button buttonText="Anxy" onClick={goAnxy} />
       <Button buttonText="Distancing" onClick={goDistancing} />
       <div css={{ marginTop: "20px" }}>
-        <Button buttonText="MVP" onClick={() => {}} />
+        <Button buttonText="Others" onClick={goOthers} />
       </div>
     </>
   );

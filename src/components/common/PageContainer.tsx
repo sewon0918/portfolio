@@ -1,7 +1,9 @@
 import { isMobile } from "react-device-detect";
 export default function PageContainer({
+  noBottomPadding,
   children,
 }: {
+  noBottomPadding?: boolean;
   children: React.ReactNode;
 }) {
   return (
@@ -14,10 +16,14 @@ export default function PageContainer({
         display: "flex",
         flexDirection: "column",
         gap: "20px",
-        padding: isMobile ? "20px 0 0 0" : "40px 0 60px 0",
+        padding: isMobile
+          ? "20px 0 0 0"
+          : `40px 0 ${noBottomPadding ? 0 : "60px"} 0`,
       }}
     >
-      <div css={{ fontWeight: 600, textAlign: "center" }}>PORTFOLIO</div>
+      <div css={{ fontWeight: 600, textAlign: "center", color: "#8E8E93" }}>
+        PORTFOLIO
+      </div>
       {children}
     </div>
   );
