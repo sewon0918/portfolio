@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 
 interface PressedEffectProps {
   element: React.ReactNode;
-  className?: string;
   disable?: boolean;
   action?: () => void;
   hasButton?: boolean;
@@ -12,7 +11,7 @@ interface PressedEffectProps {
 export const PressedEffect: React.FC<PressedEffectProps> = (
   props: PressedEffectProps
 ) => {
-  const { element, className, disable = false, action } = props;
+  const { element, disable = false, action } = props;
   const [buttonDown, setButtonDown] = useState(false);
 
   const pressedRef = useRef<HTMLDivElement>(null);
@@ -21,12 +20,13 @@ export const PressedEffect: React.FC<PressedEffectProps> = (
     <motion.div
       animate={{ scale: buttonDown && !disable ? 0.95 : 1 }}
       transition={{ duration: 0.2 }}
-      className={`w-full h-full  ${className} `}
+      css={{ ...(disable && { pointerEvents: "none" }) }}
       ref={pressedRef}
       onMouseDown={() => {
         setButtonDown(true);
       }}
       onTouchStart={() => {
+        console.log("touch start");
         setButtonDown(true);
       }}
       onMouseUp={() => {
@@ -36,7 +36,7 @@ export const PressedEffect: React.FC<PressedEffectProps> = (
         setButtonDown(false);
       }}
       onClick={() => {
-        if (!disable && action) {
+        if (action) {
           action();
         }
       }}

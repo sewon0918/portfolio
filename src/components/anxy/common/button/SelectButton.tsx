@@ -1,5 +1,4 @@
 import { PressedEffect } from "@/components/common/PressedEffect";
-import { useState } from "react";
 import { Text17 } from "../Text";
 import { useColorTheme } from "@/hooks/useColorTheme";
 import { addAlpha } from "@/utils/helpers";
@@ -28,10 +27,6 @@ export function SelectButton(props: SelectButtonProps) {
     isFullWidth,
   } = props;
 
-  const [buttonDown, setButtonDown] = useState(false);
-  const [touchStartX, setTouchStartX] = useState(0);
-  const [touchStartY, setTouchStartY] = useState(0);
-
   return (
     <div css={{ width: isFullWidth ? "100%" : "fit-content" }}>
       <PressedEffect
@@ -51,39 +46,6 @@ export function SelectButton(props: SelectButtonProps) {
                 : `1.2px solid ${activeColor}`,
               pointerEvents: disable ? "none" : "auto",
             }}
-            onMouseDown={() => {
-              setButtonDown(true);
-            }}
-            onClick={() => {
-              onClick(option);
-            }}
-            onTouchStart={(e) => {
-              if (!buttonDown) {
-                setButtonDown(true);
-                setTouchStartY(e.changedTouches[0].clientY);
-                setTouchStartX(e.changedTouches[0].clientX);
-              }
-            }}
-            onTouchMove={(e) => {
-              if (
-                Math.abs(e.changedTouches[0].clientY - touchStartY) > 10 ||
-                Math.abs(e.changedTouches[0].clientX - touchStartX) > 10
-              ) {
-                setButtonDown(false);
-              }
-            }}
-            onTouchEnd={(e) => {
-              setButtonDown(false);
-
-              if (
-                !(
-                  Math.abs(e.changedTouches[0].clientY - touchStartY) > 5 ||
-                  Math.abs(e.changedTouches[0].clientX - touchStartX) > 5
-                )
-              ) {
-                onClick(option);
-              }
-            }}
           >
             <Text17
               customCss={{
@@ -97,6 +59,9 @@ export function SelectButton(props: SelectButtonProps) {
             </Text17>
           </div>
         }
+        action={() => {
+          onClick(option);
+        }}
       />
     </div>
   );
