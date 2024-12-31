@@ -4,6 +4,7 @@ import { Wori } from "@/components/anxy/Wori";
 import { css } from "@emotion/react";
 import { ActionButton } from "@/components/anxy/common/button/ActionButton";
 import { useNavigate } from "react-router";
+import { Text24 } from "@/components/anxy/common/Text";
 
 export default function WoriTab() {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ export default function WoriTab() {
         padding: "0 20px",
       })}
     >
+      <Text24 customCss={{ paddingTop: "12px" }}>최근 나의 불안</Text24>
       <div
         css={css({
           margin: "0 auto",
