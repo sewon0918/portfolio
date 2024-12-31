@@ -7,7 +7,7 @@ import { ButtonStateType } from "@/components/anxy/common/button/ActionButton";
 import HighlightSentence from "@/components/anxy/retrospect/HighlightSentence";
 import Lottie from "@/components/common/Lottie";
 import highlight_finger_guide from "@/assets/anxy/retrospect/highlight_finger_guide.json";
-import { Text18 } from "@/components/anxy/common/Text";
+import { Text15, Text18 } from "@/components/anxy/common/Text";
 import { addAlpha } from "@/utils/helpers";
 import useActivityDone from "@/hooks/anxy/useActivityDone";
 
@@ -32,9 +32,11 @@ export default function Retrospect() {
   const [selectedSentenceList, setSelectedSentenceList] = useState<string[]>(
     []
   );
+  const [isReset, setIsReset] = useState(false);
   const [showFingerGuide, setShowFingerGuide] = useState(true);
 
   useEffect(() => {
+    console.log("selectedSentenceList:", selectedSentenceList);
     if (selectedSentenceList.length > 0) {
       setButtonState("ACTIVE");
       setShowFingerGuide(false);
@@ -104,29 +106,57 @@ export default function Retrospect() {
           <Text18 customCss={{ color: "#ffffff" }}>
             나쁜 일이 생길 거라 예상한 문장을 찾아주세요
           </Text18>
+
           <div
             css={{
-              height: "300px",
+              maxHeight: "320px",
               position: "relative",
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
             }}
           >
-            <ScrollGradientIndicator isInvisible={!isOverflow} />
             <div
-              ref={containerRef}
               css={{
-                padding: "30px 0",
-                height: "100%",
-                overflow: isOverflow ? "auto" : "hidden",
-                scrollbarWidth: "none",
+                flex: 1,
+                position: "relative",
+                overflow: "hidden",
               }}
             >
-              <HighlightSentence
-                text={thought}
-                selectedSentenceList={selectedSentenceList}
-                setSelectedSentenceList={setSelectedSentenceList}
-                readonly={false}
-              />
+              <ScrollGradientIndicator isInvisible={!isOverflow} />
+              <div
+                ref={containerRef}
+                css={{
+                  padding: "30px 0",
+                  height: "100%",
+                  overflow: isOverflow ? "auto" : "hidden",
+
+                  scrollbarWidth: "none",
+                }}
+              >
+                <HighlightSentence
+                  text={`${thought} `}
+                  setSelectedSentenceList={setSelectedSentenceList}
+                  readonly={false}
+                  isReset={isReset}
+                  setIsReset={setIsReset}
+                />
+              </div>
             </div>
+
+            <Text15
+              customCss={{
+                color: "#ffffff",
+                opacity: 0.6,
+                textDecoration: "underline",
+                textAlign: "center",
+              }}
+              onClick={() => {
+                setIsReset(true);
+              }}
+            >
+              다시 선택할게요
+            </Text15>
             {showFingerGuide && (
               <div
                 css={{

@@ -3,18 +3,21 @@ import { useRef, useState } from "react";
 import { Text24 } from "../common/Text";
 import { addAlpha } from "@/utils/helpers";
 import { useColorTheme } from "@/hooks/useColorTheme";
+import { isEqual } from "es-toolkit";
 
 export default function HighlightSentence({
   text,
-  selectedSentenceList,
   setSelectedSentenceList,
+  isReset,
+  setIsReset,
   color = "#ffffff",
   readonly,
   highlightOpacity = 0.7,
 }: {
   text: string;
-  selectedSentenceList: string[];
-  setSelectedSentenceList?: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedSentenceList: React.Dispatch<React.SetStateAction<string[]>>;
+  isReset: boolean;
+  setIsReset: React.Dispatch<React.SetStateAction<boolean>>;
   color?: string;
   readonly?: boolean;
   highlightOpacity?: number;
@@ -22,70 +25,25 @@ export default function HighlightSentence({
   const colorPalette = useColorTheme({ type: "anxy" });
   const highlightRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement[]>([]);
-  const [selectedIndexList, setSelectedIndexList] = useState<number[]>([]);
-  const [selectedLastIdx, setSelectedLastIdx] = useState<number>(0);
-  const [mode, setMode] = useState<"select" | "delete">("select");
-  const [isDragging, setIsDragging] = useState(false);
+  const [selectedIndexList, setSelectedIndexList] = useState<number[][]>([]);
+  const [firstSelectedIdx, setFirstSelectedIdx] = useState<
+    number | undefined
+  >();
 
   useEffect(() => {
-    const alreadySelectedIndexList = selectedSentenceList
-      .map((sentence) =>
-        Array.from(
-          { length: sentence.length },
-          (v, i) => text.indexOf(sentence) + i
-        )
-      )
-      .flat();
-    setSelectedIndexList(alreadySelectedIndexList);
-  }, []);
-
-  useEffect(() => {
-    const sequentialIndexList: number[][] = [];
-    selectedIndexList.forEach((each, index) =>
-      index === 0
-        ? sequentialIndexList.push([each])
-        : each === selectedIndexList[index - 1] + 1
-        ? sequentialIndexList[sequentialIndexList.length - 1].push(each)
-        : sequentialIndexList.push([each])
+    const updatedSentenceList = selectedIndexList.map((each) =>
+      each.map((element) => text[element]).join("")
     );
-    const textList = sequentialIndexList
-      .map((list) => list.map((index) => text[index]))
-      .map((each) => each.join(""));
-    const regExp = /^[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]*$/;
 
-    if (
-      textList.some(
-        (element) =>
-          (element && element.trim().length === 0) ||
-          regExp.test(element.trim())
-      )
-    ) {
-      setSelectedIndexList(
-        sequentialIndexList
-          .filter(
-            (each, index) =>
-              textList[index] &&
-              textList[index].trim().length > 0 &&
-              !regExp.test(textList[index].trim())
-          )
-          .flat()
-      );
-      if (setSelectedSentenceList) {
-        setSelectedSentenceList(
-          textList.filter(
-            (element) =>
-              element &&
-              element.trim().length > 0 &&
-              !regExp.test(element.trim())
-          )
-        );
-      }
-    } else {
-      if (setSelectedSentenceList) {
-        setSelectedSentenceList(textList);
-      }
-    }
+    setSelectedSentenceList(updatedSentenceList);
   }, [selectedIndexList]);
+
+  useEffect(() => {
+    if (isReset) {
+      setSelectedIndexList([]);
+      setIsReset(false);
+    }
+  }, [isReset]);
 
   function getElementFromPoints(x: number, y: number) {
     return document.elementFromPoint(x, y) as HTMLDivElement;
@@ -98,85 +56,69 @@ export default function HighlightSentence({
     return index;
   }
   const onStart = (x: number, y: number) => {
-    setIsDragging(true);
     const currentIdx = getIndex(getElementFromPoints(x, y));
-    setSelectedLastIdx(currentIdx);
-    if (selectedIndexList.includes(currentIdx)) {
-      setMode("delete");
-    }
-    if (currentIdx >= 0 && text[currentIdx].trim().length > 0) {
-      setSelectedIndexList((selectedIndexList) =>
-        selectedIndexList.includes(currentIdx)
-          ? selectedIndexList.filter((element) => element !== currentIdx)
-          : selectedIndexList.concat(currentIdx)
-      );
+    if (currentIdx > -1) {
+      setFirstSelectedIdx(currentIdx);
+      //이미 선택된 경우 리스트애서 제거하고 다시 추가
+      setSelectedIndexList((selectedIndexList) => {
+        if (selectedIndexList.some((each) => each.includes(currentIdx))) {
+          return [
+            ...selectedIndexList.filter((each) => !each.includes(currentIdx)),
+            [currentIdx],
+          ];
+        }
+        return [...selectedIndexList, [currentIdx]];
+      });
     }
   };
 
   const onMove = (x: number, y: number) => {
-    if (isDragging) {
+    if (firstSelectedIdx !== undefined) {
       const currentIdx = getIndex(getElementFromPoints(x, y));
+
       if (currentIdx >= 0) {
+        const currentList = Array.from(
+          { length: Math.abs(currentIdx - firstSelectedIdx) + 1 },
+          (v, i) => Math.min(firstSelectedIdx, currentIdx) + i
+        );
         setSelectedIndexList((selectedIndexList) => {
-          return mode === "select"
-            ? selectedIndexList.includes(currentIdx)
-              ? selectedIndexList
-              : [
-                  ...new Set(
-                    selectedIndexList.concat(
-                      Array.from(
-                        { length: Math.abs(selectedLastIdx - currentIdx) },
-                        (v, i) =>
-                          selectedLastIdx +
-                          (i + 1) * (selectedLastIdx < currentIdx ? 1 : -1)
-                      )
-                    )
-                  ),
-                ]
-            : selectedIndexList.filter((element) =>
-                selectedLastIdx !== undefined
-                  ? !Array.from(
-                      { length: Math.abs(selectedLastIdx - currentIdx) },
-                      (v, i) =>
-                        selectedLastIdx +
-                        (i + 1) * (selectedLastIdx < currentIdx ? 1 : -1)
-                    ).includes(element)
-                  : true
-              );
+          const previousSelections = selectedIndexList.slice(0, -1);
+          const already_selected = previousSelections.find((each) =>
+            each.includes(currentIdx)
+          );
+          if (already_selected) {
+            let updated_list = [...already_selected, ...currentList];
+            const min = Math.min(...updated_list);
+            const max = Math.max(...updated_list);
+            updated_list = Array.from(
+              { length: max - min + 1 },
+              (v, i) => min + i
+            );
+            return [
+              ...previousSelections.filter(
+                (each) => !isEqual(each, already_selected)
+              ),
+              updated_list,
+            ];
+          } else {
+            return [...previousSelections, currentList];
+          }
         });
-        setSelectedIndexList((selectedIndexList) => {
-          const copied = selectedIndexList.slice();
-          copied.sort((a, b) => {
-            return a - b;
-          });
-          return copied;
-        });
-        setSelectedLastIdx(currentIdx);
       }
     }
   };
 
   const onEnd = () => {
-    setIsDragging(false);
-    setSelectedIndexList((selectedIndexList) => {
-      const copied = selectedIndexList.slice();
-      copied.sort((a, b) => {
-        return a - b;
-      });
-      return copied;
-    });
-    setMode("select");
+    setFirstSelectedIdx(undefined);
   };
 
   useEffect(() => {
-    window?.addEventListener("mouseup", onEnd, {
-      passive: false,
-    });
+    window?.addEventListener("mouseup", onEnd);
 
     return () => {
       window?.removeEventListener("mouseup", onEnd);
     };
-  }, [isDragging]);
+  }, []);
 
   return (
     <div
@@ -218,7 +160,7 @@ export default function HighlightSentence({
               width: "100%",
               display: "inline",
               color: color,
-              backgroundColor: selectedIndexList.includes(index)
+              backgroundColor: selectedIndexList.flat().includes(index)
                 ? addAlpha(colorPalette.orange, highlightOpacity)
                 : undefined,
             }}

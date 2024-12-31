@@ -24,11 +24,23 @@ const StyledText24 = styled.div`
 export function Text15({
   children,
   customCss,
+  ...props
 }: {
   children: string;
   customCss?: Interpolation<Theme>;
-}) {
-  return <StyledText15 css={customCss}>{children}</StyledText15>;
+} & React.HTMLProps<HTMLDivElement>) {
+  return (
+    <div
+      css={{
+        fontSize: "15px",
+        lineHeight: "21px",
+        ...((customCss as object) || {}),
+      }}
+      {...props}
+    >
+      {children}
+    </div>
+  );
 }
 
 export function Text17({
