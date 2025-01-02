@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { getImageUrl } from "@/utils/helpers";
 import Anxy, { anxyStateType } from "../customizing/Anxy";
 import {
@@ -145,7 +145,6 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
   const [anxyWalking, setAnxyWalking] = useState(false);
   const mileStoneWidth = 124;
   const anxyWidth = 85;
-  // const brokenWidth = 175;
   const brokenWidth = 160;
   const bridgeGap = 4;
 
@@ -266,7 +265,6 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
       {state && (
         <div css={{ width: "100%", height: "100%", overflow: "hidden" }}>
           <motion.div
-            key={state}
             initial={{
               x: previousStatePositionData
                 ? previousStatePositionData?.backgroundX
@@ -304,7 +302,6 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
             >
               {/* anxy */}
               <motion.div
-                key={`${state}`}
                 style={{
                   position: "absolute",
                   bottom: "12px",
@@ -329,7 +326,6 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
                   if (state === "ONPROGRESS" || state === "DONE") {
                     setAnxyWalking(false);
                   }
-
                   if (
                     state === "ONPROGRESS" &&
                     completedActivitiesCount === bridgeNum
@@ -346,24 +342,37 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
                   }
                 }}
               >
-                <Anxy
-                  state={anxyState}
-                  itemList={itemList}
-                  loop={anxyState === "walking"}
-                  autoplay={anxyWalking}
-                  playing={anxyWalking}
-                  onAnimationComplete={() => {
-                    setAnxyWalking(false);
-                    if (anxyState == "standup") {
-                      setState("ONPROGRESS");
-                      setPreviousState("WAIT");
-                    } else if (anxyState == "sitdown") {
-                      setAnxyState("standup");
-                    }
-                  }}
-                />
+                <AnimatePresence mode="sync">
+                  <motion.div
+                    key={`${anxyState}`}
+                    animate={{
+                      opacity: 1,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      transition: { duration: state === "WAIT" ? 0 : 0.2 },
+                    }}
+                    css={{ position: "absolute", width: "100%" }}
+                  >
+                    <Anxy
+                      state={anxyState}
+                      itemList={itemList}
+                      loop={anxyState === "walking"}
+                      autoplay={anxyWalking}
+                      playing={anxyWalking}
+                      onAnimationComplete={() => {
+                        setAnxyWalking(false);
+                        if (anxyState == "standup") {
+                          setState("ONPROGRESS");
+                          setPreviousState("WAIT");
+                        } else if (anxyState == "sitdown") {
+                          setAnxyState("standup");
+                        }
+                      }}
+                    />
+                  </motion.div>
+                </AnimatePresence>
               </motion.div>
-
               <GroundWithFlag
                 focused={focusMilestone}
                 onClick={milestoneClickAction}

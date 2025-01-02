@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Text24 } from "../common/Text";
 
 export default function Community({ scrollTop }: { scrollTop?: number }) {
-  const mockList = Array(20)
+  const mockList = Array(5)
     .fill([
       {
         contents: `지난 주에 비해 불안 지수를 ‘20점’ 낮췄어요. `,

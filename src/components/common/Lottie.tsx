@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import lottie, { AnimationItem } from "lottie-web";
 
 interface LottieProps {
@@ -24,13 +24,21 @@ function Lottie({
   width,
   height,
   playing,
-  renderer = "svg",
+  renderer = "canvas",
   delay,
   reload,
   onComplete,
 }: LottieProps) {
   const lottieContainer = useRef<HTMLDivElement>(null);
   const animationInstance = useRef<AnimationItem | null>(null);
+  const [isCompleted, setIsCompleted] = useState<boolean>(false);
+
+  const onLottieComplete = () => {
+    setIsCompleted(true);
+    if (onComplete) {
+      onComplete();
+    }
+  };
 
   useEffect(() => {
     if (delay) {
@@ -56,17 +64,13 @@ function Lottie({
     }
 
     if (animationInstance.current) {
-      animationInstance.current.addEventListener("complete", () => {
-        if (onComplete) {
-          onComplete();
-        }
-      });
+      animationInstance.current.addEventListener("complete", onLottieComplete);
     }
     return () => {
       if (animationInstance.current) {
         animationInstance.current.removeEventListener(
           "complete",
-          onComplete || (() => {})
+          onLottieComplete
         );
         animationInstance.current.destroy();
         animationInstance.current = null;
@@ -75,18 +79,24 @@ function Lottie({
   }, [lottieData, path, reload]);
 
   useEffect(() => {
-    if (animationInstance.current && playing !== undefined) {
+    if (animationInstance.current && playing !== undefined && !isCompleted) {
       if (playing) {
         animationInstance.current.play();
       } else {
         animationInstance.current.stop();
-        // animationInstance.current.goToAndStop(0, false);
       }
     }
   }, [playing]);
 
   return (
-    <div css={{ width, height, overflow: "hidden " }} ref={lottieContainer} />
+    <div
+      css={{
+        width,
+        height,
+        overflow: "hidden ",
+      }}
+      ref={lottieContainer}
+    />
   );
 }
 

@@ -94,66 +94,47 @@ export function Ground({
   leftRoundBorder?: boolean;
 }) {
   const colorTheme = useColorTheme({ type: "anxy" });
-  const borderClass = rightRoundBorder
-    ? "rounded-r-[3px]"
-    : leftRoundBorder
-    ? "rounded-l-[3px]"
-    : "";
+
   return (
     <div
-      // className={`w-full h-[26px] ${borderClass} bg-[#A67153] pb-[5px] relative`}
       css={{
         width: "100%",
         height: "26px",
         backgroundColor: "#A67153",
         paddingBottom: "5px",
         position: "relative",
-        // borderRadius: "3px",
-        ...(rightRoundBorder && { borderRightRadius: "3px" }),
-        ...(leftRoundBorder && { borderLeftRadius: "3px" }),
+        overflow: "hidden",
+        borderRadius: `${leftRoundBorder ? "3px" : 0} ${
+          rightRoundBorder ? "3px" : 0
+        } ${rightRoundBorder ? "3px" : 0} ${leftRoundBorder ? "3px" : 0}`,
       }}
     >
       <div
-        // className={`w-full h-full relative ${borderClass} pb-[5px]`}
-        // style={{
-        //   backgroundColor: colorTheme.green,
-        // }}
         css={{
           width: "100%",
           height: "100%",
           position: "relative",
           paddingBottom: "5px",
           backgroundColor: colorTheme.green,
-          ...(rightRoundBorder && { borderRightRadius: "3px" }),
-          ...(leftRoundBorder && { borderLeftRadius: "3px" }),
         }}
       >
         <div
-          // className={`w-full h-full absolute bottom-0 left-0 ${borderClass} bg-[#000000] opacity-[0.3]`}
           css={{
             width: "100%",
             height: "100%",
             position: "absolute",
             bottom: 0,
             left: 0,
-            ...(rightRoundBorder && { borderRightRadius: "3px" }),
-            ...(leftRoundBorder && { borderLeftRadius: "3px" }),
             backgroundColor: "#000000",
             opacity: "0.3",
           }}
         />
         <div
-          className={`w-full h-full ${borderClass} relative`}
-          style={{
-            backgroundColor: colorTheme.green,
-          }}
           css={{
             width: "100%",
             height: "100%",
             position: "relative",
             backgroundColor: colorTheme.green,
-            ...(rightRoundBorder && { borderRightRadius: "3px" }),
-            ...(leftRoundBorder && { borderLeftRadius: "3px" }),
           }}
         />
       </div>
