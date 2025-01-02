@@ -3,6 +3,7 @@ import { useRef } from "react";
 import Carousel from "react-multi-carousel";
 import { addAlpha, getImageUrl } from "@/utils/helpers";
 import usePreventScrollWhenHorizontalSwipe from "@/hooks/usePreventScrollWhenHorizontalSwipe";
+import VideoScreenShot from "../common/VideoScreenshot";
 
 const CustomDot = (props: any) => {
   const { onClick, active } = props;
@@ -36,6 +37,12 @@ export default function ScreenShotCarousel({ srcList }: { srcList: string[] }) {
       }}
       ref={carouselRef}
     >
+      {/* <VideoScreenShot
+        src={getImageUrl(
+          "../../assets/wallflower_society/demo.mp4",
+          import.meta.url
+        )}
+      /> */}
       <Carousel
         showDots
         customDot={<CustomDot />}
@@ -68,15 +75,42 @@ export default function ScreenShotCarousel({ srcList }: { srcList: string[] }) {
         {srcList.map((src) => (
           <div
             css={{
-              width: "10",
+              width: "100%",
+              height: "100%",
               margin: "0 auto",
               padding: "0 4px",
             }}
           >
-            <img
-              src={getImageUrl(src, import.meta.url)}
-              css={{ width: "100%", pointerEvents: "none" }}
-            />
+            {src.includes("png") ? (
+              <img
+                src={getImageUrl(src, import.meta.url)}
+                css={{ width: "100%", pointerEvents: "none" }}
+              />
+            ) : src.includes("mp4") ? (
+              <div
+                css={{
+                  width: "100%",
+                  height: "100%",
+                  overflow: "hidden",
+                }}
+              >
+                {/* <video
+                  width="100%"
+                  height="100%"
+                  controls // 컨트롤러 표시
+                  css={{ objectFit: "cover" }}
+                >
+                  <source
+                    src={getImageUrl(src, import.meta.url)}
+                    type="video/mp4"
+                  />
+                </video> */}
+                <VideoScreenShot src={getImageUrl(src, import.meta.url)} />
+              </div>
+            ) : (
+              // <VideoScreenShot src={getImageUrl(src, import.meta.url)} />
+              <></>
+            )}
           </div>
         ))}
       </Carousel>

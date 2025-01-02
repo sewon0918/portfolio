@@ -13,32 +13,40 @@ const projectData = [
     techStack:
       "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo",
     description: [
-      "식이장애 치료를 위한 앱입니다.",
-      "불안 관리 앱 Anxy와 같이 배우고, 기록하며 식이장애를 유발하는 뿌리깊은 생각을 찾도록 도와줍니다.",
+      "식이장애 관리 솔루션입니다.",
+      "배우고, 기록하며 식사 패턴을 파악하고 식이장애에서 벗어날 수 있도록 도와줍니다.",
     ],
   },
   {
     name: "Loomy",
     assetDirectory: "assets/loomy",
-    screenshots: ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png"],
+    screenshots: [
+      "demo.mp4",
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png",
+      "5.png",
+      "6.png",
+    ],
     devDuration: "2022.12",
     techStack:
       "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo",
     description: [
-      "우울증을 위한 앱입니다.",
-      "불안 관리 앱 Anxy와 같이 배우고, 기록하며 식이장애를 유발하는 뿌리깊은 생각을 찾도록 도와줍니다.",
+      "우울 관리 솔루션입니다.",
+      "'마음의 날씨를 바꾼다'는 컨셉으로 게임처럼 우울을 관리할 수 있도록 도와줍니다.",
     ],
   },
   {
     name: "Somny",
     assetDirectory: "assets/somny",
-    screenshots: ["1.png", "2.png", "3.png", "4.png", "5.png"],
+    screenshots: ["demo.mp4", "1.png", "2.png", "3.png", "4.png", "5.png"],
     devDuration: "2022.11",
     techStack:
       "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo",
     description: [
-      "수면 문제 치료를 위한 앱입니다.",
-      "불안 관리 앱 Anxy와 같이 배우고, 기록하며 규칙적인 수면 습관을 기르도록 도와줍니다.",
+      "수면 관리 솔루션입니다.",
+      "배우고, 기록하며 규칙적인 수면 습관을 기르도록 도와줍니다.",
     ],
   },
   {
@@ -49,13 +57,15 @@ const projectData = [
     techStack: "React, Typescript, Recoil, Tailwindcss, Framer-motion",
     description: [
       "글로벌 시장을 타겟으로 한 저널링 서비스입니다. ",
-      "AI와 대화하며 자신의 생각을 정리하고 기록하는 것을 도와줍니다.",
+      "뿌리깊은 생각을 꺼내볼 수 있는 질문에 답하며 생각을 정리할 수 있도록 도와줍니다.",
     ],
   },
   {
     name: "Wallflower Society",
     assetDirectory: "assets/wallflower_society",
     screenshots: [
+      "demo.mp4",
+
       "1.png",
       "2.png",
       "3.png",
@@ -69,7 +79,7 @@ const projectData = [
       "React Native, TypeScript, Expo, Recoil, Sentry, AppsFlyer, Legend-motion",
     description: [
       "글로벌 시장을 타겟으로 한 사회불안을 위한 챌린지 서비스입니다.",
-      "사용자는 ",
+      "나에게 맞는 챌린지를 선택해 진행하며 사회적인 상황에서 단계적으로 불안을 극복할 수 있도록 도와줍니다. 챌린지를 완료하면 그 경험을 공유하며 사람들과 소통할 수 있습니다.",
     ],
   },
   {
@@ -78,7 +88,9 @@ const projectData = [
     screenshots: ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png"],
     devDuration: "2024.7",
     techStack: "React, Typescript, Recoil, Jou-UI, Framer-motion",
-    description: [""],
+    description: [
+      "디스턴싱의 개념에 관심이 있지만 모종의 이유로 제품은 사용하지 않는 사람들에게 조금 더 쉽게 제공하기 위해 만든 툴입니다. 사용자가 머릿속에 떠오르는 생각을 자유롭게 기록하면, AI와의 문답을 통해 상황-생각-감정으로 분리해줍니다.",
+    ],
   },
 ];
 
@@ -150,8 +162,7 @@ export default function OtherProjects() {
               수 있는 새로운 도구가 필요하다고 생각했어요. 수많은 테스트를 하며
               "효과 있는, 동시에 사람들이 정말로 꾸준히 사용하는 디지털 도구" 를
               찾아 나섰습니다. ‘총알 먼저 쏘고 대포를 쏜다’ 라는 규칙 하에 작은
-              단위부터 단계적으로 검증해나가며, 발전시킬만한 아이디어라고
-              판단되는 경우에 한해 피드백을 반영해 제품을 발전시켰습니다.
+              단위부터 단계적으로 검증해나가며 제품을 발전시켰습니다.
               <Link
                 link={
                   "https://orwell.distancing.im/orwell-health/mental-health-improved"

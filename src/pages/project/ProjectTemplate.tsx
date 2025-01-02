@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import Title from "@/components/Title";
-import iphone_mockup from "@/assets/iphone_mockup.png";
+import iphone15 from "@/assets/common/iphone15.png";
 import { useEffect, useRef, useState } from "react";
 import OpenInNewRoundedIcon from "@mui/icons-material/OpenInNewRounded";
 import { isMobile } from "react-device-detect";
@@ -164,8 +164,8 @@ export default function ProjectTemplate({
           {!isMobile && (
             <IphoneContainer>
               <IphoneImage
-                src={iphone_mockup}
-                alt={"iphone_mockup"}
+                src={iphone15}
+                alt={"iphone15"}
                 onLoad={() => {
                   setIsIphoneImageLoaded(true);
                 }}
