@@ -1,5 +1,4 @@
 import { useLayout } from "@/hooks/useLayout";
-import { isInIframe } from "@/utils/isInIframe";
 import { css } from "@emotion/react";
 import { useThrottle } from "@toss/react";
 import React, { useEffect, useRef } from "react";
@@ -13,14 +12,10 @@ export default function AppScreen({
   children: React.ReactNode;
   setScrollTop?: React.Dispatch<React.SetStateAction<number>>;
 }>) {
-  const { showHeader } = useLayout();
-  const notchHeight = isInIframe ? "var(--notch-height)" : "0px";
-  const headerHeight = showHeader ? "var(--header-height)" : "0px";
+  const { notchHeight, headerHeight } = useLayout();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const setCurrentPosition = useThrottle(() => {
-    console.log(containerRef.current?.scrollTop);
-
     if (containerRef.current?.scrollTop && setScrollTop) {
       setScrollTop(containerRef.current?.scrollTop);
     }
@@ -48,8 +43,6 @@ export default function AppScreen({
         paddingTop: `calc(${headerHeight} + ${notchHeight})`,
         height: "calc(var(--vh,1vh) * 100)",
         minHeight: "calc(var(--vh.1vh) * 100)",
-        // minHeight: "calc(100vh)",
-        // height: "100%",
         backgroundColor: backgroundColor,
         overflowY: "scroll",
         fontFamily: "Arial, sans-serif",

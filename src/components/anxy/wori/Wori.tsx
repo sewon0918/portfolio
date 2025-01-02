@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { usePrevious } from "@uidotdev/usehooks";
 import { Body, Head, Legs, Pants } from "./WoriBodyParts";
 import { css } from "@emotion/react";
+import woriAtom from "@/recoil/anxy/wori/atom";
+import { useSetRecoilState } from "recoil";
 
 interface WoriProps {
   score: number;
@@ -18,9 +20,11 @@ export const Wori: React.FC<WoriProps> = ({
   showWoriAnimation = false,
 }) => {
   const previousScore = usePrevious(score);
+  const setWoriScore = useSetRecoilState(woriAtom);
 
-  const duration = 0;
   const animationDuration = 0.3;
+  const duration =
+    showWoriAnimation && previousScore > 0 ? animationDuration : 0;
 
   const springConfig = {
     type: showWoriAnimation && "spring",
@@ -54,7 +58,12 @@ export const Wori: React.FC<WoriProps> = ({
           }}
           transition={{
             ...springConfig,
-            duration: showWoriAnimation ? animationDuration : duration,
+            duration: duration,
+          }}
+          onAnimationComplete={() => {
+            if (showWoriAnimation) {
+              setWoriScore((state) => ({ ...state, prevScore: score }));
+            }
           }}
         >
           <div
@@ -81,7 +90,7 @@ export const Wori: React.FC<WoriProps> = ({
               animate={{ bottom: `${54 - 9 * (score / 100)}px` }}
               transition={{
                 ...springConfig,
-                duration: showWoriAnimation ? animationDuration : duration,
+                duration: duration,
               }}
             />
           </div>
@@ -97,7 +106,7 @@ export const Wori: React.FC<WoriProps> = ({
             animate={{ height: `${(74 * score) / 100}px` }}
             transition={{
               ...springConfig,
-              duration: showWoriAnimation ? animationDuration : duration,
+              duration: duration,
             }}
           />
 
@@ -118,7 +127,7 @@ export const Wori: React.FC<WoriProps> = ({
           }}
           transition={{
             ...springConfig,
-            duration: showWoriAnimation ? animationDuration : duration,
+            duration: duration,
           }}
           css={css({
             position: "absolute",

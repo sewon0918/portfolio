@@ -90,7 +90,6 @@ export default function CheerUpPost({
   const orange = "#D66418";
   useEffect(() => {
     if (isEnded) {
-      console.log("isEnded", cheerId);
       setAvailableCheerList((availableCheerList) =>
         availableCheerList.filter((element) => element.cheerId !== cheerId)
       );

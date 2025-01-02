@@ -23,7 +23,6 @@ const GlobalStyles = () => (
       body {
         box-sizing: border-box;
         margin: 0;
-        font-family: Arial, sans-serif;
         font-family: "IBM Plex Mono";
         background-color: var(--primary-color);
         color: #131314;

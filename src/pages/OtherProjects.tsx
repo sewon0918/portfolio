@@ -18,6 +18,18 @@ const projectData = [
     ],
   },
   {
+    name: "Somny",
+    assetDirectory: "assets/somny",
+    screenshots: ["demo.mp4", "1.png", "2.png", "3.png", "4.png", "5.png"],
+    devDuration: "2022.11",
+    techStack:
+      "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo",
+    description: [
+      "수면 관리 솔루션입니다.",
+      "배우고, 기록하며 규칙적인 수면 습관을 기르도록 도와줍니다.",
+    ],
+  },
+  {
     name: "Loomy",
     assetDirectory: "assets/loomy",
     screenshots: [
@@ -38,18 +50,6 @@ const projectData = [
     ],
   },
   {
-    name: "Somny",
-    assetDirectory: "assets/somny",
-    screenshots: ["demo.mp4", "1.png", "2.png", "3.png", "4.png", "5.png"],
-    devDuration: "2022.11",
-    techStack:
-      "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo",
-    description: [
-      "수면 관리 솔루션입니다.",
-      "배우고, 기록하며 규칙적인 수면 습관을 기르도록 도와줍니다.",
-    ],
-  },
-  {
     name: "Socrates",
     assetDirectory: "assets/socrates",
     screenshots: ["1.png", "2.png", "3.png"],
@@ -57,7 +57,8 @@ const projectData = [
     techStack: "React, Typescript, Recoil, Tailwindcss, Framer-motion",
     description: [
       "글로벌 시장을 타겟으로 한 저널링 서비스입니다. ",
-      "뿌리깊은 생각을 꺼내볼 수 있는 질문에 답하며 생각을 정리할 수 있도록 도와줍니다.",
+      "뿌리깊은 생각을 꺼내볼 수 있는 AI의 질문에 답하며 생각을 정리할 수 있도록 도와줍니다.",
+      "하루만에 개발했고, 3번의 문답 이후 이메일을 받는 방식으로 사용자들의 반응을 테스트 했습니다. ",
     ],
   },
   {
@@ -65,7 +66,6 @@ const projectData = [
     assetDirectory: "assets/wallflower_society",
     screenshots: [
       "demo.mp4",
-
       "1.png",
       "2.png",
       "3.png",
@@ -80,6 +80,7 @@ const projectData = [
     description: [
       "글로벌 시장을 타겟으로 한 사회불안을 위한 챌린지 서비스입니다.",
       "나에게 맞는 챌린지를 선택해 진행하며 사회적인 상황에서 단계적으로 불안을 극복할 수 있도록 도와줍니다. 챌린지를 완료하면 그 경험을 공유하며 사람들과 소통할 수 있습니다.",
+      "React Native를 사용한 첫번째 프로젝트이고, 3주 만에 스토어에 성공적으로 릴리즈했습니다.",
     ],
   },
   {

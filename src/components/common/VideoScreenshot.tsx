@@ -8,7 +8,7 @@ export default function VideoScreenShot({ src }: { src: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [containerWidth, setContainerWidth] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [isHover, setIsHover] = useState<boolean>(false);
+
   useEffect(() => {
     setContainerWidth(containerRef.current?.offsetWidth || 0);
   }, [containerRef.current]);

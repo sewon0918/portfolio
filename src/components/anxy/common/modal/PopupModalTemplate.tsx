@@ -49,6 +49,9 @@ export const PopupModalTemplate: React.FC<PopupModalTemplateProps> = ({
           setIsModalVisible(false);
         }}
         detent="content-height"
+        css={{
+          fontFamily: "Arial, sans-serif",
+        }}
       >
         <Sheet.Container>
           <Sheet.Header disableDrag={false}>

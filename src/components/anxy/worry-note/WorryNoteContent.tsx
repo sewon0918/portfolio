@@ -16,7 +16,7 @@ export default function WorryNoteContent({
   updateSelectedOptions,
   updateNestedSelectedOptions,
   updateInputOptions,
-  updateNesedInputOptions,
+  updateNestedInputOptions,
 }: {
   metaInfo: MetaInfoType[];
   userInput: UserInputType;
@@ -33,7 +33,7 @@ export default function WorryNoteContent({
     id: CategoryType,
     option: string[]
   ) => void;
-  updateNesedInputOptions: (
+  updateNestedInputOptions: (
     inputOptions: string[],
     id: CategoryType,
     option: {
@@ -169,7 +169,7 @@ export default function WorryNoteContent({
                       );
                     }}
                     setInputOptions={(inputOptions: string[]) => {
-                      updateNesedInputOptions(
+                      updateNestedInputOptions(
                         inputOptions,
                         category.id,
                         category.option as {

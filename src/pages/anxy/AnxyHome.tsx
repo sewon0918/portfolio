@@ -1,5 +1,5 @@
 import AppScreen from "@/components/common/AppScreen";
-import Tabs from "@/components/anxy/Tabs";
+import Tabs from "@/components/anxy/tab/Tabs";
 import { useRecoilState } from "recoil";
 import homeTypeAtom from "@/recoil/anxy/home/atom";
 import AnxyTab from "./AnxyTab";

@@ -1,7 +1,8 @@
 import { Text24 } from "@/components/anxy/common/Text";
-import { Wori } from "@/components/anxy/Wori";
+import { Wori } from "@/components/anxy/wori/Wori";
 import { DragWorryScore } from "@/components/anxy/worry-note/DragWorryScore";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import Toast from "../common/Toast";
 
 export default function WoriScore({
   score,
@@ -10,7 +11,15 @@ export default function WoriScore({
   score: number;
   setScore: React.Dispatch<React.SetStateAction<number>>;
 }) {
+  const [showToast, setShowToast] = useState<boolean>(false);
   const woriContainerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (score === 0) {
+      setShowToast(true);
+    } else {
+      setShowToast(false);
+    }
+  }, [score]);
   return (
     <div
       css={{
@@ -21,6 +30,11 @@ export default function WoriScore({
         flexDirection: "column",
       }}
     >
+      <Toast
+        text={"불안하지 않으면 기록하지 않아도 돼요"}
+        showToast={showToast}
+        setShowToast={setShowToast}
+      />
       <Text24>{"얼마나 불안했나요?"}</Text24>
       <div
         css={{

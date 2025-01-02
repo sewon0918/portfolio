@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 
 import ModalTemplate from "../common/modal/ModalTemplate";
-import { Text15 } from "../common/Text";
 import Lottie from "@/components/common/Lottie";
 import reward_twinkle from "@/assets/anxy/journey/reward_twinkle.json";
 import reward_gain from "@/assets/anxy/journey/reward_gain.json";
+import { Text15 } from "../common/Text";
 
 export function RewardModal({
   isModalVisible,

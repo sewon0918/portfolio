@@ -15,6 +15,7 @@ import Inside from "@/pages/project/Inside.tsx";
 import { useEffect } from "react";
 import { isMobileVersion } from "@/utils/isMobileVersion.ts";
 import OtherProjects from "@/pages/OtherProjects.tsx";
+import Grounding from "@/pages/anxy/Grounding.tsx";
 
 const ServiceRouter = () => {
   const location = useLocation();
@@ -61,6 +62,7 @@ const ServiceRouter = () => {
             <Route path="test" element={<Test />} />
             <Route path="store" element={<Store />} />
             <Route path="worry-note" element={<WorryNote />} />
+            <Route path="grounding" element={<Grounding />} />
             <Route path="retrospect" element={<Retrospect />} />
           </Route>
           <Route path="/distancing/:taskKey?">

@@ -96,6 +96,8 @@ export const theme = extendTheme({
   //   display: "Roboto", // applies to `h1`–`h4`
   //   body: "Roboto", // applies to `title-*` and `body-*`
   // },
+
+  // fontFamily: "Arial, sans-serif",
   colorSchemes: {
     light: {
       palette: {

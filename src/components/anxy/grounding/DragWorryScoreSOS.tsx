@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { addAlpha } from "@/utils/helpers";
 import { css, keyframes } from "@emotion/react";
+import { useNavigate } from "react-router";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 interface DragWorryScoreSOS {
   baseColor?: string;
@@ -11,8 +13,6 @@ interface DragWorryScoreSOS {
   setScore: (score: number) => void;
   setShowWoriAnimation: (showWoriAnimation: boolean) => void;
 }
-
-const orange = "#D66418";
 
 const Handle = () => {
   return (
@@ -34,44 +34,52 @@ const Handle = () => {
     </svg>
   );
 };
-export const DragWorryScoreSOS: React.FC<DragWorryScoreSOS> = ({
-  baseColor = addAlpha(orange, 0.1),
-  pathColor = orange,
-  score,
-  setScore,
-  setShowWoriAnimation,
-}) => {
+export const DragWorryScoreSOS: React.FC<DragWorryScoreSOS> = (props) => {
+  const colorPalette = useColorTheme({ type: "anxy" });
+
+  const {
+    baseColor = addAlpha(colorPalette.orange, 0.1),
+    pathColor = colorPalette.orange,
+    score,
+    setScore,
+    setShowWoriAnimation,
+  } = props;
+  const navigate = useNavigate();
+  const goGrounding = () => {
+    navigate("/anxy/grounding");
+  };
   const handleRef = useRef<HTMLDivElement>(null);
   const [dragScore, setDragScore] = useState(score);
-  const [isInGoGroundingRange, setInGoGroundingRange] = useState(false);
-  const [whileDragging, setWhileDragging] = useState(false);
+  const isInGoGroundingRange = dragScore < 15;
+
+  const [isGoGrounding, setIsGoGrounding] = useState(false);
   const [focus, setFocus] = useState<boolean>(false);
 
   const textRef = useRef<HTMLDivElement>(null);
   const [showOrangeWaveText, setShowOrangeWaveText] = useState(false);
 
   useEffect(() => {
-    setShowWoriAnimation(!whileDragging);
-  }, [whileDragging]);
+    setShowWoriAnimation(!focus);
+  }, [focus]);
 
   useEffect(() => {
     setScore(dragScore);
-    if (dragScore < 10) {
-      if (!isInGoGroundingRange) {
-        setInGoGroundingRange(true);
-      }
-    } else {
-      setInGoGroundingRange(false);
-    }
   }, [dragScore]);
+
+  useEffect(() => {
+    if (isGoGrounding && !focus) {
+      setDragScore(0);
+      setScore(0);
+      goGrounding();
+    }
+  }, [isGoGrounding, focus]);
 
   const onTouchMove = (e: TouchEvent) => {
     if (handleRef.current) {
       if (
         handleRef.current?.getBoundingClientRect().x +
           handleRef.current.offsetWidth <
-          (textRef.current?.getBoundingClientRect().x ?? 0) &&
-        !showOrangeWaveText
+        (textRef.current?.getBoundingClientRect().x ?? 0)
       ) {
         setShowOrangeWaveText(true);
       } else {
@@ -80,7 +88,6 @@ export const DragWorryScoreSOS: React.FC<DragWorryScoreSOS> = ({
     }
 
     e.preventDefault();
-    setWhileDragging(true);
     setDragScore(
       Math.max(
         0,
@@ -100,7 +107,8 @@ export const DragWorryScoreSOS: React.FC<DragWorryScoreSOS> = ({
         if (
           handleRef.current?.getBoundingClientRect().x +
             handleRef.current.offsetWidth <
-          (textRef.current?.getBoundingClientRect().x || 0)
+          (textRef.current?.getBoundingClientRect().x || 0) +
+            textRef.current.offsetWidth / 2
         ) {
           setShowOrangeWaveText(true);
         } else {
@@ -109,7 +117,6 @@ export const DragWorryScoreSOS: React.FC<DragWorryScoreSOS> = ({
       }
 
       e.preventDefault();
-      setWhileDragging(true);
       setDragScore(
         Math.max(
           0,
@@ -128,12 +135,8 @@ export const DragWorryScoreSOS: React.FC<DragWorryScoreSOS> = ({
   const onDragEnd = () => {
     setShowOrangeWaveText(false);
     setFocus(false);
-    setWhileDragging(false);
     if (isInGoGroundingRange) {
       setDragScore(0);
-      setTimeout(() => {
-        console.log("go grounding");
-      }, 500);
     } else {
       setDragScore(score);
     }
@@ -157,11 +160,11 @@ export const DragWorryScoreSOS: React.FC<DragWorryScoreSOS> = ({
     };
   }, [focus]);
 
-  const highlightColor = !showOrangeWaveText ? "#ffffff" : orange;
+  const highlightColor = !showOrangeWaveText ? "#ffffff" : colorPalette.orange;
   const noneHighlightColor = addAlpha(highlightColor, 0.6);
 
   const springConfig = {
-    type: !whileDragging && "spring",
+    type: !focus && "spring",
     stiffness: 1000,
     damping: 59,
     mass: 5.1,
@@ -244,7 +247,7 @@ export const DragWorryScoreSOS: React.FC<DragWorryScoreSOS> = ({
       css={containerCss}
       style={{
         background: `linear-gradient(90deg, ${pathColor} 22px, ${
-          isInGoGroundingRange ? addAlpha(orange, 0.6) : baseColor
+          isInGoGroundingRange ? addAlpha(colorPalette.orange, 0.6) : baseColor
         } 22px`,
       }}
     >
@@ -258,6 +261,11 @@ export const DragWorryScoreSOS: React.FC<DragWorryScoreSOS> = ({
           animate={{ width: `${dragScore}%` }}
           transition={{
             ...springConfig,
+          }}
+          onAnimationComplete={() => {
+            if (dragScore === 0) {
+              setIsGoGrounding(true);
+            }
           }}
         />
 

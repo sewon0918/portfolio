@@ -96,7 +96,9 @@ export const DailyProgram: React.FC<DailyProgramProps> = ({ activityList }) => {
                 </div>
               }
               action={() => {
-                navigate(activityMappingData[activityId]?.url);
+                navigate(activityMappingData[activityId]?.url, {
+                  state: { isFromDailyProgram: true },
+                });
               }}
             />
           )

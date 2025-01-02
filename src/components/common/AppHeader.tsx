@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
-import { isInIframe } from "@/utils/isInIframe";
+import { useLayout } from "@/hooks/useLayout";
 
 export default function AppHeader() {
-  const notchHeight = isInIframe ? "var(--notch-height)" : "0px";
+  const { notchHeight } = useLayout();
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);

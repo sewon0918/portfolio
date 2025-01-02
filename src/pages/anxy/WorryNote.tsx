@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import AppScreen from "@/components/common/AppScreen";
 import { useColorTheme } from "@/hooks/useColorTheme";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import ContainerWithBottomButton from "@/components/common/ContainerWithBottomButton";
 import WoriScore from "@/components/anxy/worry-note/WoriScore";
 import WorryNoteContent from "@/components/anxy/worry-note/WorryNoteContent";
 import { ButtonStateType } from "@/components/anxy/common/button/ActionButton";
 import useActivityDone from "@/hooks/anxy/useActivityDone";
+import { useSetRecoilState } from "recoil";
+import woriAtom from "@/recoil/anxy/wori/atom";
 
 export type CategoryType =
   | "situation"
@@ -29,6 +31,10 @@ export default function WorryNote() {
   const colorPalette = useColorTheme({ type: "anxy" });
 
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const isFromDailyProgram = state?.isFromDailyProgram;
+
+  const setWoriScore = useSetRecoilState(woriAtom);
 
   const goBack = () => {
     navigate(-1);
@@ -110,12 +116,12 @@ export default function WorryNote() {
   }
 
   useEffect(() => {
-    if (ifUserInputAllFilled(userInput)) {
+    if (ifUserInputAllFilled(userInput) && score > 0) {
       setButtonState("ACTIVE");
     } else {
       setButtonState("INACTIVE");
     }
-  }, [userInput]);
+  }, [userInput, score]);
 
   function ifUserInputAllFilled(userInput: UserInputType) {
     for (let i = 0; i < metaInfo.length; i++) {
@@ -204,7 +210,7 @@ export default function WorryNote() {
     }));
   };
 
-  const updateNesedInputOptions = (
+  const updateNestedInputOptions = (
     inputOptions: string[],
     id: CategoryType,
     option: {
@@ -231,7 +237,10 @@ export default function WorryNote() {
   };
   function submit() {
     setButtonState("LOADING");
-    completeActivity("worry-note");
+    if (isFromDailyProgram) {
+      completeActivity("worry-note");
+    }
+    setWoriScore((state) => ({ ...state, score: score }));
     setTimeout(() => {
       setButtonState("DONE");
       goBack();
@@ -257,7 +266,7 @@ export default function WorryNote() {
               updateSelectedOptions={updateSelectedOptions}
               updateNestedSelectedOptions={updateNestedSelectedOptions}
               updateInputOptions={updateInputOptions}
-              updateNesedInputOptions={updateNesedInputOptions}
+              updateNestedInputOptions={updateNestedInputOptions}
             />
           )}
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, ReactNode } from "react";
+import React, { useState, ReactNode } from "react";
 import { addAlpha } from "@/utils/helpers";
 import { useColorTheme } from "@/hooks/useColorTheme";
 import { Text17 } from "../Text";
@@ -47,26 +47,13 @@ export const ActionButton: React.FC<ActionButtonProps> = (props) => {
   const colorTheme = themeByType[type];
 
   const [buttonDown, setButtonDown] = useState(false);
-  const [touchStartX, setTouchStartX] = useState(0);
-  const [touchStartY, setTouchStartY] = useState(0);
-  const [disable, setDisable] = useState(false);
-
-  const buttonRef = useRef<HTMLDivElement>(null);
 
   const blurAndAction = () => {
-    if (!disable && action) {
+    if (action) {
       (document.activeElement as HTMLElement).blur();
       action();
     }
   };
-
-  useEffect(() => {
-    if (disable) {
-      setTimeout(() => {
-        setDisable(false);
-      }, 100);
-    }
-  }, [disable]);
 
   const spin = keyframes`
   to {
@@ -84,8 +71,6 @@ export const ActionButton: React.FC<ActionButtonProps> = (props) => {
         backgroundColor: bgColor,
         pointerEvents: state === "ACTIVE" ? "auto" : "none",
       }}
-      ref={buttonRef}
-      onClick={() => console.log("click")}
     >
       <div
         css={{
@@ -111,53 +96,23 @@ export const ActionButton: React.FC<ActionButtonProps> = (props) => {
           justifyContent: "center",
           overflow: "hidden",
         }}
-        onMouseDown={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-
-          setButtonDown(true);
-        }}
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
+        onClick={() => {
           setButtonDown(false);
           blurAndAction();
         }}
-        onTouchStart={(e) => {
-          if (state === "ACTIVE") {
-            e.preventDefault();
-            e.stopPropagation();
-            setButtonDown(true);
-            setTouchStartY(e.changedTouches[0].clientY);
-            setTouchStartX(e.changedTouches[0].clientX);
-          }
+        onMouseDown={() => {
+          setButtonDown(true);
         }}
-        onTouchMove={(e) => {
-          if (state === "ACTIVE") {
-            if (
-              Math.abs(e.changedTouches[0].clientY - touchStartY) > 10 ||
-              Math.abs(e.changedTouches[0].clientX - touchStartX) > 10
-            ) {
-              setDisable(true);
-            }
-          }
+        onMouseUp={() => {
+          setButtonDown(false);
         }}
-        onTouchEnd={(e) => {
-          if (state === "ACTIVE") {
-            e.preventDefault();
-            e.stopPropagation();
-            setButtonDown(false);
-            if (
-              !(
-                Math.abs(e.changedTouches[0].clientY - touchStartY) > 5 ||
-                Math.abs(e.changedTouches[0].clientX - touchStartX) > 5
-              )
-            ) {
-              blurAndAction();
-            }
-          }
+        onMouseLeave={() => {
+          setButtonDown(false);
         }}
-        onTouchCancel={() => {
+        onTouchStart={() => {
+          setButtonDown(true);
+        }}
+        onTouchEnd={() => {
           setButtonDown(false);
         }}
         onTouchEndCapture={() => {
