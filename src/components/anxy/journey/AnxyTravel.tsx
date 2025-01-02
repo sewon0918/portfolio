@@ -350,7 +350,7 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
                     }}
                     exit={{
                       opacity: 0,
-                      transition: { duration: state === "WAIT" ? 0 : 0.2 },
+                      transition: { duration: state === "WAIT" ? 0 : 1 },
                     }}
                     css={{ position: "absolute", width: "100%" }}
                   >
