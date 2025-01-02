@@ -16,13 +16,10 @@ export default function SingleSelectTemplate({
   onClick: (id: string) => void;
   onAnimationComplete: () => void;
 }) {
-  const [showUnselectedOptions, setShowUnselectedOption] =
-    useState<boolean>(false);
+  const [showAnimation, setShowAnimation] = useState<boolean>(false);
 
   useEffect(() => {
-    if (selected) {
-      setShowUnselectedOption(true);
-    }
+    setShowAnimation(false);
   }, [questionId]);
 
   return (
@@ -31,18 +28,17 @@ export default function SingleSelectTemplate({
     >
       {question.map((each) => {
         const isClicked = each.id === selected;
-        const showAnimation = selected !== undefined;
         const text = each.text;
         return (
           <motion.div
             key={`${questionId}-${each.id}-${each.text}`}
             animate={{
-              y: !showUnselectedOptions && showAnimation && !isClicked ? 10 : 0,
-              opacity:
-                !showUnselectedOptions && showAnimation && !isClicked ? 0 : 1,
+              y: showAnimation && !isClicked ? 10 : 0,
+              opacity: showAnimation && !isClicked ? 0 : 1,
             }}
             onClick={() => {
               onClick(each.id);
+              setShowAnimation(true);
               setTimeout(() => {
                 onAnimationComplete();
               }, 200);
