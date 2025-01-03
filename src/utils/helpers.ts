@@ -72,4 +72,10 @@ export function extractHexColor(cssVar: string) {
   return "";
 }
 
+export function getTodayDate() {
+  const today = new Date();
+  const formattedDate = today.toISOString().split("T")[0]; // 'YYYY-MM-DD' 형식으로 변환
+  return formattedDate;
+}
+
 export const isDev = window.location.hostname === "localhost";

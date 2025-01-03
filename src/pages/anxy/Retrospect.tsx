@@ -24,9 +24,18 @@ export default function Retrospect() {
   };
 
   const submit = () => {
+    setButtonState("LOADING");
     completeActivity("retrospect");
-    goBack();
+    setTimeout(() => {
+      setButtonState("DONE");
+    }, 200);
   };
+
+  useEffect(() => {
+    if (buttonState === "DONE") {
+      goBack();
+    }
+  }, [buttonState]);
 
   const completeActivity = useActivityDone();
   const [selectedSentenceList, setSelectedSentenceList] = useState<string[]>(

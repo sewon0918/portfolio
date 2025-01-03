@@ -11,20 +11,14 @@ import {
 } from "./TravelElements";
 import { RewardModal } from "./RewardModal";
 import { MileStoneModal } from "./MileStoneModal";
-import {
-  useRecoilState,
-  useRecoilValue,
-  useResetRecoilState,
-  useSetRecoilState,
-} from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import customizingAtom, {
   addSeedSelector,
 } from "@/recoil/anxy/customizing/atom";
-import journeyAtom, {
+import {
   isMileStoneClickedSelector,
   isRewardGainedSelector,
 } from "@/recoil/anxy/journey/atom";
-import programAtom from "@/recoil/anxy/program/atom";
 
 interface AnxyTravelProps {
   completedActivitiesCount: number;
@@ -37,6 +31,7 @@ interface AnxyTravelProps {
     rewardType: string;
   };
   initialRewardState: RewardState;
+  reset: () => void;
 }
 
 export type AnxyTravelStateType =
@@ -52,6 +47,7 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
   bridgeNum,
   seedData,
   initialRewardState,
+  reset,
 }) => {
   const [currentStage, setCurrentStage] = useState<number>(
     completedActivitiesCount
@@ -259,16 +255,6 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
     setIsMileStoneClicked(true);
   };
 
-  const resetJourney = useResetRecoilState(journeyAtom);
-  const resetProgram = useResetRecoilState(programAtom);
-
-  const reset = () => {
-    if (state === "REST") {
-      resetJourney();
-      resetProgram();
-    }
-  };
-
   return (
     <div css={{ width: "100vw", height: "156px" }}>
       {/* <Text15 customCss={{ position: "absolute" }}>
@@ -290,6 +276,7 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
         dismissAction={milestoneModalAction}
         resetAction={reset}
       />
+
       {/* 배경 */}
       {state && (
         <div css={{ width: "100%", height: "100%", overflow: "hidden" }}>

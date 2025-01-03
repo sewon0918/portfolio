@@ -22,6 +22,7 @@ export function MileStoneModal({
   resetAction: () => void;
 }) {
   const tomorrow = getDateByToday(1);
+
   const [remainingTime, setRemainingTime] = useState(getRemainigTime(tomorrow));
 
   useInterval(() => {

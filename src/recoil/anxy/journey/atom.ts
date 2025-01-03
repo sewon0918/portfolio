@@ -2,6 +2,7 @@ import { atom, selector } from "recoil";
 import { ProgramType } from "../program/atom";
 
 interface JourneyType extends ProgramType {
+  date: string;
   isRewardGained: boolean;
   isMileStoneClicked: boolean;
 }

@@ -18,7 +18,7 @@ export interface ProgramType {
     seedBoxId: string;
   };
 }
-export const dailyProgramDetail_mock = {
+export const dailyProgramDetail_mock: ProgramType = {
   activityList: [
     {
       progressRate: 0,

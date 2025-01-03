@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { Text24 } from "../common/Text";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import programAtom, {
   ActivityType,
   dailyProgramDetail_mock,
@@ -14,6 +14,7 @@ import journeyAtom from "@/recoil/anxy/journey/atom";
 import Seed from "../store/Seed";
 import { DailyProgram } from "../program/DailyProgram";
 import homeTypeAtom from "@/recoil/anxy/home/atom";
+import { getTodayDate } from "@/utils/helpers";
 
 const AnxyJourney = () => {
   const homeType = useRecoilValue(homeTypeAtom);
@@ -25,16 +26,40 @@ const AnxyJourney = () => {
 
   const previousDailyProgramDetail = usePrevious(dailyProgramDetail);
 
+  const today = getTodayDate();
+  const isAllActivityDone = dailyProgramDetail?.activityList.every(
+    (activity) => activity.progressRate === 100
+  );
+
+  const resetJourney = useResetRecoilState(journeyAtom);
+  const resetProgram = useResetRecoilState(programAtom);
+
+  const reset = () => {
+    if (isAllActivityDone) {
+      resetJourney();
+      resetProgram();
+    }
+  };
+
   useEffect(() => {
     if (isFocused) {
       if (!dailyProgramDetail_raw) {
         setDailyProgramDetail_raw(dailyProgramDetail_mock);
-        // resetJourneyState();
       } else {
-        setDailyProgramDetail((state) => ({
-          ...state,
-          activityList: dailyProgramDetail_raw.activityList,
-        }));
+        if (
+          dailyProgramDetail &&
+          isAllActivityDone &&
+          dailyProgramDetail.date !== today
+        ) {
+          //활동 모두 완료 후 날짜 바뀜
+          reset();
+        } else {
+          setDailyProgramDetail((state) => ({
+            ...state,
+            activityList: dailyProgramDetail_raw.activityList,
+            date: today,
+          }));
+        }
       }
     }
   }, [isFocused, dailyProgramDetail_raw]);
@@ -122,6 +147,7 @@ const AnxyJourney = () => {
               initialRewardState={
                 dailyProgramDetail?.isRewardGained ? "GAINED" : "LOCKED"
               }
+              reset={reset}
             />
           )}
           {dailyProgramDetail !== undefined && (
