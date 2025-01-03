@@ -73,7 +73,6 @@ export function Reward({
 
   return (
     <div
-      // className={`w-fit mx-auto `}
       css={{ width: "fit-content", margin: "0 auto" }}
       onClick={() => {
         if (clickable && onClick) {

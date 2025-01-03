@@ -11,14 +11,20 @@ import {
 } from "./TravelElements";
 import { RewardModal } from "./RewardModal";
 import { MileStoneModal } from "./MileStoneModal";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from "recoil";
 import customizingAtom, {
   addSeedSelector,
 } from "@/recoil/anxy/customizing/atom";
-import {
+import journeyAtom, {
   isMileStoneClickedSelector,
   isRewardGainedSelector,
 } from "@/recoil/anxy/journey/atom";
+import programAtom from "@/recoil/anxy/program/atom";
 
 interface AnxyTravelProps {
   completedActivitiesCount: number;
@@ -30,6 +36,7 @@ interface AnxyTravelProps {
     seedBoxId: string;
     rewardType: string;
   };
+  initialRewardState: RewardState;
 }
 
 export type AnxyTravelStateType =
@@ -44,6 +51,7 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
   previousCompletedActivitiesCount,
   bridgeNum,
   seedData,
+  initialRewardState,
 }) => {
   const [currentStage, setCurrentStage] = useState<number>(
     completedActivitiesCount
@@ -63,7 +71,12 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
 
   const [focusMilestone, setFocusMilestone] = useState(false);
   const [focusReward, setFocusReward] = useState(false);
-  const [rewardState, setRewardState] = useState<RewardState>("LOCKED");
+  const [rewardState, setRewardState] =
+    useState<RewardState>(initialRewardState);
+
+  useEffect(() => {
+    setRewardState(initialRewardState);
+  }, [initialRewardState]);
 
   const { itemList } = useRecoilValue(customizingAtom);
 
@@ -94,6 +107,9 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
       setFocusReward(true);
     } else if (state === "DONE") {
       setFocusMilestone(true);
+    } else {
+      setFocusReward(false);
+      setFocusMilestone(false);
     }
   }, [state]);
 
@@ -136,6 +152,8 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
     }
   }, [currentStage, previousStage, bridgeNum]);
 
+  const disableAnimation =
+    previousCompletedActivitiesCount === undefined && state === "WAIT";
   useEffect(() => {
     if (state !== previousState || currentStage !== previousStage) {
       setAnxyWalking(true);
@@ -221,7 +239,7 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
     } else {
       setFocusReward(false);
       setShowRewardPopup(false);
-      setRewardState("GAINED");
+      // setRewardState("GAINED");
       addSeed(1);
       setTimeout(() => {
         setState("DONE");
@@ -239,6 +257,16 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
     setState("REST");
     setShowMilestonePopup(false);
     setIsMileStoneClicked(true);
+  };
+
+  const resetJourney = useResetRecoilState(journeyAtom);
+  const resetProgram = useResetRecoilState(programAtom);
+
+  const reset = () => {
+    if (state === "REST") {
+      resetJourney();
+      resetProgram();
+    }
   };
 
   return (
@@ -260,6 +288,7 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
         setModalVisible={setShowMilestonePopup}
         action={milestoneModalAction}
         dismissAction={milestoneModalAction}
+        resetAction={reset}
       />
       {/* 배경 */}
       {state && (
@@ -273,10 +302,14 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
             animate={{
               x: currentStatePositionData?.backgroundX,
             }}
-            transition={{
-              duration: 2,
-              delay: currentStatePositionData?.delay || 0.2,
-            }}
+            transition={
+              disableAnimation
+                ? { duration: 0, delay: 0 }
+                : {
+                    duration: 2,
+                    delay: currentStatePositionData?.delay || 0.2,
+                  }
+            }
             css={{ width: "300vw", height: "content-fit", overflow: "hidden" }}
           >
             <div
@@ -310,10 +343,14 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
                   zIndex: 20,
                   pointerEvents: "none",
                 }}
-                transition={{
-                  delay: 0.2,
-                  duration: 1,
-                }}
+                transition={
+                  disableAnimation
+                    ? { duration: 0, delay: 0 }
+                    : {
+                        delay: 0.2,
+                        duration: 1,
+                      }
+                }
                 initial={{
                   x: previousStatePositionData
                     ? previousStatePositionData?.anxyX
@@ -437,6 +474,7 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
                         completedActivitiesCount === bridgeNum &&
                         seedData !== null
                       }
+                      // state={rewardState}
                       state={rewardState}
                     />
                   </div>

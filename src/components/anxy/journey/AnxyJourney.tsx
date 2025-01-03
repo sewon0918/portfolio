@@ -5,7 +5,10 @@ import { motion } from "framer-motion";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { Text24 } from "../common/Text";
 import { useRecoilState, useRecoilValue } from "recoil";
-import programAtom, { ActivityType } from "@/recoil/anxy/program/atom";
+import programAtom, {
+  ActivityType,
+  dailyProgramDetail_mock,
+} from "@/recoil/anxy/program/atom";
 import { usePrevious } from "@toss/react";
 import journeyAtom from "@/recoil/anxy/journey/atom";
 import Seed from "../store/Seed";
@@ -15,7 +18,8 @@ import homeTypeAtom from "@/recoil/anxy/home/atom";
 const AnxyJourney = () => {
   const homeType = useRecoilValue(homeTypeAtom);
   const isFocused = homeType === "anxy";
-  const dailyProgramDetail_raw = useRecoilValue(programAtom);
+  const [dailyProgramDetail_raw, setDailyProgramDetail_raw] =
+    useRecoilState(programAtom);
   const [dailyProgramDetail, setDailyProgramDetail] =
     useRecoilState(journeyAtom);
 
@@ -23,10 +27,15 @@ const AnxyJourney = () => {
 
   useEffect(() => {
     if (isFocused) {
-      setDailyProgramDetail((state) => ({
-        ...state,
-        activityList: dailyProgramDetail_raw.activityList,
-      }));
+      if (!dailyProgramDetail_raw) {
+        setDailyProgramDetail_raw(dailyProgramDetail_mock);
+        // resetJourneyState();
+      } else {
+        setDailyProgramDetail((state) => ({
+          ...state,
+          activityList: dailyProgramDetail_raw.activityList,
+        }));
+      }
     }
   }, [isFocused, dailyProgramDetail_raw]);
 
@@ -44,40 +53,44 @@ const AnxyJourney = () => {
   ] = useState<number | undefined>(undefined);
 
   const getDoneActivityNum = (activityList: ActivityType[]) => {
-    return activityList?.filter((element) => element.progressRate === 100)
-      .length;
+    return !activityList
+      ? undefined
+      : activityList?.filter((element) => element.progressRate === 100).length;
   };
 
   useEffect(() => {
-    if (dailyProgramDetail) {
-      setCompletedActivitiesCount(
-        getDoneActivityNum(dailyProgramDetail?.activityList)
-      );
-      setPreviousCompletedActivitiesCount(
-        getDoneActivityNum(previousDailyProgramDetail?.activityList)
-      );
-      const changedList = dailyProgramDetail.activityList
-        ? dailyProgramDetail.activityList.slice()
-        : [];
-      if (dailyActivityList) {
-        dailyActivityList.forEach((beforeItem) => {
-          changedList.forEach((afterItem) => {
-            if (beforeItem.activityId === afterItem.activityId) {
-              const updatedAfterItem = {
-                ...afterItem,
-                isFirstUnlocked: beforeItem.isLock && !afterItem.isLock,
-                isFirstComplete:
-                  (beforeItem.progressRate || 0) < 100 &&
-                  afterItem.progressRate === 100,
-                prevProgressRate: beforeItem.progressRate,
-              };
-              changedList[changedList.indexOf(afterItem)] = updatedAfterItem;
-            }
-          });
+    // if (dailyProgramDetail) {
+    console.log(dailyProgramDetail);
+    setCompletedActivitiesCount(
+      getDoneActivityNum(dailyProgramDetail?.activityList)
+    );
+
+    setPreviousCompletedActivitiesCount(
+      getDoneActivityNum(previousDailyProgramDetail?.activityList)
+    );
+
+    const changedList = dailyProgramDetail?.activityList
+      ? dailyProgramDetail.activityList.slice()
+      : [];
+    if (dailyActivityList) {
+      dailyActivityList.forEach((beforeItem) => {
+        changedList.forEach((afterItem) => {
+          if (beforeItem.activityId === afterItem.activityId) {
+            const updatedAfterItem = {
+              ...afterItem,
+              isFirstUnlocked: beforeItem.isLock && !afterItem.isLock,
+              isFirstComplete:
+                (beforeItem.progressRate || 0) < 100 &&
+                afterItem.progressRate === 100,
+              prevProgressRate: beforeItem.progressRate,
+            };
+            changedList[changedList.indexOf(afterItem)] = updatedAfterItem;
+          }
         });
-      }
-      setDailyActivityList(changedList);
+      });
     }
+    setDailyActivityList(changedList);
+    // }
   }, [dailyProgramDetail]);
 
   return (
@@ -107,9 +120,12 @@ const AnxyJourney = () => {
                 previousCompletedActivitiesCount
               }
               seedData={dailyProgramDetail && dailyProgramDetail.seedBox}
+              initialRewardState={
+                dailyProgramDetail?.isRewardGained ? "GAINED" : "LOCKED"
+              }
             />
           )}
-          {completedActivitiesCount !== undefined && (
+          {dailyProgramDetail !== undefined && (
             <motion.div
               initial={{
                 height: 0,
@@ -118,9 +134,8 @@ const AnxyJourney = () => {
                 height: "auto",
               }}
               transition={{
-                duration:
-                  previousCompletedActivitiesCount === undefined ? 0.2 : 0,
-                delay: previousCompletedActivitiesCount === undefined ? 3.5 : 0,
+                duration: !previousDailyProgramDetail ? 0.2 : 0,
+                delay: !previousDailyProgramDetail ? 3.5 : 0,
               }}
               css={{
                 padding: "0 20px",

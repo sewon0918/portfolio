@@ -21,6 +21,7 @@ export default function Tabs() {
     justifyContent: "center",
     zIndex: 10,
     background: `linear-gradient(to top, ${oat}, ${addAlpha(oat, 0)})`,
+    pointerEvents: "none",
   });
 
   const ButtonContainer = styled.div({
@@ -33,6 +34,7 @@ export default function Tabs() {
     borderRadius: "20px",
     padding: "8px",
     boxShadow: "0px 12px 32px -4px rgba(0, 0, 0, 0.1)",
+    pointerEvents: "auto",
   });
 
   const IconButton = styled.div<{ bgColor: string }>`

@@ -33,13 +33,10 @@ export const dailyProgramDetail_mock = {
   ],
 };
 
-export const initialData = {
-  activityList: [],
-};
-
 const programAtom = atom<ProgramType>({
   key: "program",
-  default: dailyProgramDetail_mock,
+  // default: dailyProgramDetail_mock,
+  default: undefined,
   effects: [
     ({ setSelf, onSet }) => {
       const savedData = localStorage.getItem("program");

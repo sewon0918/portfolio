@@ -5,7 +5,7 @@ import {
   getRemainigTime,
   getRemainigTimeString,
 } from "@/utils/helpers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useInterval } from "@toss/react";
 
 export function MileStoneModal({
@@ -13,11 +13,13 @@ export function MileStoneModal({
   setModalVisible,
   action,
   dismissAction,
+  resetAction,
 }: {
   isModalVisible: boolean;
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   action: () => void;
   dismissAction: () => void;
+  resetAction: () => void;
 }) {
   const tomorrow = getDateByToday(1);
   const [remainingTime, setRemainingTime] = useState(getRemainigTime(tomorrow));
@@ -25,6 +27,13 @@ export function MileStoneModal({
   useInterval(() => {
     setRemainingTime(getRemainigTime(tomorrow));
   }, 1000);
+
+  useEffect(() => {
+    if (getRemainigTimeString(remainingTime) === "0초") {
+      dismissAction();
+      resetAction();
+    }
+  }, [remainingTime]);
 
   return (
     <ModalTemplate
