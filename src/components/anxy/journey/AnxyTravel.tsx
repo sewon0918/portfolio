@@ -385,13 +385,13 @@ export const AnxyTravel: React.FC<AnxyTravelProps> = ({
                     animate={{
                       opacity: 1,
                     }}
-                    // exit={{
-                    //   opacity: 0,
-                    //   transition: {
-                    //     duration:
-                    //       state === "WAIT" || state === previousState ? 0 : 1,
-                    //   },
-                    // }}
+                    exit={{
+                      opacity: 0,
+                      transition: {
+                        duration:
+                          state === "WAIT" || state === previousState ? 0 : 1,
+                      },
+                    }}
                     css={{ position: "absolute", width: "100%" }}
                   >
                     <Anxy

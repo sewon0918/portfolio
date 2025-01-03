@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import Title from "@/components/Title";
-import iphone15 from "@/assets/common/iphone15.png";
+import iphone15 from "@/assets/common/iphone15.webp";
 import { useEffect, useRef, useState } from "react";
 import OpenInNewRoundedIcon from "@mui/icons-material/OpenInNewRounded";
 import { isMobile } from "react-device-detect";

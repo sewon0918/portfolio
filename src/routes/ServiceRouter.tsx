@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { isMobileVersion } from "@/utils/isMobileVersion.ts";
 import OtherProjects from "@/pages/OtherProjects.tsx";
 import Grounding from "@/pages/anxy/Grounding.tsx";
+import { preloadAllLottieFiles } from "@/utils/preloadLottieFiles.ts";
 
 const ServiceRouter = () => {
   const location = useLocation();
@@ -32,6 +33,14 @@ const ServiceRouter = () => {
     body.style.position = "fixed";
     body.style.overflow = "hidden";
   }, []);
+
+  useEffect(() => {
+    if (location.pathname.includes("anxy")) {
+      preloadAllLottieFiles().then((files) => {
+        console.log("Lottie files preloaded", files);
+      });
+    }
+  }, [location]);
 
   const handleResize = () => {
     const vh = window.innerHeight * 0.01;
