@@ -24,7 +24,7 @@ async function preloadLottieFile(url: string) {
 
 export async function preloadAllLottieFiles() {
   const lottieFiles = import.meta.glob(
-    "/src/assets/anxy/customizing/**/**/*.json"
+    "../assets/anxy/customizing/**/**/*.json"
   );
 
   const fileUrls = Object.entries(lottieFiles).map(
