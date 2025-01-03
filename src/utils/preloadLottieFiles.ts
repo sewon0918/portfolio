@@ -15,7 +15,7 @@
 // }
 
 async function preloadLottieFile(url: string) {
-  const response = await fetch(`../${url}`, { cache: "force-cache" }); // 캐시를 강제적으로 사용
+  const response = await fetch(`${url}`, { cache: "force-cache" }); // 캐시를 강제적으로 사용
   if (!response.ok) {
     throw new Error(`Failed to load Lottie file: ${url}`);
   }
