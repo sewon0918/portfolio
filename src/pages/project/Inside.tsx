@@ -6,7 +6,7 @@ export default function Inside() {
       pathname={"/inside/begin"}
       title={"Inside"}
       devDuration={"2022.4 - 2022.9"}
-      techStack={"React, Javascript, Context-api, Tailwindcss, Framer-motion"}
+      techStack={"React, Javascript, Context API, Tailwindcss, Framer-motion"}
       description={{
         ABOUT: [
           "화상 상담 서비스입니다. 사용자는 자신의 니즈에 맞는 상담사를 찾아 상담 일정을 예약한 뒤 예약된 시간에 화상 상담을 진행합니다.",
