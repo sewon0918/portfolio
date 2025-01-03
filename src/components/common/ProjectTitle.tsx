@@ -1,3 +1,4 @@
+import { isMobileVersion } from "@/utils/isMobileVersion";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import { useState } from "react";
 
@@ -9,20 +10,22 @@ export default function ProjectTitle({
   onClick?: () => void;
 }) {
   const [isHover, setIsHover] = useState(false);
+  const [hasClicked, setHasClicked] = useState(false);
   return (
     <div
       css={{
         maxWidth: "100%",
-        width: "fit-content",
+        display: "flex",
+        flexWrap: "wrap",
         fontSize: "40px",
         fontWeight: 700,
         backgroundColor: "transparent",
-        borderWidth: "0px",
         fontFamily: "Arial, sans-serif",
-        // fontFamily: "Noto Sans, serif",
         pointerEvents: onClick ? "auto" : "none",
         transformOrigin: "left",
-        transition: "all 0.2s ease",
+        ...(!isMobileVersion && {
+          transition: "all 0.2s ease",
+        }),
 
         ...(isHover
           ? {
@@ -30,8 +33,7 @@ export default function ProjectTitle({
               backgroundColor: "transparent",
               textDecoration: "underline",
               color: "orange",
-              padding: "5px 0",
-              scale: 1.2,
+              fontSize: "50px",
             }
           : {}),
       }}
@@ -44,27 +46,35 @@ export default function ProjectTitle({
       onTouchStart={() => {
         setIsHover(true);
       }}
-      // onTouchEnd={() => {
-      //   setIsHover(false);
-      // }}
+      onTouchEnd={() => {
+        setTimeout(() => {
+          if (!hasClicked) {
+            setIsHover(false);
+          }
+        }, 100);
+      }}
       onClick={() => {
         if (onClick) {
+          setHasClicked(true);
+          setIsHover(true);
           onClick();
         }
       }}
     >
-      {title}
+      <div css={{ whiteSpace: "nowrap" }}> {title}</div>
+
       {isHover && (
-        <ArrowForwardRoundedIcon
-          css={{
-            fontSize: "30px",
-            color: "inherit",
-            marginLeft: "4px",
-            opacity: isHover ? 1 : 0,
-            display: "inline",
-            // border: "1px solid red",
-          }}
-        />
+        <div>
+          <ArrowForwardRoundedIcon
+            css={{
+              fontSize: "30px",
+              color: "inherit",
+              marginLeft: "4px",
+              opacity: isHover ? 1 : 0,
+              display: "inline",
+            }}
+          />
+        </div>
       )}
     </div>
   );
