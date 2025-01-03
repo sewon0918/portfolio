@@ -40,6 +40,7 @@ export default function Home() {
     flex: 1,
     overflow: "hidden",
     display: "flex",
+    flexDirection: "column",
     position: "relative",
   });
 
@@ -56,7 +57,7 @@ export default function Home() {
   });
 
   return (
-    <PageContainer>
+    <PageContainer noBottomPadding>
       <Wrapper>
         <ScrollIndicator />
         <FlexContainer>

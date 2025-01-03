@@ -12,6 +12,8 @@ export default function ProjectTitle({
   return (
     <div
       css={{
+        maxWidth: "100%",
+        width: "fit-content",
         fontSize: "40px",
         fontWeight: 700,
         backgroundColor: "transparent",
@@ -39,6 +41,12 @@ export default function ProjectTitle({
       onMouseLeave={() => {
         setIsHover(false);
       }}
+      onTouchStart={() => {
+        setIsHover(true);
+      }}
+      onTouchEnd={() => {
+        setIsHover(false);
+      }}
       onClick={onClick}
     >
       {title}
@@ -47,8 +55,10 @@ export default function ProjectTitle({
           css={{
             fontSize: "30px",
             color: "inherit",
-            marginLeft: "10px",
+            marginLeft: "4px",
             opacity: isHover ? 1 : 0,
+            display: "inline",
+            // border: "1px solid red",
           }}
         />
       )}

@@ -5,12 +5,12 @@ import Projects from "@/components/home/Projects";
 import { About, Career, Instruction } from "@/components/home/Elements";
 import { ScrollRestoration } from "react-router";
 import { useEffect } from "react";
+import { isMobile } from "react-device-detect";
+import Header from "@/components/common/Header";
+import { Link } from "@/components/common/Link";
 
 export default function Home() {
   const ScrollIndicator = styled.div({
-    position: "absolute",
-    top: 0,
-    left: 0,
     width: "100%",
     height: "40px",
     background: `linear-gradient(to bottom, #ffffff, ${addAlpha(
@@ -40,13 +40,15 @@ export default function Home() {
 
   const Wrapper = styled.div({
     flex: 1,
+
     overflow: "hidden",
     display: "flex",
     position: "relative",
   });
 
   const FlexContainer = styled.div({
-    // flex: 1,
+    flex: 1,
+    // minHeight: "100%",
     maxWidth: "1000px",
     margin: "0 auto",
     // overflow: "auto",
@@ -58,23 +60,47 @@ export default function Home() {
   });
 
   return (
-    // <PageContainer>
-    //   <Wrapper>
-    //     <ScrollIndicator />
-    <FlexContainer>
-      {/* <ScrollRestoration /> */}
-      <HalfContainer>
-        <SelfInstruction>
-          <About />
-          <Instruction />
-          <Career />
-        </SelfInstruction>
-      </HalfContainer>
-      <HalfContainer>
-        <Projects />
-      </HalfContainer>
-    </FlexContainer>
-    //   </Wrapper>
-    // </PageContainer>
+    <div
+      css={{
+        width: "100%",
+        height: "calc(var(--vh,1vh) * 100)",
+        overflow: "auto",
+        backgroundColor: "white",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <div
+        css={{
+          position: "sticky",
+          width: "100%",
+          top: 0,
+        }}
+      >
+        <div
+          css={{
+            width: "100%",
+            padding: isMobile ? "20px 0 0 0" : `40px 0 ${0} 0`,
+            backgroundColor: "white",
+          }}
+        >
+          <Header />
+        </div>
+        <ScrollIndicator />
+      </div>
+
+      <FlexContainer>
+        <HalfContainer>
+          <SelfInstruction>
+            <About />
+            <Instruction />
+            <Career />
+          </SelfInstruction>
+        </HalfContainer>
+        <HalfContainer>
+          <Projects />
+        </HalfContainer>
+      </FlexContainer>
+    </div>
   );
 }
