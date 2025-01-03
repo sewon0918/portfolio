@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import Title from "@/components/Title";
 import ScreenShotCarousel from "./ScreenShotCarousel";
+import ProjectTitle from "../common/ProjectTitle";
 
 export default function Project({
   name,
@@ -42,7 +42,7 @@ export default function Project({
         />
       </div>
       <div css={{ flex: 1, minWidth: "300px", padding: "20px 40px" }}>
-        <Title title={name} />
+        <ProjectTitle title={name} />
         <Description>{devDuration}</Description>
         <Description>{techStack}</Description>
         <Description>

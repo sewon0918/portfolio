@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import iphone13 from "@/assets/common/iphone13.png";
+import iphone13 from "@/assets/common/iphone13.webp";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
 

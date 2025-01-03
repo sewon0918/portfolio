@@ -8,7 +8,7 @@ const projectData = [
   {
     name: "Betty",
     assetDirectory: "assets/betty",
-    screenshots: ["1.png", "2.png", "3.png"],
+    screenshots: ["1.webp", "2.webp", "3.webp"],
     devDuration: "2022.10 - 2023.2",
     techStack:
       "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo",
@@ -20,7 +20,7 @@ const projectData = [
   {
     name: "Somny",
     assetDirectory: "assets/somny",
-    screenshots: ["demo.mp4", "1.png", "2.png", "3.png", "4.png", "5.png"],
+    screenshots: ["demo.mp4", "1.webp", "2.webp", "3.webp", "4.webp", "5.webp"],
     devDuration: "2022.11",
     techStack:
       "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo",
@@ -34,12 +34,12 @@ const projectData = [
     assetDirectory: "assets/loomy",
     screenshots: [
       "demo.mp4",
-      "1.png",
-      "2.png",
-      "3.png",
-      "4.png",
-      "5.png",
-      "6.png",
+      "1.webp",
+      "2.webp",
+      "3.webp",
+      "4.webp",
+      "5.webp",
+      "6.webp",
     ],
     devDuration: "2022.12",
     techStack:
@@ -52,7 +52,7 @@ const projectData = [
   {
     name: "Socrates",
     assetDirectory: "assets/socrates",
-    screenshots: ["1.png", "2.png", "3.png"],
+    screenshots: ["1.webp", "2.webp", "3.webp"],
     devDuration: "2023.4",
     techStack: "React, Typescript, Recoil, Tailwindcss, Framer-motion",
     description: [
@@ -64,16 +64,7 @@ const projectData = [
   {
     name: "Wallflower Society",
     assetDirectory: "assets/wallflower_society",
-    screenshots: [
-      "demo.mp4",
-      "1.png",
-      "2.png",
-      "3.png",
-      "4.png",
-      "5.png",
-      "6.png",
-      "7.png",
-    ],
+    screenshots: ["demo.mp4", "1.webp", "2.webp", "3.webp", "4.webp", "5.webp"],
     devDuration: "2023.5",
     techStack:
       "React Native, TypeScript, Expo, Recoil, Sentry, AppsFlyer, Legend-motion",
@@ -86,7 +77,7 @@ const projectData = [
   {
     name: "Distancing Isolation Tool",
     assetDirectory: "assets/distancing_isolation",
-    screenshots: ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png"],
+    screenshots: ["1.webp", "2.webp", "3.webp", "4.webp", "5.webp", "6.webp"],
     devDuration: "2024.7",
     techStack: "React, Typescript, Recoil, Jou-UI, Framer-motion",
     description: [
@@ -195,9 +186,8 @@ export default function OtherProjects() {
                   screenshots,
                   description,
                 }) => (
-                  <div>
+                  <div key={name}>
                     <Project
-                      key={name}
                       name={name}
                       devDuration={devDuration}
                       techStack={techStack}

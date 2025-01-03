@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import Button from "@/components/common/Button";
+import ProjectTitle from "@/components/common/ProjectTitle";
 
 export default function Projects() {
   const navigate = useNavigate();
@@ -19,13 +19,10 @@ export default function Projects() {
 
   return (
     <div css={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-      <Button buttonText="Distancing" onClick={goDistancing} />
-
-      {/* <div css={{ marginTop: "20px" }}> */}
-      <Button buttonText="Endless Trials" onClick={goOthers} />
-      {/* </div> */}
-      <Button buttonText="Anxy" onClick={goAnxy} />
-      <Button buttonText="Inside" onClick={goInside} />
+      <ProjectTitle title="Distancing" onClick={goDistancing} />
+      <ProjectTitle title="Endless Trials" onClick={goOthers} />
+      <ProjectTitle title="Anxy" onClick={goAnxy} />
+      <ProjectTitle title="Inside" onClick={goInside} />
     </div>
   );
 }

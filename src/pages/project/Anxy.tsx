@@ -4,7 +4,7 @@ export default function Anxy() {
   return (
     <ProjectTemplate
       pathname={"/anxy"}
-      title={"ANXY"}
+      title={"Anxy"}
       devDuration={"2022.9 - 2023.4"}
       techStack={
         "React, Typescript, Recoil, Tailwindcss, Framer-motion, Monorepo"

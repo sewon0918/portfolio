@@ -17,6 +17,7 @@ import { isMobileVersion } from "@/utils/isMobileVersion.ts";
 import OtherProjects from "@/pages/OtherProjects.tsx";
 import Grounding from "@/pages/anxy/Grounding.tsx";
 import { preloadAllLottieFiles } from "@/utils/preloadLottieFiles.ts";
+import { isDev } from "@/utils/helpers.ts";
 
 const ServiceRouter = () => {
   const location = useLocation();
@@ -37,7 +38,9 @@ const ServiceRouter = () => {
   useEffect(() => {
     if (location.pathname.includes("anxy")) {
       preloadAllLottieFiles().then((files) => {
-        console.log("Lottie files preloaded", files);
+        if (isDev) {
+          console.log("Lottie files preloaded", files);
+        }
       });
     }
   }, [location]);

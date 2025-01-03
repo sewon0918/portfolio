@@ -1,18 +1,18 @@
-// const lottieFiles = import.meta.glob(
-//   "/src/assets/anxy/customizing/**/**/*.json",
-//   {
-//     eager: true,
-//   }
-// );
+const lottieFiles = import.meta.glob(
+  "/src/assets/anxy/customizing/**/**/*.json",
+  {
+    eager: true,
+  }
+);
 
-// export function preloadLottieFiles() {
-//   const files = Object.entries(lottieFiles).map(([filePath, content]) => ({
-//     name: filePath,
-//     content,
-//   }));
+export function preloadLottieFiles() {
+  const files = Object.entries(lottieFiles).map(([filePath, content]) => ({
+    name: filePath,
+    content,
+  }));
 
-//   return files;
-// }
+  return files;
+}
 
 async function preloadLottieFile(url: string) {
   const response = await fetch(`${url}`, { cache: "force-cache" }); // 캐시를 강제적으로 사용
@@ -27,9 +27,7 @@ export async function preloadAllLottieFiles() {
     "../assets/anxy/customizing/**/**/*.json"
   );
 
-  const fileUrls = Object.entries(lottieFiles).map(
-    ([filePath, content]) => filePath
-  );
+  const fileUrls = Object.entries(lottieFiles).map(([filePath]) => filePath);
   const promises = fileUrls.map((url) => preloadLottieFile(url));
   const files = await Promise.all(promises);
   return files;

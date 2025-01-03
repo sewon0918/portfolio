@@ -74,6 +74,7 @@ export default function ScreenShotCarousel({ srcList }: { srcList: string[] }) {
       >
         {srcList.map((src) => (
           <div
+            key={src}
             css={{
               width: "100%",
               height: "100%",
@@ -81,7 +82,7 @@ export default function ScreenShotCarousel({ srcList }: { srcList: string[] }) {
               padding: "0 4px",
             }}
           >
-            {src.includes("png") ? (
+            {src.includes("webp") || src.includes("png") ? (
               <img
                 src={getImageUrl(src, import.meta.url)}
                 css={{ width: "100%", pointerEvents: "none" }}

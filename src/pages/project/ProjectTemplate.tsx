@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import Title from "@/components/Title";
 import iphone15 from "@/assets/common/iphone15.webp";
 import { useEffect, useRef, useState } from "react";
 import OpenInNewRoundedIcon from "@mui/icons-material/OpenInNewRounded";
@@ -9,6 +8,7 @@ import { addAlpha } from "@/utils/helpers";
 import PageContainer from "@/components/common/PageContainer";
 import apple_store from "@/assets/common/apple_store.png";
 import google_play_store from "@/assets/common/google_play_store.png";
+import ProjectTitle from "@/components/common/ProjectTitle";
 
 export default function ProjectTemplate({
   pathname,
@@ -187,7 +187,7 @@ export default function ProjectTemplate({
             <ScrollIndicator />
             <DescriptionScrollArea>
               <TitleContainer>
-                <Title title={title} />
+                <ProjectTitle title={title} />
                 {(isMobile || (!isMobile && hasDesktopVersion)) && (
                   <OpenPageButton />
                 )}

@@ -71,3 +71,5 @@ export function extractHexColor(cssVar: string) {
   // 매치된 결과가 없으면 null을 반환
   return "";
 }
+
+export const isDev = window.location.hostname === "localhost";
