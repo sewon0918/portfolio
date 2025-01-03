@@ -225,7 +225,15 @@ export default function ProjectTemplate({
               <Description>{techStack}</Description>
               {Object.entries(description).map(([key, value]) => (
                 <Description key={key}>
-                  <div>{key}</div>
+                  <div
+                    css={{
+                      // fontWeight: 600,
+                      textDecoration: "underline",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    {key}
+                  </div>
                   {value.map((each, index) => (
                     <div key={index}>{`∙ ${each}`}</div>
                   ))}

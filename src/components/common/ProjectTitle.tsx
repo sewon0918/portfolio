@@ -47,7 +47,11 @@ export default function ProjectTitle({
       onTouchEnd={() => {
         setIsHover(false);
       }}
-      onClick={onClick}
+      onClick={() => {
+        if (onClick) {
+          onClick();
+        }
+      }}
     >
       {title}
       {isHover && (

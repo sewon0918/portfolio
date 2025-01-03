@@ -48,12 +48,14 @@ export default function Home() {
     flex: 1,
     maxWidth: "1000px",
     margin: "0 auto",
-    overflow: "auto",
+    overflowX: "hidden",
+    overflowY: "auto",
     display: "flex",
     flexDirection: "row",
     gap: "40px",
     flexWrap: "wrap",
     alignItems: "center",
+    paddingBottom: "20px",
   });
 
   return (
