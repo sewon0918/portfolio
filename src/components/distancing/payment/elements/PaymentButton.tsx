@@ -16,6 +16,7 @@ export default function PaymentButton({
 
   return (
     <Button
+      disabled
       loading={isLoading}
       onClick={requestPayment}
       size={size}
