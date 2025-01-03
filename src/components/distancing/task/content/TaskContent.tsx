@@ -8,7 +8,7 @@ import { ProgramContentType } from "../../../../data/distancing/BlockComponent";
 import useSaveContentData from "@/hooks/distancing/useSaveContentData";
 import { usePrevious } from "@toss/react";
 import Block from "./block/Block";
-import { cloneDeep, isEqual } from "es-toolkit";
+import { cloneDeep, differenceWith, isEqual } from "es-toolkit";
 
 export default function TaskContent({
   taskKey,
@@ -49,11 +49,24 @@ export default function TaskContent({
   useEffect(() => {
     if (data && data.length > 0) {
       if (previousData) {
-        const changedIndex = data.findIndex((element, index) =>
-          isEqual(element, previousData[index])
+        const changedIndex = data.findIndex(
+          (element, index) => !isEqual(element, previousData[index])
         );
         if (changedIndex > -1) {
           setCurrentIndex(changedIndex);
+          if (
+            isBlockUserFieldFilled(data[changedIndex]) &&
+            !isBlockUserFieldFilled(previousData[changedIndex])
+          ) {
+            const difference = differenceWith(
+              data[changedIndex].lines.flat(),
+              previousData[changedIndex].lines.flat(),
+              (a, b) => a.content.value === b.content.value
+            );
+            if (difference[0].type === "buttongroup") {
+              complete(changedIndex);
+            }
+          }
         }
       }
     }
@@ -85,10 +98,7 @@ export default function TaskContent({
       setData((data) => {
         const isLastBlock = index === (data || []).length - 1;
         if (data) {
-          if (
-            // isBlockUserFieldFilled(data[index], data, user) &&
-            !isLastBlock
-          ) {
+          if (!isLastBlock) {
             const data_temp = cloneDeep(data);
             const nextBlockIndex = data_temp.findIndex(
               (element, blockIndex) =>
@@ -115,7 +125,7 @@ export default function TaskContent({
 
   const complete = useCallback(
     (index: number) => {
-      (document.activeElement as HTMLElement)?.blur();
+      // (document.activeElement as HTMLElement)?.blur();
       if (data && isBlockUserFieldFilled(data[index])) {
         openNextBlock(index);
       }
@@ -188,6 +198,10 @@ export default function TaskContent({
         overflowX: "hidden",
         padding: `20px 16px ${(containerHeight || 72) / 2}px 16px`,
         height: "100%",
+      }}
+      onClick={() => {
+        console.log("click");
+        complete(lastIndex);
       }}
     >
       {data.map((blockData, index) => (

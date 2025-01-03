@@ -41,47 +41,6 @@ export default function ButtonGroupCell({
     setSelectedOption({ text: defaultValue, index: index });
   }, [defaultValue, selectedIndex]);
 
-  // useEffect(() => {
-  //   if (options.length === 1) {
-  //     setSelected(options[0]);
-  //     handleChange(options[0], 0);
-  //   }
-  // }, [options]);
-
-  //직접 클릭한 게 아닌 경우 (생기지에서 명훈지 저장, 명훈지에서 생기지 저장)
-  useEffect(() => {
-    handleChangeFirst(selectedOption.text, selectedOption.index);
-  }, [selectedOption]);
-
-  const handleChangeFirst = (selected?: string, optionIndex?: number) => {
-    setData((data) => {
-      if (data) {
-        const originalCurrentContent = (data[blockIndex].lines[lineIndex][
-          cellIndex
-        ].content || {}) as SingleSelectionType;
-
-        const data_temp = cloneDeep(data);
-        if (
-          selected &&
-          optionIndex !== undefined &&
-          originalCurrentContent.options
-        ) {
-          const currentContent =
-            data_temp[blockIndex].lines[lineIndex][cellIndex].content || {};
-          data_temp[blockIndex].lines[lineIndex][cellIndex].content = {
-            ...currentContent,
-            value: selected,
-            selectedIndex: optionIndex,
-          };
-        }
-
-        return data_temp;
-      }
-
-      return data;
-    });
-  };
-
   const handleChange = (selected?: string, optionIndex?: number) => {
     setData((data) => {
       if (data) {
@@ -161,7 +120,6 @@ export default function ButtonGroupCell({
             value={option}
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               const selectedText = (e?.target as HTMLElement)?.innerText;
-
               if (selectedOption.text !== selectedText) {
                 setSelectedOption({ text: selectedText, index: optionIndex });
                 handleChange(selectedText, optionIndex);
