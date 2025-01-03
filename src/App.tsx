@@ -5,6 +5,8 @@ import { ThemeProvider } from "@emotion/react";
 import { RecoilRoot } from "recoil";
 import { CssVarsProvider } from "@mui/joy";
 import { theme as joyuiTheme } from "./styles/theme";
+import { useEffect } from "react";
+import { preloadLottieFiles } from "./utils/preloadLottieFiles";
 
 declare module "@emotion/react" {
   export interface Theme {
@@ -25,6 +27,11 @@ function App() {
       },
     },
   };
+
+  useEffect(() => {
+    const files = preloadLottieFiles();
+    console.log("Preloaded files:", files);
+  }, []);
 
   return (
     <RecoilRoot>

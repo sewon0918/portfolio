@@ -60,7 +60,6 @@ const AnxyJourney = () => {
 
   useEffect(() => {
     // if (dailyProgramDetail) {
-    console.log(dailyProgramDetail);
     setCompletedActivitiesCount(
       getDoneActivityNum(dailyProgramDetail?.activityList)
     );

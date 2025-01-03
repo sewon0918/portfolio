@@ -54,6 +54,7 @@ export const Career = () => {
         },
       ].map(({ career, link, duration: { from, to } }) => (
         <div
+          key={career}
           css={{
             display: "flex",
             justifyContent: "space-between",
