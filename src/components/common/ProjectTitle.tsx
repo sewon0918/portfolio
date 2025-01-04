@@ -61,7 +61,7 @@ export default function ProjectTitle({
         }
       }}
     >
-      <div css={{ whiteSpace: "nowrap" }}> {title}</div>
+      <div> {title}</div>
 
       {isHover && (
         <div>

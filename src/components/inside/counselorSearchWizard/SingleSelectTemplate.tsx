@@ -24,7 +24,13 @@ export default function SingleSelectTemplate({
 
   return (
     <div
-      css={{ width: "100%", display: "flex", flexWrap: "wrap", gap: "10px" }}
+      css={{
+        width: "100%",
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "10px",
+        ...(showAnimation && { pointerEvents: "none" }),
+      }}
     >
       {question.map((each) => {
         const isClicked = each.id === selected;

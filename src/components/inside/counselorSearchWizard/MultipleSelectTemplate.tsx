@@ -21,7 +21,13 @@ export default function MultipleSelectTemplate({
   return (
     <motion.div>
       <div
-        css={{ width: "100%", display: "flex", flexWrap: "wrap", gap: "10px" }}
+        css={{
+          width: "100%",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "10px",
+          ...(showAnimation && { pointerEvents: "none" }),
+        }}
       >
         {question.map((each) => {
           const isClicked = selected?.includes(each.id);
