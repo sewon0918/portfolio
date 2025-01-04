@@ -188,8 +188,8 @@ export default function ProjectTemplate({
               initial={!hasAnimatedRef.current ? { opacity: 0, y: 10 } : false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
-              onAnimationComplete={() => {
-                hasAnimatedRef.current = true; // 애니메이션이 완료되면 상태를 업데이트
+              onAnimationStart={() => {
+                hasAnimatedRef.current = true;
               }}
               css={{
                 flex: 1,

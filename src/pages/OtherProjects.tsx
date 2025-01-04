@@ -3,6 +3,7 @@ import { addAlpha } from "@/utils/helpers";
 import PageContainer from "@/components/common/PageContainer";
 import Project from "@/components/other-projects/Project";
 import { Link } from "@/components/common/Link";
+import { motion } from "framer-motion";
 
 const projectData = [
   {
@@ -113,20 +114,11 @@ export default function OtherProjects() {
       0
     )})`,
   });
-  const BottomScrollIndicator = styled.div({
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    width: "100%",
-    height: "80px",
-    background: `linear-gradient(to top, #ffffff, ${addAlpha("#ffffff", 0)})`,
-  });
 
   const ScrollIndicator = () => {
     return (
       <div css={{ zIndex: 1, pointerEvents: "none" }}>
         <TopScrollIndicator />
-        <BottomScrollIndicator />
       </div>
     );
   };
@@ -136,7 +128,11 @@ export default function OtherProjects() {
       <ProjectLayout>
         <ScrollIndicator />
         <ProjectContainer>
-          <div
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            viewport={{ once: true }}
             css={{
               width: "100%",
               maxWidth: "1200px",
@@ -189,22 +185,29 @@ export default function OtherProjects() {
                   screenshots,
                   description,
                 }) => (
-                  <div key={name}>
-                    <Project
-                      name={name}
-                      devDuration={devDuration}
-                      techStack={techStack}
-                      screenshots={screenshots.map(
-                        (each) => `${assetDirectory}/${each}`
-                      )}
-                      description={description}
-                    />
-                    {/* <div css={{ height: "1px", backgroundColor: "gray" }} /> */}
-                  </div>
+                  <motion.div
+                    key={name}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    viewport={{ once: true }}
+                  >
+                    <div>
+                      <Project
+                        name={name}
+                        devDuration={devDuration}
+                        techStack={techStack}
+                        screenshots={screenshots.map(
+                          (each) => `${assetDirectory}/${each}`
+                        )}
+                        description={description}
+                      />
+                    </div>
+                  </motion.div>
                 )
               )}
             </div>
-          </div>
+          </motion.div>
         </ProjectContainer>
       </ProjectLayout>
     </PageContainer>
