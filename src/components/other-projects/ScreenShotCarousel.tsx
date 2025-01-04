@@ -86,6 +86,7 @@ export default function ScreenShotCarousel({ srcList }: { srcList: string[] }) {
               <img
                 src={getImageUrl(src, import.meta.url)}
                 css={{ width: "100%", pointerEvents: "none" }}
+                loading="lazy"
               />
             ) : src.includes("mp4") ? (
               <div

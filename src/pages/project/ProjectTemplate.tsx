@@ -188,7 +188,7 @@ export default function ProjectTemplate({
               initial={!hasAnimatedRef.current ? { opacity: 0, y: 10 } : false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
-              onAnimationStart={() => {
+              onAnimationComplete={() => {
                 hasAnimatedRef.current = true;
               }}
               css={{
