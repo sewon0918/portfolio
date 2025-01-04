@@ -10,6 +10,7 @@ import apple_store from "@/assets/common/apple_store.png";
 import google_play_store from "@/assets/common/google_play_store.png";
 import ProjectTitle from "@/components/common/ProjectTitle";
 import { CircularProgress } from "@mui/joy";
+import { motion } from "framer-motion";
 
 export default function ProjectTemplate({
   pathname,
@@ -37,8 +38,18 @@ export default function ProjectTemplate({
   const [iphoneMaxHeight, setIphoneMaxHeight] = useState<number>();
 
   useEffect(() => {
-    setIphoneMaxHeight(containerRef.current?.offsetHeight);
-  }, [containerRef.current?.offsetHeight]);
+    const handleResize = () => {
+      setIphoneMaxHeight(containerRef.current?.offsetHeight);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const PrpjectLayout = styled.div({
     flex: 1,
@@ -50,9 +61,8 @@ export default function ProjectTemplate({
   const ProjectContainer = styled.div({
     flex: 1,
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
   });
+
   const IphoneContainer = styled.div({
     position: "relative",
     marginLeft: "40px",
@@ -168,86 +178,100 @@ export default function ProjectTemplate({
     <PageContainer>
       <PrpjectLayout>
         <ProjectContainer ref={containerRef}>
-          {!isMobile && (
-            <IphoneContainer>
-              <IphoneImage
-                src={iphone15}
-                alt={"iphone15"}
-                onLoad={() => {
-                  setIsIphoneImageLoaded(true);
-                }}
-                css={{ ...(!isIphoneImageLoaded && { opacity: 0 }) }}
-              ></IphoneImage>
-              {!isIphoneImageLoaded ? (
-                <LoadingIndicator />
-              ) : (
-                <Iframe
-                  src={`${window.location.origin}${pathname}`}
-                  width="100%"
-                  allowFullScreen
-                ></Iframe>
-              )}
-            </IphoneContainer>
-          )}
-
-          <DescriptionContainer>
-            <ScrollIndicator />
-            <DescriptionScrollArea>
-              <TitleContainer>
-                <ProjectTitle title={title} />
-                {(isMobile || (!isMobile && hasDesktopVersion)) && (
-                  <OpenPageButton />
-                )}
-                <div css={{ display: "flex", gap: "10px" }}>
-                  {appStoreLink && (
-                    <img
-                      src={apple_store}
-                      css={{
-                        width: "32px",
-                        borderRadius: "6px",
-                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-                      }}
-                      onClick={() => {
-                        window.open(appStoreLink);
-                      }}
-                    />
-                  )}
-                  {playStoreLink && (
-                    <img
-                      src={google_play_store}
-                      css={{
-                        width: "32px",
-                        borderRadius: "6px",
-                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-                      }}
-                      onClick={() => {
-                        window.open(playStoreLink);
-                      }}
-                    />
-                  )}
-                </div>
-              </TitleContainer>
-
-              <Description>{devDuration}</Description>
-              <Description>{techStack}</Description>
-              {Object.entries(description).map(([key, value]) => (
-                <Description key={key}>
-                  <div
-                    css={{
-                      // fontWeight: 600,
-                      textDecoration: "underline",
-                      marginBottom: "10px",
+          {(iphoneMaxHeight || 0) > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2 }}
+              css={{
+                flex: 1,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {!isMobile && (
+                <IphoneContainer>
+                  <IphoneImage
+                    src={iphone15}
+                    alt={"iphone15"}
+                    onLoad={() => {
+                      setIsIphoneImageLoaded(true);
                     }}
-                  >
-                    {key}
-                  </div>
-                  {value.map((each, index) => (
-                    <div key={index}>{`∙ ${each}`}</div>
+                    css={{ ...(!isIphoneImageLoaded && { opacity: 0 }) }}
+                  ></IphoneImage>
+                  {!isIphoneImageLoaded ? (
+                    <LoadingIndicator />
+                  ) : (
+                    <Iframe
+                      src={`${window.location.origin}${pathname}`}
+                      width="100%"
+                      allowFullScreen
+                    ></Iframe>
+                  )}
+                </IphoneContainer>
+              )}
+
+              <DescriptionContainer>
+                <ScrollIndicator />
+                <DescriptionScrollArea>
+                  <TitleContainer>
+                    <ProjectTitle title={title} />
+                    {(isMobile || (!isMobile && hasDesktopVersion)) && (
+                      <OpenPageButton />
+                    )}
+                    <div css={{ display: "flex", gap: "10px" }}>
+                      {appStoreLink && (
+                        <img
+                          src={apple_store}
+                          css={{
+                            width: "32px",
+                            borderRadius: "6px",
+                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                          }}
+                          onClick={() => {
+                            window.open(appStoreLink);
+                          }}
+                        />
+                      )}
+                      {playStoreLink && (
+                        <img
+                          src={google_play_store}
+                          css={{
+                            width: "32px",
+                            borderRadius: "6px",
+                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                          }}
+                          onClick={() => {
+                            window.open(playStoreLink);
+                          }}
+                        />
+                      )}
+                    </div>
+                  </TitleContainer>
+
+                  <Description>{devDuration}</Description>
+                  <Description>{techStack}</Description>
+                  {Object.entries(description).map(([key, value]) => (
+                    <Description key={key}>
+                      <div
+                        css={{
+                          // fontWeight: 600,
+                          textDecoration: "underline",
+                          marginBottom: "10px",
+                        }}
+                      >
+                        {key}
+                      </div>
+                      {value.map((each, index) => (
+                        <div key={index}>{`∙ ${each}`}</div>
+                      ))}
+                    </Description>
                   ))}
-                </Description>
-              ))}
-            </DescriptionScrollArea>
-          </DescriptionContainer>
+                </DescriptionScrollArea>
+              </DescriptionContainer>
+            </motion.div>
+          )}
         </ProjectContainer>
       </PrpjectLayout>
       {/* </div> */}
