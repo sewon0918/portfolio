@@ -9,6 +9,7 @@ import PageContainer from "@/components/common/PageContainer";
 import apple_store from "@/assets/common/apple_store.png";
 import google_play_store from "@/assets/common/google_play_store.png";
 import ProjectTitle from "@/components/common/ProjectTitle";
+import { CircularProgress } from "@mui/joy";
 
 export default function ProjectTemplate({
   pathname,
@@ -41,7 +42,7 @@ export default function ProjectTemplate({
 
   const PrpjectLayout = styled.div({
     flex: 1,
-    padding: isMobile ? 0 : "20px 0 0 0",
+    padding: isMobile ? 0 : "20px 0 20px 0",
     overflow: "hidden",
     display: "flex",
   });
@@ -59,6 +60,7 @@ export default function ProjectTemplate({
     minWidth: "375px",
     width: "375px",
     scale: Math.min((iphoneMaxHeight || 0) / 764, 1),
+    ...(!isIphoneImageLoaded && { boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)" }),
   });
 
   const IphoneImage = styled.img({
@@ -76,16 +78,6 @@ export default function ProjectTemplate({
     height: "calc(100% - 41px)",
     border: "0px",
     borderRadius: "40px",
-  });
-  const Placeholder = styled.iframe({
-    position: "absolute",
-    left: "21px",
-    top: "18.7px",
-    width: "calc(100% - 41px)",
-    height: "calc(100% - 41px)",
-    border: "0px",
-    borderRadius: "40px",
-    backgroundColor: "#f0f0f0",
   });
 
   const DescriptionContainer = styled.div({
@@ -157,6 +149,21 @@ export default function ProjectTemplate({
     );
   };
 
+  const LoadingIndicator = () => {
+    return (
+      <div
+        css={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%,-50%)",
+        }}
+      >
+        <CircularProgress color="neutral" />
+      </div>
+    );
+  };
+
   return (
     <PageContainer>
       <PrpjectLayout>
@@ -169,16 +176,16 @@ export default function ProjectTemplate({
                 onLoad={() => {
                   setIsIphoneImageLoaded(true);
                 }}
+                css={{ ...(!isIphoneImageLoaded && { opacity: 0 }) }}
               ></IphoneImage>
-
-              {isIphoneImageLoaded ? (
+              {!isIphoneImageLoaded ? (
+                <LoadingIndicator />
+              ) : (
                 <Iframe
                   src={`${window.location.origin}${pathname}`}
                   width="100%"
                   allowFullScreen
                 ></Iframe>
-              ) : (
-                <Placeholder />
               )}
             </IphoneContainer>
           )}
