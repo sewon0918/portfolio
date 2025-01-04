@@ -69,6 +69,7 @@ export default function ProjectTemplate({
     borderRadius: "100px",
     minWidth: "375px",
     width: "375px",
+    height: "764px",
     opacity: iphoneMaxHeight ? 1 : 0,
     scale: Math.min((iphoneMaxHeight || 0) / 764, 1),
     ...(!isIphoneImageLoaded && { boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)" }),
@@ -175,15 +176,20 @@ export default function ProjectTemplate({
     );
   };
 
+  const hasAnimatedRef = useRef(false);
+
   return (
     <PageContainer>
       <PrpjectLayout>
         <ProjectContainer ref={containerRef}>
           {(iphoneMaxHeight || 0) > 0 && (
             <motion.div
-              {...(!isIphoneImageLoaded && { initial: { opacity: 0, y: 10 } })}
+              initial={!hasAnimatedRef.current ? { opacity: 0, y: 10 } : false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
+              onAnimationComplete={() => {
+                hasAnimatedRef.current = true; // 애니메이션이 완료되면 상태를 업데이트
+              }}
               css={{
                 flex: 1,
                 display: "flex",
