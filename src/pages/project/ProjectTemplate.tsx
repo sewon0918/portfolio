@@ -69,6 +69,7 @@ export default function ProjectTemplate({
     borderRadius: "100px",
     minWidth: "375px",
     width: "375px",
+    opacity: iphoneMaxHeight ? 1 : 0,
     scale: Math.min((iphoneMaxHeight || 0) / 764, 1),
     ...(!isIphoneImageLoaded && { boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)" }),
   });
