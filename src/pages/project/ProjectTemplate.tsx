@@ -65,13 +65,14 @@ export default function ProjectTemplate({
 
   const IphoneContainer = styled.div({
     position: "relative",
-    marginLeft: "40px",
+    margin: "0 40px",
     borderRadius: "100px",
     minWidth: "375px",
     width: "375px",
     height: "764px",
     opacity: iphoneMaxHeight ? 1 : 0,
     scale: Math.min((iphoneMaxHeight || 0) / 764, 1),
+    transformOrigin: "center right",
     ...(!isIphoneImageLoaded && { boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)" }),
   });
 
@@ -195,6 +196,7 @@ export default function ProjectTemplate({
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                gap: "40px",
               }}
             >
               {!isMobile && (
