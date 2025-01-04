@@ -181,7 +181,7 @@ export default function ProjectTemplate({
         <ProjectContainer ref={containerRef}>
           {(iphoneMaxHeight || 0) > 0 && (
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              {...(!isIphoneImageLoaded && { initial: { opacity: 0, y: 10 } })}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
               css={{
@@ -199,7 +199,9 @@ export default function ProjectTemplate({
                     onLoad={() => {
                       setIsIphoneImageLoaded(true);
                     }}
-                    css={{ ...(!isIphoneImageLoaded && { opacity: 0 }) }}
+                    css={{
+                      opacity: isIphoneImageLoaded ? 1 : 0,
+                    }}
                   ></IphoneImage>
                   {!isIphoneImageLoaded ? (
                     <LoadingIndicator />
