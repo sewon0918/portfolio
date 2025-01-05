@@ -177,20 +177,16 @@ export default function ProjectTemplate({
     );
   };
 
-  const hasAnimatedRef = useRef(false);
-
   return (
     <PageContainer>
       <PrpjectLayout>
         <ProjectContainer ref={containerRef}>
           {(iphoneMaxHeight || 0) > 0 && (
             <motion.div
-              initial={!hasAnimatedRef.current ? { opacity: 0, y: 10 } : false}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.2 }}
-              onAnimationComplete={() => {
-                hasAnimatedRef.current = true;
-              }}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              viewport={{ once: true }}
               css={{
                 flex: 1,
                 display: "flex",
