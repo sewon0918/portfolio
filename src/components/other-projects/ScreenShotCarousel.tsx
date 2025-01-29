@@ -29,7 +29,7 @@ export default function ScreenShotCarousel({
   responsive,
 }: {
   srcList: string[];
-  responsive: { desktop: number; mobile: number };
+  responsive?: { desktop: number; mobile: number };
 }) {
   const carouselRef = useRef<HTMLDivElement>(null);
   usePreventScrollWhenHorizontalSwipe({ carouselRef });
