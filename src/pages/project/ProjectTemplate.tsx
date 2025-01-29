@@ -26,7 +26,7 @@ export default function ProjectTemplate({
   title: string;
   devDuration: string;
   techStack: string;
-  description: { [key: string]: string[] };
+  description: { [key: string]: (string | React.ReactNode)[] };
   hasDesktopVersion?: boolean;
   appStoreLink?: string;
   playStoreLink?: string;
@@ -271,7 +271,13 @@ export default function ProjectTemplate({
                         {key}
                       </div>
                       {value.map((each, index) => (
-                        <div key={index}>{`∙ ${each}`}</div>
+                        <div key={index}>
+                          {typeof each === "string" ? (
+                            `∙ ${each}`
+                          ) : (
+                            <>∙ {each}</>
+                          )}
+                        </div>
                       ))}
                     </Description>
                   ))}

@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import ProjectTemplate from "./ProjectTemplate";
 
 export default function Distancing() {
@@ -21,11 +22,17 @@ export default function Distancing() {
 
         "KEY FEATURES": [
           "하단 탭과 채팅 기능은 React Native로 개발하고, 나머지는 웹뷰를 사용하여 구현했습니다.",
+          <p css={{ display: "inline" }}>
+            활동지에 새로운 컴포넌트가 추가되더라도 쉽게 확장할 수 있는 구조로
+            설계했습니다.(
+            <Link css={{ color: "#131314" }} to="detail">
+              상세
+            </Link>
+            )
+          </p>,
           "Material Design의 UI/UX 원칙을 준수하며, 빠른 프로토타이핑을 위해 Joy UI를 사용했습니다.",
-          "활동지에 새로운 컴포넌트가 추가되더라도 쉽게 확장할 수 있는 구조로 설계했습니다.",
           "변동성이 큰 활동지의 텍스트를 버전별로 관리하고, i18n를 적용해 영어 사용자를 지원했습니다.",
           "앱과 데스크톱 모두에서 사용 가능하도록 반응형 레이아웃으로 개발했습니다.",
-          "코치와 유저의 화면을 한 벌로 관리할 수 있도록 설계했습니다.",
         ],
       }}
       appStoreLink={

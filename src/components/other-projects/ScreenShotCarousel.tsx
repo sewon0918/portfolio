@@ -24,7 +24,13 @@ const CustomDot = (props: any) => {
   );
 };
 
-export default function ScreenShotCarousel({ srcList }: { srcList: string[] }) {
+export default function ScreenShotCarousel({
+  srcList,
+  responsive,
+}: {
+  srcList: string[];
+  responsive: { desktop: number; mobile: number };
+}) {
   const carouselRef = useRef<HTMLDivElement>(null);
   usePreventScrollWhenHorizontalSwipe({ carouselRef });
 
@@ -54,7 +60,7 @@ export default function ScreenShotCarousel({ srcList }: { srcList: string[] }) {
         responsive={{
           desktop: {
             breakpoint: { max: 3000, min: 1024 },
-            items: 3,
+            items: responsive?.desktop || 3,
             slidesToSlide: 1, // optional, default to 1.
           },
           tablet: {
@@ -64,7 +70,7 @@ export default function ScreenShotCarousel({ srcList }: { srcList: string[] }) {
           },
           mobile: {
             breakpoint: { max: 464, min: 0 },
-            items: 3,
+            items: responsive?.mobile || 3,
             slidesToSlide: 1, // optional, default to 1.
           },
         }}
@@ -96,21 +102,9 @@ export default function ScreenShotCarousel({ srcList }: { srcList: string[] }) {
                   overflow: "hidden",
                 }}
               >
-                {/* <video
-                  width="100%"
-                  height="100%"
-                  controls // 컨트롤러 표시
-                  css={{ objectFit: "cover" }}
-                >
-                  <source
-                    src={getImageUrl(src, import.meta.url)}
-                    type="video/mp4"
-                  />
-                </video> */}
                 <VideoScreenShot src={getImageUrl(src, import.meta.url)} />
               </div>
             ) : (
-              // <VideoScreenShot src={getImageUrl(src, import.meta.url)} />
               <></>
             )}
           </div>

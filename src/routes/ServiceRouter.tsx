@@ -1,6 +1,5 @@
 import { Route, Routes, useLocation } from "react-router";
 import RouteTransition from "./RouteTransition.tsx";
-import Test from "../pages/Test.tsx";
 import Home from "../pages/Home.tsx";
 import AnxyHome from "@/pages/anxy/AnxyHome.tsx";
 import Store from "@/pages/anxy/Store.tsx";
@@ -18,6 +17,7 @@ import OtherProjects from "@/pages/OtherProjects.tsx";
 import Grounding from "@/pages/anxy/Grounding.tsx";
 import { preloadAllLottieFiles } from "@/utils/preloadLottieFiles.ts";
 import { isDev } from "@/utils/helpers.ts";
+import DistancingDetail from "@/pages/project/DistancingDetail.tsx";
 
 const ServiceRouter = () => {
   const location = useLocation();
@@ -68,10 +68,14 @@ const ServiceRouter = () => {
           <Route path="/" element={<Home />} />
           <Route path="/project/anxy" element={<Anxy />} />
           <Route path="/project/distancing" element={<Distancing />} />
+          <Route
+            path="/project/distancing/detail"
+            element={<DistancingDetail />}
+          />
           <Route path="/project/inside" element={<Inside />} />
           <Route path="/anxy">
             <Route index element={<AnxyHome />} />
-            <Route path="test" element={<Test />} />
+
             <Route path="store" element={<Store />} />
             <Route path="worry-note" element={<WorryNote />} />
             <Route path="grounding" element={<Grounding />} />
