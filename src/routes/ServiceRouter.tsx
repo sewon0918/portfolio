@@ -1,23 +1,24 @@
 import { Route, Routes, useLocation } from "react-router";
 import RouteTransition from "./RouteTransition.tsx";
 import Home from "../pages/Home.tsx";
-import AnxyHome from "@/pages/anxy/AnxyHome.tsx";
-import Store from "@/pages/anxy/Store.tsx";
-import WorryNote from "@/pages/anxy/WorryNote.tsx";
-import Retrospect from "@/pages/anxy/Retrospect.tsx";
-import Anxy from "@/pages/project/Anxy.tsx";
-import Distancing from "@/pages/project/Distancing.tsx";
-import DistancingHome from "@/pages/distancing/DistancingHome.tsx";
+import AnxyHome from "@/pages/anxy/app/AnxyHome.tsx";
+import Store from "@/pages/anxy/app/Store.tsx";
+import WorryNote from "@/pages/anxy/app/WorryNote.tsx";
+import Retrospect from "@/pages/anxy/app/Retrospect.tsx";
+import Anxy from "@/pages/anxy/Anxy.tsx";
+import Distancing from "@/pages/distancing/Distancing.tsx";
+import DistancingHome from "@/pages/distancing/app/DistancingHome.tsx";
 import { useLayout } from "@/hooks/useLayout.ts";
-import InsideHome from "@/pages/inside/InsideHome.tsx";
-import Inside from "@/pages/project/Inside.tsx";
+import InsideHome from "@/pages/inside/app/InsideHome.tsx";
+import Inside from "@/pages/inside/Inside.tsx";
 import { useEffect } from "react";
 import { isMobileVersion } from "@/utils/isMobileVersion.ts";
 import OtherProjects from "@/pages/OtherProjects.tsx";
-import Grounding from "@/pages/anxy/Grounding.tsx";
+import Grounding from "@/pages/anxy/app/Grounding.tsx";
 import { preloadAllLottieFiles } from "@/utils/preloadLottieFiles.ts";
 import { isDev } from "@/utils/helpers.ts";
-import DistancingDetail from "@/pages/project/DistancingDetail.tsx";
+import AboutContentStructure from "@/pages/distancing/detail/AboutContentStructure.tsx";
+import AboutDataSetting from "@/pages/distancing/detail/AboutDataSetting.tsx";
 
 const ServiceRouter = () => {
   const location = useLocation();
@@ -69,8 +70,12 @@ const ServiceRouter = () => {
           <Route path="/project/anxy" element={<Anxy />} />
           <Route path="/project/distancing" element={<Distancing />} />
           <Route
-            path="/project/distancing/detail"
-            element={<DistancingDetail />}
+            path="/project/distancing/about-content-structure"
+            element={<AboutContentStructure />}
+          />
+          <Route
+            path="/project/distancing/about-data-setting"
+            element={<AboutDataSetting />}
           />
           <Route path="/project/inside" element={<Inside />} />
           <Route path="/anxy">

@@ -1,4 +1,4 @@
-import ProjectTemplate from "./ProjectTemplate";
+import ProjectTemplate from "../template/ProjectTemplate";
 
 export default function Inside() {
   return (

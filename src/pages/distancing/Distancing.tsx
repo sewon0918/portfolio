@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import ProjectTemplate from "./ProjectTemplate";
+import ProjectTemplate from "../template/ProjectTemplate";
 
 export default function Distancing() {
   return (
@@ -25,7 +25,16 @@ export default function Distancing() {
           <p css={{ display: "inline" }}>
             활동지에 새로운 컴포넌트가 추가되더라도 쉽게 확장할 수 있는 구조로
             설계했습니다.(
-            <Link css={{ color: "#131314" }} to="detail">
+            <Link css={{ color: "#131314" }} to="about-content-structure">
+              상세
+            </Link>
+            )
+          </p>,
+          <p css={{ display: "inline" }}>
+            활동지별로 초기화 로직이 달라 코드의 복잡성이 증가하는 문제를
+            해결하기 위해 Wrapper 함수와 객체 맵을 활용하여 중복 코드를 제거하고
+            조건부 로직을 단순화하도록 리팩토링했습니다.(
+            <Link css={{ color: "#131314" }} to="about-data-setting">
               상세
             </Link>
             )

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import counselorSearchWizardQ, {
   CounselorSearchWizardQType,
   NestedCounselorSearchWizardQType,
-} from "../../data/inside/counselorSearchWizardQ";
+} from "../../../data/inside/counselorSearchWizardQ";
 import SingleSelectTemplate from "@/components/inside/counselorSearchWizard/SingleSelectTemplate";
 import MultipleSelectTemplate from "@/components/inside/counselorSearchWizard/MultipleSelectTemplate";
 import { counselorSearchWizardAtom } from "@/recoil/inside/counselor-search-wizard/atom";

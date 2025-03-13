@@ -4,7 +4,7 @@ import { useColorTheme } from "@/hooks/useColorTheme";
 import { ActionButton } from "@/components/anxy/common/button/ActionButton";
 import { Text15 } from "@/components/anxy/common/Text";
 import SeedImage from "@/components/anxy/store/SeedImage";
-import { StoreItemType } from "@/pages/anxy/Store";
+import { StoreItemType } from "@/pages/anxy/app/Store";
 
 export default function Item({
   isPurchased,

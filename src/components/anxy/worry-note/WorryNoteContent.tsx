@@ -6,7 +6,7 @@ import {
   CategoryType,
   MetaInfoType,
   UserInputType,
-} from "@/pages/anxy/WorryNote";
+} from "@/pages/anxy/app/WorryNote";
 
 export default function WorryNoteContent({
   metaInfo,

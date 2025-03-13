@@ -85,6 +85,9 @@ export default function ProjectDetailTemplate({
     height: "100%",
     padding: "20px 40px 80px 40px",
     overflow: "auto",
+    display: "flex",
+    flexDirection: "column",
+    // justifyContent: "center",
   });
 
   const Description = styled.div({
